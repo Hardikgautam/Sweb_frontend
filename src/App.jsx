@@ -18,7 +18,7 @@ import { subjectsData } from './config/subjectsData';
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/Sweb_frontend">
         <ScrollToTop />
         <Navbar />
         <Routes>
