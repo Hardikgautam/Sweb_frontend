@@ -22,7 +22,43 @@ export const siteConfig = {
   // Contact
   phone:    "+91 XXXXXXXXXX",           // TODO: replace with real phone number
   email:    "info@xyzpublicschool.in",   // TODO: replace with real email address
-  address:  "XYZ Public School, Panipat, Haryana – 132103, India",
+  address:  "XYZ Public School, Sector 12, Panipat, Haryana – 132103, India",
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // CAMPUS LOCATION & COORDINATES (EDIT THIS SECTION FOR REAL SCHOOL LOCATION)
+  // Replace `address`, `lat`, and `lng` below with your real campus values.
+  // ─────────────────────────────────────────────────────────────────────────
+  location: {
+    // Exact street address displayed in text for parents, screen readers & SEO
+    address: "XYZ Public School, Sector 12, Panipat, Haryana – 132103, India",
+    
+    // Landmark or nearby prominent junction
+    landmark: "Near City Centre & Main GT Road Junction",
+
+    // Exact GPS coordinates used for Google Map pin & "Get Directions" navigation:
+    coordinates: {
+      lat: 29.3909,  // <-- REPLACE with real latitude (e.g. 29.390946)
+      lng: 76.9635,  // <-- REPLACE with real longitude (e.g. 76.963502)
+    },
+
+    // Default map zoom level (14 to 17 recommended for campus view)
+    mapZoom: 15,
+
+    // Visiting hours for prospective parents and visitors
+    visitingHours: [
+      { days: "Monday – Friday",   hours: "8:30 AM – 3:30 PM" },
+      { days: "Saturday",          hours: "9:00 AM – 1:00 PM" },
+      { days: "Sunday & Holidays", hours: "Closed (Prior appointment only)" },
+    ],
+
+    // Contact desks for campus visits
+    admissionsHelpdesk: "+91 98765 43210",
+    transportEnquiry:   "+91 98765 43211",
+    receptionEmail:     "info@xyzpublicschool.in",
+
+    // Note regarding campus walk-throughs & scheduling
+    tourNotice: "Campus walk-throughs are conducted Monday through Saturday. Prior appointment via the enquiry form is recommended to ensure counselor availability.",
+  },
 
   // Navbar links
   navLinks: [
@@ -36,12 +72,13 @@ export const siteConfig = {
 
   // Navbar "More" dropdown links
   moreLinks: [
-    { label: "E-books",  href: "/ebooks",  desc: "NCERT Digital Textbooks & Curriculum" },
-    { label: "Calendar", href: "/calendar", desc: "Events, Vacations & Exam Schedules" },
+    { label: "E-books",      href: "/ebooks",         desc: "NCERT Digital Textbooks & Curriculum" },
+    { label: "Calendar",     href: "/calendar",       desc: "Events, Vacations & Exam Schedules" },
+    { label: "Visit Campus", href: "/visit-campus",   desc: "Location, Map, Directions & Tour Timings" },
   ],
 
   // Navbar right-side actions
-  visitUsLink: { label: "Visit Us", href: "#contact" },
+  visitUsLink: { label: "Visit Us", href: "/visit-campus" },
   enquireLink: { label: "Enquire Now", href: "#admissions" },
 
   // Social media handles (outline icons in footer)
@@ -58,8 +95,8 @@ export const siteConfig = {
       title: "ADMISSIONS",
       links: [
         { label: "Apply now",              href: "/#admissions" },
-        { label: "Fees & scholarships",    href: "/#admissions" },
-        { label: "Visit campus",           href: "/#contact" },
+        { label: "Fees & scholarships",    href: "/fees-scholarships" },
+        { label: "Visit campus",           href: "/visit-campus" },
         { label: "Transport info",         href: "/#why-us" },
         { label: "Request info",           href: "/#contact" },
       ],
@@ -89,7 +126,7 @@ export const siteConfig = {
     {
       title: "UPDATES",
       isNewsletter: true,
-      text: "Subscribe to our parent bulletin for admission alerts, term dates, and campus event highlights.",
+      text: "We send a monthly parent bulletin — term dates, result updates, school events. No spam, unsubscribe any time.",
       placeholder: "Enter parent's email address",
       buttonText: "Subscribe",
     },

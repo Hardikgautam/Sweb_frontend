@@ -12,8 +12,22 @@ export async function submitEnquiry(data) {
   return res.data;
 }
 
-export async function getEnquiries(params = {}) {
-  const res = await client.get('/enquiries', { params });
+export async function getEnquiries(params = {}, token) {
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
+  const res = await client.get('/enquiries', { params, headers });
   return res.data;
 }
 
+export async function deleteEnquiry(id, token) {
+  const res = await client.delete(`/enquiries/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+}
+
+export async function cleanupEnquiries(token) {
+  const res = await client.delete('/enquiries/cleanup?confirm=true', {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data;
+}

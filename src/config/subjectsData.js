@@ -13,7 +13,7 @@ export const subjectsData = {
     poster: publicUrl('images/subjects/languages-hero.jpg'),
     fallbackImage: publicUrl('images/subjects/languages-hero.jpg'),
     intro:
-      "Fostering articulate expression, rich literary appreciation, and multi-lingual mastery across English, Hindi, and Sanskrit through interactive phonics, classical literature, creative prose, and competitive debate.",
+      "We teach three languages: English, Hindi, and Sanskrit. English literature starts with picture books in Nursery and ends with CBSE's First Flight in Class 10. What happens in between is where it gets interesting.",
     stats: [
       { number: "3", label: "Languages Taught" },
       { number: "100%", label: "CBSE Board Pass" },
@@ -81,7 +81,7 @@ export const subjectsData = {
       kicker: "NCERT DIGITAL TEXTBOOKS",
       headline: "Access Official Language Textbooks & Readers",
       paragraph:
-        "Download complete CBSE English, Hindi, and Sanskrit textbooks directly as single PDFs with zero waiting and instant access.",
+        "Every CBSE textbook we use — English, Hindi, Sanskrit — is available as a direct single-file PDF download. No sign-up, no waiting.",
       primaryButtonText: "Browse Language E-Books →",
       primaryButtonLink: "/e-books?subject=English",
       secondaryButtonText: "Enquire for Admissions",
@@ -98,7 +98,7 @@ export const subjectsData = {
     poster: publicUrl('images/subjects/math-hero.jpg'),
     fallbackImage: publicUrl('images/subjects/math-hero.jpg'),
     intro:
-      "Developing fearless, creative mathematical problem solvers through concrete-to-abstract learning, interactive math lab discovery, mental calculation drills, and rigorous CBSE conceptual mastery.",
+      "Maths here starts with actual objects — blocks, counting rods, physical shapes. Worksheets come later, once the idea makes sense. By Class 10, students are working through board-level problems from a set they helped choose.",
     stats: [
       { number: "100%", label: "Lab Activity Based" },
       { number: "98.4%", label: "Top Board Score" },
@@ -166,7 +166,7 @@ export const subjectsData = {
       kicker: "NCERT MATHEMATICS REPOSITORY",
       headline: "Download Official Math Textbooks & Exemplars",
       paragraph:
-        "Instant one-click access to complete CBSE Mathematics textbooks for all grades, with zero waiting and single-file PDF downloads.",
+        "All CBSE Maths textbooks from Class 1 through 10, plus exemplar problem sets — downloaded as single PDFs. No account needed.",
       primaryButtonText: "Browse Mathematics E-Books →",
       primaryButtonLink: "/e-books?subject=Mathematics",
       secondaryButtonText: "Book a Campus Visit",
@@ -183,7 +183,7 @@ export const subjectsData = {
     poster: publicUrl('images/subjects/science-hero.jpg'),
     fallbackImage: publicUrl('images/subjects/science-hero.jpg'),
     intro:
-      "Igniting lifelong scientific curiosity through observational discovery in nature, guided scientific method, and hands-on laboratory experimentation across Physics, Chemistry, and Biology.",
+      "The junior lab opens from Class 6. Every student runs actual experiments — not demonstrations, not videos. Three lab rooms, 12 students per session, and safety gear for all of them.",
     stats: [
       { number: "3", label: "Dedicated Labs" },
       { number: "100+", label: "Hands-on Experiments" },
@@ -241,7 +241,7 @@ export const subjectsData = {
       kicker: "NCERT SCIENCE REPOSITORY",
       headline: "Explore Verified Science Textbooks & Lab Manuals",
       paragraph:
-        "Download official NCERT Science textbooks, lab exercise guides, and chapter notes directly from our digital library.",
+        "NCERT Science textbooks, official lab manuals, and chapter-by-chapter notes — all in one place, available as direct PDF downloads.",
       primaryButtonText: "Browse Science E-Books →",
       primaryButtonLink: "/e-books?subject=Science",
       secondaryButtonText: "Schedule a Lab Tour",
@@ -258,7 +258,7 @@ export const subjectsData = {
     poster: publicUrl('images/subjects/social-hero.jpg'),
     fallbackImage: publicUrl('images/subjects/social-hero.jpg'),
     intro:
-      "Developing empathetic, responsible global citizens through immersive Indian and world history, geographical analysis, democratic political institutions, and socio-economic understanding.",
+      "Four disciplines, one subject: History, Geography, Civics, and Economics. Students map actual terrain, debate real constitutional questions, and take field trips to local heritage sites — not just read about them.",
     stats: [
       { number: "4", label: "Core Disciplines" },
       { number: "100%", label: "CBSE Aligned" },
@@ -316,7 +316,7 @@ export const subjectsData = {
       kicker: "NCERT SOCIAL SCIENCE REPOSITORY",
       headline: "Download History, Geography & Civics Textbooks",
       paragraph:
-        "Access official CBSE Social Science textbooks, historical maps, and democratic politics curriculum modules as single-file PDFs.",
+        "Official CBSE Social Science books — History, Geography, Political Science, Economics — as single-file PDFs. No login, instant access.",
       primaryButtonText: "Browse Social Studies E-Books →",
       primaryButtonLink: "/e-books?subject=Social%20Science",
       secondaryButtonText: "Enquire for Admissions",
@@ -333,7 +333,7 @@ export const subjectsData = {
     poster: publicUrl('images/subjects/cs-hero.jpg'),
     fallbackImage: publicUrl('images/subjects/cs-hero.jpg'),
     intro:
-      "Empowering students with 21st-century digital literacy, computational thinking, algorithmic logic, and programming fundamentals from visual block coding to Python and Artificial Intelligence.",
+      "Class 1 starts on computers. By Class 6, students are writing HTML. By Class 9, they're working with Python and MySQL. The two labs have 1:1 terminal access — nobody shares a machine.",
     stats: [
       { number: "2", label: "Air-Conditioned Labs" },
       { number: "1:1", label: "Terminal Access" },
@@ -401,7 +401,7 @@ export const subjectsData = {
       kicker: "TECH CURRICULUM REPOSITORY",
       headline: "Discover Digital Textbooks & Coding Materials",
       paragraph:
-        "Access CBSE Computer Science textbooks, Python reference manuals, and practical coding blueprints directly.",
+        "CBSE Computer Science textbooks, Python syntax references, and lab practicals — download them directly. No account, no waiting list.",
       primaryButtonText: "Explore Tech E-Books →",
       primaryButtonLink: "/e-books?subject=Computer%20Science",
       secondaryButtonText: "Enquire About STEM Program",
@@ -418,7 +418,7 @@ export const subjectsData = {
     poster: publicUrl('images/subjects/arts-hero.jpg'),
     fallbackImage: publicUrl('images/subjects/arts-hero.jpg'),
     intro:
-      "Nurturing creative self-expression, acoustic musicality, physical vitality, and teamwork through structured visual arts, performing arts, and comprehensive athletics.",
+      "The art studio is open before school on three days a week. The sports field is 4 acres. The school band performed at the district cultural festival last March — 40 students on stage. We take this seriously.",
     stats: [
       { number: "2", label: "Dedicated Art Studios" },
       { number: "1", label: "Acoustic Music Suite" },
@@ -484,10 +484,10 @@ export const subjectsData = {
       },
     ],
     cta: {
-      kicker: "CO-CURRICULAR & HOLISTIC EXCELLENCE",
-      headline: "Where Passion Meets Discipline",
+      kicker: "CO-CURRICULAR PROGRAMME",
+      headline: "Arts, Music & Sport — not sidelines, not extras.",
       paragraph:
-        "Discover how our art galleries, acoustic music suites, and competitive sports academies cultivate balanced champions. Connect with our admissions counselors today.",
+        "Our art, music, and sports programmes run on the same timetable as academics. If you want to know what that looks like, come see the school on a Tuesday — that's when it's all happening at once.",
       primaryButtonText: "Enquire for Admissions →",
       primaryButtonLink: "#contact",
       secondaryButtonText: "Explore Student Life",

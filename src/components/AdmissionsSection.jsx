@@ -2,6 +2,7 @@
 // Section 05: Admissions process with 4 steps and highlighted enquiry strip.
 // All copy is imported from admissionsContent.js — edit that file, not here.
 
+import { Link } from 'react-router-dom';
 import { admissionsContent } from '../config/admissionsContent';
 import { openEnquiryModal } from '../api/enquiries';
 import { useSwipeCarousel } from '../hooks/useSwipeCarousel';
@@ -88,6 +89,9 @@ export default function AdmissionsSection() {
           </div>
 
           <div className="admissions-section__callout-action">
+            <Link to="/fees-scholarships" className="admissions-section__fees-link">
+              Fees &amp; Scholarships &rarr;
+            </Link>
             <Button
               variant="primary"
               as="button"

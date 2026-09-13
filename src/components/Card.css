@@ -3,7 +3,7 @@
 .card {
   background-color: var(--color-card-bg);
   border-top: var(--card-border-top);
-  border-radius: 4px;
+  border-radius: var(--card-radius);
   padding: var(--space-md) var(--space-md) var(--space-lg);
   box-shadow: var(--card-shadow);
   transition: box-shadow var(--transition-mid), transform var(--transition-mid);

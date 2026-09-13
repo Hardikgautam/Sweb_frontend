@@ -1,0 +1,345 @@
+/* ============================================================
+   components/admin/FeesAdminTab.css — Fees & Scholarships Admin Styles
+   ============================================================ */
+
+.adm-fees-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Subtabs bar ────────────────────────────────────────────── */
+.adm-fees-subtabs {
+  display: flex;
+  gap: 0.5rem;
+  background: #e2e8f0;
+  padding: 0.35rem;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.adm-fees-subtab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.adm-fees-subtab-btn:hover {
+  color: #0f1d38;
+}
+
+.adm-fees-subtab-btn.active {
+  background: #ffffff;
+  color: #0f1d38;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.adm-fees-subtab-btn .adm-tab-badge {
+  background: #e2e8f0;
+  color: #334155;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 10px;
+}
+
+.adm-fees-subtab-btn.active .adm-tab-badge {
+  background: #0f1d38;
+  color: #ffffff;
+}
+
+/* ── Table Badges ───────────────────────────────────────────── */
+.adm-fee-category-badge {
+  display: inline-block;
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.88rem;
+}
+
+.adm-freq-tag {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.adm-freq-tag--onetime,
+.adm-freq-tag--one-time {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.adm-freq-tag--monthly {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.adm-freq-tag--quarterly {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.adm-freq-tag--annual {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+/* ── Custom Input Wrap ──────────────────────────────────────── */
+.adm-custom-input-wrap {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.adm-custom-input-wrap .adm-input {
+  flex: 1;
+}
+
+/* ── Scholarships Cards Grid in Admin ───────────────────────── */
+.adm-scholarship-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+
+.adm-sch-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.adm-sch-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.adm-sch-card.inactive {
+  opacity: 0.65;
+  background: #f8fafc;
+}
+
+.adm-sch-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  background: #f8fafc;
+  border-bottom: 1px solid #edf2f7;
+  border-radius: 8px 8px 0 0;
+}
+
+.adm-sch-card__badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adm-status-chip {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 12px;
+}
+
+.adm-status-chip.active {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.adm-status-chip.inactive {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.adm-order-tag {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.adm-order-btns {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.adm-order-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  cursor: pointer;
+  color: #475569;
+  transition: all 0.15s ease;
+}
+
+.adm-order-btn:hover {
+  background: #0f1d38;
+  color: #ffffff;
+  border-color: #0f1d38;
+}
+
+.adm-sch-card__body {
+  padding: 1.1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.adm-sch-card__discount-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.adm-sch-card__discount-val {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #b45309;
+}
+
+.adm-sch-card__classes {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #f1f5f9;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  color: #334155;
+}
+
+.adm-sch-card__title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f1d38;
+  margin: 0 0 0.4rem;
+}
+
+.adm-sch-card__desc {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #64748b;
+  margin: 0 0 0.85rem;
+}
+
+.adm-sch-card__info-row {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #475569;
+  margin-bottom: 0.45rem;
+  background: #f8fafc;
+  padding: 0.45rem 0.65rem;
+  border-radius: 4px;
+}
+
+.adm-sch-card__info-row strong {
+  color: #0f1d38;
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.15rem;
+}
+
+.adm-sch-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.1rem;
+  border-top: 1px solid #f1f5f9;
+  background: #fafbfc;
+  border-radius: 0 0 8px 8px;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── Toggle Switch ──────────────────────────────────────────── */
+.adm-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.adm-toggle-label input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.adm-toggle-slider {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 18px;
+  background-color: #cbd5e1;
+  border-radius: 20px;
+  transition: 0.25s;
+}
+
+.adm-toggle-slider::before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.25s;
+}
+
+.adm-toggle-label input:checked + .adm-toggle-slider {
+  background-color: #10b981;
+}
+
+.adm-toggle-label input:checked + .adm-toggle-slider::before {
+  transform: translateX(16px);
+}
+
+.adm-toggle-text {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.adm-card-actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.adm-sch-skeleton {
+  height: 260px;
+  background: linear-gradient(90deg, #f0f3f6 25%, #e6ebef 50%, #f0f3f6 75%);
+  background-size: 200% 100%;
+  animation: admFeesShimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes admFeesShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

@@ -1,0 +1,444 @@
+/* ============================================================
+   components/VisitCampusSection.css — Visit Campus & Google Map Section
+   Responsive 2-column grid, themed map container, and navigation buttons
+   ============================================================ */
+
+.visit-section {
+  padding: 4.5rem 0 5rem;
+  background-color: #f7f9fc;
+  color: var(--color-navy, #0f1d38);
+  position: relative;
+}
+
+.visit-section--home {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ── Section Header ────────────────────────────────────────── */
+.visit-section__header {
+  margin-bottom: 2.75rem;
+  max-width: 720px;
+}
+
+.visit-section__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.65rem;
+}
+
+.visit-section__kicker-line {
+  width: 28px;
+  height: 2px;
+  background-color: var(--color-maroon, #7a2333);
+  display: inline-block;
+}
+
+.visit-section__kicker-text {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-maroon, #7a2333);
+}
+
+.visit-section__headline {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(2rem, 3.8vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.18;
+  color: var(--color-navy, #0f1d38);
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.visit-section__subhead {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-muted, #556275);
+  margin: 0;
+}
+
+/* ── 2-Column Responsive Grid ───────────────────────────────── */
+.visit-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1.35fr;
+  gap: 2.25rem;
+  align-items: start;
+}
+
+/* ── Left Column: Cards ─────────────────────────────────────── */
+.visit-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.visit-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 1.35rem 1.5rem;
+  display: flex;
+  gap: 1.1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.visit-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  border-color: #cbd5e1;
+}
+
+.visit-card__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background-color: rgba(15, 29, 56, 0.07);
+  color: var(--color-navy, #0f1d38);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.visit-card__icon--gold {
+  background-color: rgba(199, 164, 107, 0.18);
+  color: #936e38;
+}
+
+.visit-card__content {
+  flex: 1;
+}
+
+.visit-card__title {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-navy, #0f1d38);
+  margin: 0 0 0.45rem;
+}
+
+/* ── Address Styles ─────────────────────────────────────────── */
+.visit-address {
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #334155;
+}
+
+.visit-address strong {
+  color: var(--color-navy, #0f1d38);
+}
+
+.visit-address__landmark {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 0.2rem;
+}
+
+.visit-address__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.visit-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.visit-copy-btn:hover {
+  background: #e2e8f0;
+  color: #0f1d38;
+}
+
+.visit-external-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-navy, #0f1d38);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.visit-external-link:hover {
+  color: var(--color-maroon, #7a2333);
+}
+
+/* ── Directions CTA Button ──────────────────────────────────── */
+.visit-cta-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.visit-directions-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #0f1d38 0%, #1e3357 100%);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 10px;
+  border: 1px solid rgba(199, 164, 107, 0.4);
+  box-shadow: 0 4px 14px rgba(15, 29, 56, 0.18);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.visit-directions-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: left 0.5s ease;
+}
+
+.visit-directions-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(15, 29, 56, 0.28);
+  border-color: var(--color-gold, #c7a46b);
+  color: #ffffff;
+}
+
+.visit-directions-btn:hover::after {
+  left: 100%;
+}
+
+.visit-directions-btn__icon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-gold, #c7a46b);
+  flex-shrink: 0;
+}
+
+.visit-cta-hint {
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: #64748b;
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+/* ── Hours List ─────────────────────────────────────────────── */
+.visit-hours-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.visit-hours-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.visit-hours-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.visit-hours-days {
+  color: #475569;
+  font-weight: 600;
+}
+
+.visit-hours-time {
+  color: #0f1d38;
+  font-weight: 700;
+}
+
+/* ── Tour Card ──────────────────────────────────────────────── */
+.visit-tour-desc {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #475569;
+  margin: 0 0 1rem;
+}
+
+.visit-tour-action {
+  display: flex;
+}
+
+/* ── Right Column: Google Map Container ─────────────────────── */
+.visit-map-column {
+  position: sticky;
+  top: 90px;
+}
+
+.visit-map-frame-wrapper {
+  background: #0f1d38;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(15, 29, 56, 0.16);
+  border: 1px solid rgba(199, 164, 107, 0.35);
+  display: flex;
+  flex-direction: column;
+}
+
+.visit-map-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background: #0a1426;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.visit-map-topbar__pin {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.visit-map-topbar__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+}
+
+.visit-map-topbar__coords {
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: var(--color-gold, #c7a46b);
+  background: rgba(199, 164, 107, 0.1);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
+/* ── The Embed Container ────────────────────────────────────── */
+.visit-map-embed-container {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  background-color: #e5e3df; /* Google Maps placeholder color */
+}
+
+.visit-map-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* ── Footbar below map ──────────────────────────────────────── */
+.visit-map-footbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 1.25rem;
+  background: #0a1426;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.visit-map-footbar__info {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.visit-map-footbar__action {
+  color: var(--color-gold, #c7a46b);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.visit-map-footbar__action:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* ── Responsive Behavior ─────────────────────────────────────── */
+@media (max-width: 960px) {
+  .visit-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .visit-map-column {
+    position: static;
+  }
+
+  .visit-map-embed-container {
+    height: 380px;
+  }
+}
+
+@media (max-width: 640px) {
+  .visit-section {
+    padding: 3rem 0 3.5rem;
+  }
+
+  .visit-card {
+    padding: 1.1rem 1.25rem;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .visit-card__icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .visit-hours-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+
+  .visit-map-embed-container {
+    height: 320px;
+  }
+
+  .visit-map-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    padding: 0.65rem 1rem;
+  }
+
+  .visit-map-footbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+}

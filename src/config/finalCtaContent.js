@@ -10,7 +10,7 @@ export const finalCtaContent = {
     "are open.",
   ],
   paragraph:
-    "Early registration deadline: November 30, 2026. The initial online application takes under 10 minutes to complete, and our admissions team responds within 48 hours.",
+    "Seats fill up fast — we typically close Class 1 and Nursery intake by December. The form is short (10 minutes). We respond within two working days, and our admissions team is available by phone if you have questions before you apply.",
 
   primaryButton: {
     label: "Begin Application →",

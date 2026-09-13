@@ -142,18 +142,45 @@ export default function Navbar() {
                   <div className="navbar__dropdown-desc">Events, Vacations &amp; Exams</div>
                 </div>
               </Link>
+
+              <Link
+                to="/visit-campus"
+                className={`navbar__dropdown-item ${pathname === '/visit-campus' ? 'active' : ''}`}
+                onClick={() => setDesktopMoreOpen(false)}
+                role="menuitem"
+              >
+                <div className="navbar__dropdown-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="navbar__dropdown-title">Visit Campus</div>
+                  <div className="navbar__dropdown-desc">Location, Map &amp; Directions</div>
+                </div>
+              </Link>
             </div>
           </li>
         </ul>
 
         {/* ── Right actions (desktop only) ────────────────────────────── */}
         <div className="navbar__actions">
-          <a
-            href={pathname !== '/' && siteConfig.visitUsLink.href.startsWith('#') ? `/${siteConfig.visitUsLink.href}` : siteConfig.visitUsLink.href}
-            className="navbar__visit-link"
-          >
-            {siteConfig.visitUsLink.label}
-          </a>
+          {siteConfig.visitUsLink.href.startsWith('/') ? (
+            <Link
+              to={siteConfig.visitUsLink.href}
+              className={`navbar__visit-link ${pathname === siteConfig.visitUsLink.href ? 'active' : ''}`}
+            >
+              {siteConfig.visitUsLink.label}
+            </Link>
+          ) : (
+            <a
+              href={pathname !== '/' && siteConfig.visitUsLink.href.startsWith('#') ? `/${siteConfig.visitUsLink.href}` : siteConfig.visitUsLink.href}
+              className="navbar__visit-link"
+            >
+              {siteConfig.visitUsLink.label}
+            </a>
+          )}
           <Button variant="primary" as="button" onClick={(e) => { e.preventDefault(); openEnquiryModal(); }}>
             {siteConfig.enquireLink.label}
           </Button>
@@ -270,22 +297,48 @@ export default function Navbar() {
                   <div className="navbar__mobile-sublink-desc">Events, Vacations &amp; Exams</div>
                 </div>
               </Link>
+
+              <Link
+                to="/visit-campus"
+                className={`navbar__mobile-sublink ${pathname === '/visit-campus' ? 'active' : ''}`}
+                onClick={closeMenu}
+              >
+                <span className="navbar__mobile-sublink-icon">📍</span>
+                <div>
+                  <div className="navbar__mobile-sublink-title">Visit Campus</div>
+                  <div className="navbar__mobile-sublink-desc">Location, Map &amp; Directions</div>
+                </div>
+              </Link>
             </div>
           </li>
         </ul>
 
         <div className="navbar__mobile-actions">
-          <a
-            href={pathname !== '/' && siteConfig.visitUsLink.href.startsWith('#') ? `/${siteConfig.visitUsLink.href}` : siteConfig.visitUsLink.href}
-            className="navbar__mobile-visit-btn"
-            onClick={closeMenu}
-          >
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ marginRight: '6px' }}>
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>
-            {siteConfig.visitUsLink.label} &rarr;
-          </a>
+          {siteConfig.visitUsLink.href.startsWith('/') ? (
+            <Link
+              to={siteConfig.visitUsLink.href}
+              className="navbar__mobile-visit-btn"
+              onClick={closeMenu}
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ marginRight: '6px' }}>
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              {siteConfig.visitUsLink.label} &rarr;
+            </Link>
+          ) : (
+            <a
+              href={pathname !== '/' && siteConfig.visitUsLink.href.startsWith('#') ? `/${siteConfig.visitUsLink.href}` : siteConfig.visitUsLink.href}
+              className="navbar__mobile-visit-btn"
+              onClick={closeMenu}
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ marginRight: '6px' }}>
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              {siteConfig.visitUsLink.label} &rarr;
+            </a>
+          )}
           <button type="button" className="navbar__mobile-enquire-btn"
             onClick={(e) => { e.preventDefault(); closeMenu(); openEnquiryModal(); }}>
             {siteConfig.enquireLink.label}

@@ -7,8 +7,8 @@ export const bannerStatsContent = {
   kickerNumber: "03",
   kickerLabel: "THE NUMBERS BEHIND OUR NAME",
   headlineLines: [
-    "Ten years that shape",
-    "a lifetime.",
+    "The numbers we're",
+    "actually proud of.",
   ],
   stats: [
     {

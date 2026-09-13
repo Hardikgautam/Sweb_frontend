@@ -74,7 +74,16 @@ export default function Footer() {
       setEmailInput('');
     } catch (err) {
       console.error('Newsletter error:', err);
-      if (err.response?.status === 400 && err.response?.data?.detail?.includes('already registered')) {
+      if (err.response?.status === 422) {
+        const detail = err.response?.data?.detail;
+        if (typeof detail === 'string') {
+          setErrorMessage(detail);
+        } else if (Array.isArray(detail) && detail[0]?.msg) {
+          setErrorMessage(detail[0].msg.replace(/^Value error,\s*/i, ''));
+        } else {
+          setErrorMessage('Please enter a valid email address.');
+        }
+      } else if (err.response?.status === 400 && err.response?.data?.detail?.includes('already registered')) {
         setErrorMessage('This email is already subscribed to our newsletter.');
       } else {
         setErrorMessage('Unable to subscribe right now. Please try again later.');

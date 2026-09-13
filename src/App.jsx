@@ -9,6 +9,8 @@ import HolidayCalendar from './pages/HolidayCalendar';
 import SubjectPage from './pages/SubjectPage';
 import ClassesPage from './pages/ClassesPage';
 import NewsPage from './pages/NewsPage';
+import FeesPage from './pages/FeesPage';
+import VisitCampusPage from './pages/VisitCampusPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -30,6 +32,14 @@ export default function App() {
 
           {/* ── News & Events public page ────────────────────── */}
           <Route path="/news" element={<NewsPage />} />
+
+          {/* ── Fees & Scholarships public page ──────────────── */}
+          <Route path="/fees-scholarships" element={<FeesPage />} />
+          <Route path="/fees" element={<FeesPage />} />
+
+          {/* ── Visit Campus & Directions page ───────────────── */}
+          <Route path="/visit-campus" element={<VisitCampusPage />} />
+          <Route path="/visit" element={<VisitCampusPage />} />
 
           {/* ── Admin routes ─────────────────────────────────── */}
           <Route path="/admin/login" element={<AdminLogin />} />

@@ -11,6 +11,7 @@ import SchoolLifeSection from '../components/SchoolLifeSection';
 import AdmissionsSection from '../components/AdmissionsSection';
 import TeachersSection from '../components/TeachersSection';
 import EventsNewsSection from '../components/EventsNewsSection';
+import VisitCampusSection from '../components/VisitCampusSection';
 import FinalCtaBanner from '../components/FinalCtaBanner';
 import './Home.css';
 
@@ -44,8 +45,10 @@ export default function Home() {
       {/* ── Sections 07 & 08: Upcoming Events & Latest News ──────────────── */}
       <EventsNewsSection />
 
+      {/* ── Section 09: Visit Campus & Google Map ──────────────────────── */}
+      <VisitCampusSection isHomeSection={true} />
+
       {/* ── Final Admissions CTA Banner ─────────────────────────────────── */}
-      <div id="contact" style={{ position: 'relative', top: '-70px', visibility: 'hidden' }} />
       <FinalCtaBanner />
     </main>
   );

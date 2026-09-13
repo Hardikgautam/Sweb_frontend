@@ -20,7 +20,7 @@ export const whyUsContent = {
     "Small class sizes, big",
     "attention to every child.",
   ],
-  body: "We believe meaningful education is deeply personal. Rather than treating children as numbers in overcrowded halls, our learning spaces are intentionally kept intimate, collaborative, and guided by dedicated teachers who understand each child's unique pace, interests, and potential.",
+  body: "Every section has at most 25 students. That's deliberate. It means your child's homeroom teacher can tell you — specifically — what clicked this term and what needs more work. Not a generic progress report. An actual conversation.",
 
   // Checklist of 4 features
   checklist: [

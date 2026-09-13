@@ -24,6 +24,13 @@ import {
   updateHoliday,
   deleteHoliday,
 } from '../api/holidays';
+import {
+  getEnquiries,
+  deleteEnquiry,
+  cleanupEnquiries,
+} from '../api/enquiries';
+import FeesAdminTab from '../components/admin/FeesAdminTab';
+import NewsletterAdminTab from '../components/admin/NewsletterAdminTab';
 import './AdminDashboard.css';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1228,6 +1235,247 @@ function EventRow({ event, onEdit, onDelete }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// ADMISSIONS ENQUIRIES: Components & Helpers
+// ─────────────────────────────────────────────────────────────────────────────
+
+const ENQUIRY_STORAGE_KEY = 'school_admin_enquiry_cols';
+const ALL_ENQUIRY_COLUMNS = [
+  { id: 'child_name', label: "Child's Name" },
+  { id: 'class_applying_for', label: 'Class Applying' },
+  { id: 'parent_name', label: "Parent's Name" },
+  { id: 'phone', label: 'Phone Number' },
+  { id: 'email', label: 'Email' },
+  { id: 'notes', label: 'Notes / Message' },
+  { id: 'created_at', label: 'Submitted Date' },
+  { id: 'status', label: 'Status' },
+];
+const DEFAULT_ENQUIRY_COLUMNS = ['child_name', 'class_applying_for', 'parent_name', 'phone', 'email', 'created_at', 'status'];
+
+function getInitialEnquiryColumns() {
+  try {
+    const saved = localStorage.getItem(ENQUIRY_STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    // fallback
+  }
+  return DEFAULT_ENQUIRY_COLUMNS;
+}
+
+function EnquiryStatusBadges({ enquiry }) {
+  const badges = [];
+  if (!enquiry.is_valid_phone) {
+    badges.push(
+      <span key="phone" className="adm-badge adm-badge--invalid" title="Invalid Indian phone number">
+        ⚠️ Invalid Phone
+      </span>
+    );
+  }
+  if (!enquiry.is_valid_email) {
+    badges.push(
+      <span key="email" className="adm-badge adm-badge--invalid" title="Invalid email address format">
+        ⚠️ Invalid Email
+      </span>
+    );
+  }
+  if (enquiry.is_duplicate) {
+    badges.push(
+      <span key="dup" className="adm-badge adm-badge--duplicate" title="Older duplicate submission for same contact">
+        Duplicate
+      </span>
+    );
+  }
+  if (enquiry.is_valid_phone && enquiry.is_valid_email && !enquiry.is_duplicate) {
+    badges.push(
+      <span key="valid" className="adm-badge adm-badge--valid">
+        ✓ Valid
+      </span>
+    );
+  }
+  return <div className="adm-status-badges">{badges}</div>;
+}
+
+function DeleteEnquiryModal({ enquiry, token, onDeleted, onClose }) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError]     = useState('');
+
+  const handleDelete = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      await deleteEnquiry(enquiry.id, token);
+      onDeleted(enquiry.id);
+    } catch (err) {
+      setError(err?.response?.data?.detail || err?.message || 'Delete failed');
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="adm-modal-backdrop" onClick={e => e.target === e.currentTarget && onClose()}>
+      <div className="adm-modal adm-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="del-enq-title">
+        <div className="adm-modal__header">
+          <span id="del-enq-title" className="adm-modal__title">Delete Enquiry</span>
+          <button className="adm-modal__close" onClick={onClose} aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div className="adm-modal__body">
+          <div className="adm-confirm-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          </div>
+          <p className="adm-confirm-title">Delete this enquiry?</p>
+          <p className="adm-confirm-sub">
+            Are you sure you want to delete the enquiry for <strong>{enquiry.child_name || 'this student'}</strong> submitted by <strong>{enquiry.parent_name || 'parent'}</strong>? This action cannot be undone.
+          </p>
+          {error && <p style={{color:'#b91c1c',fontSize:'0.85rem'}}>{error}</p>}
+        </div>
+        <div className="adm-modal__footer">
+          <button type="button" className="adm-btn adm-btn--ghost" onClick={onClose} disabled={loading}>Cancel</button>
+          <button type="button" className="adm-btn adm-btn--primary" style={{background:'#b91c1c',borderColor:'#b91c1c'}}
+            onClick={handleDelete} disabled={loading}>
+            {loading ? (<><span className="adm-btn__spinner" aria-hidden="true" /> Deleting…</>) : 'Delete'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CleanupEnquiriesModal({ token, invalidCount, duplicateCount, onCleaned, onClose }) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError]     = useState('');
+
+  const handleCleanup = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const res = await cleanupEnquiries(token);
+      onCleaned(res);
+    } catch (err) {
+      setError(err?.response?.data?.detail || err?.message || 'Cleanup failed');
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="adm-modal-backdrop" onClick={e => e.target === e.currentTarget && onClose()}>
+      <div className="adm-modal adm-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="cleanup-enq-title">
+        <div className="adm-modal__header">
+          <span id="cleanup-enq-title" className="adm-modal__title">Purge Invalid &amp; Duplicate Records</span>
+          <button className="adm-modal__close" onClick={onClose} aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div className="adm-modal__body">
+          <div className="adm-confirm-icon" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          </div>
+          <p className="adm-confirm-title">Permanently remove invalid data?</p>
+          <p className="adm-confirm-sub">
+            This will permanently delete all enquiry submissions that fail Indian mobile number validation, fail email format validation, or are older duplicates.
+          </p>
+          {(invalidCount > 0 || duplicateCount > 0) && (
+            <div style={{background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '6px', padding: '0.65rem 0.9rem', fontSize: '0.84rem', color: '#92400e', textAlign: 'left', width: '100%'}}>
+              <strong>Currently detected records:</strong>
+              <ul style={{marginTop: '0.35rem', marginBottom: 0, paddingLeft: '1.25rem'}}>
+                <li>Invalid phone / email: ~{invalidCount}</li>
+                <li>Duplicate submissions: ~{duplicateCount}</li>
+              </ul>
+            </div>
+          )}
+          {error && <p style={{color:'#b91c1c',fontSize:'0.85rem'}}>{error}</p>}
+        </div>
+        <div className="adm-modal__footer">
+          <button type="button" className="adm-btn adm-btn--ghost" onClick={onClose} disabled={loading}>Cancel</button>
+          <button type="button" className="adm-btn adm-btn--primary" style={{background:'#b91c1c',borderColor:'#b91c1c'}}
+            onClick={handleCleanup} disabled={loading}>
+            {loading ? (<><span className="adm-btn__spinner" aria-hidden="true" /> Purging…</>) : 'Yes, Permanently Purge'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function EnquiryRow({ enquiry, visibleCols, onDelete }) {
+  return (
+    <tr>
+      {visibleCols.includes('child_name') && (
+        <td className="adm-title-cell" title={enquiry.child_name}>
+          <strong>{enquiry.child_name || '—'}</strong>
+        </td>
+      )}
+      {visibleCols.includes('class_applying_for') && (
+        <td>
+          <span className="adm-badge adm-badge--class">
+            {enquiry.class_applying_for || '—'}
+          </span>
+        </td>
+      )}
+      {visibleCols.includes('parent_name') && (
+        <td>{enquiry.parent_name || '—'}</td>
+      )}
+      {visibleCols.includes('phone') && (
+        <td>
+          <div style={{display: 'flex', alignItems: 'center', gap: '0.4rem'}}>
+            <a href={`tel:${enquiry.phone}`} style={{color: 'inherit', textDecoration: 'none', fontWeight: 500}}>
+              {enquiry.phone || '—'}
+            </a>
+            {!enquiry.is_valid_phone && (
+              <span title="Invalid Indian mobile number" style={{color: '#b91c1c', cursor: 'help', fontSize: '0.85rem'}}>⚠️</span>
+            )}
+          </div>
+        </td>
+      )}
+      {visibleCols.includes('email') && (
+        <td>
+          <div style={{display: 'flex', alignItems: 'center', gap: '0.4rem'}}>
+            <a href={`mailto:${enquiry.email}`} style={{color: 'var(--color-navy)', textDecoration: 'none'}}>
+              {enquiry.email || '—'}
+            </a>
+            {!enquiry.is_valid_email && (
+              <span title="Invalid email address format" style={{color: '#b91c1c', cursor: 'help', fontSize: '0.85rem'}}>⚠️</span>
+            )}
+          </div>
+        </td>
+      )}
+      {visibleCols.includes('notes') && (
+        <td className="adm-desc-cell" title={enquiry.message || ''}>
+          {enquiry.message || '—'}
+        </td>
+      )}
+      {visibleCols.includes('created_at') && (
+        <td className="adm-date-cell">
+          <div style={{fontWeight: 500}}>{fmtDate(enquiry.created_at)}</div>
+        </td>
+      )}
+      {visibleCols.includes('status') && (
+        <td>
+          <EnquiryStatusBadges enquiry={enquiry} />
+        </td>
+      )}
+      <td>
+        <div className="adm-actions-cell">
+          <button
+            className="adm-btn adm-btn--icon adm-btn--del"
+            onClick={() => onDelete(enquiry)}
+            title="Delete enquiry"
+            aria-label={`Delete enquiry for ${enquiry.child_name}`}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          </button>
+        </div>
+      </td>
+    </tr>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Main Dashboard
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -1271,8 +1519,29 @@ export default function AdminDashboard() {
   const [eEditTarget, setEEditTarget]   = useState(null);
   const [eDelTarget, setEDelTarget]     = useState(null);
 
+  // Enquiries state
+  const [enquiries, setEnquiries]         = useState([]);
+  const [enqLoading, setEnqLoading]       = useState(false);
+  const [enqError, setEnqError]           = useState('');
+  const [enqSearch, setEnqSearch]         = useState('');
+  const [enqValidOnly, setEnqValidOnly]   = useState(true);
+  const [enqSortCol, setEnqSortCol]       = useState('created_at');
+  const [enqSortDir, setEnqSortDir]       = useState('desc');
+  const [enqColumns, setEnqColumns]       = useState(getInitialEnquiryColumns);
+  const [showColPicker, setShowColPicker] = useState(false);
+  const [enqDelTarget, setEnqDelTarget]   = useState(null);
+  const [enqCleanupOpen, setEnqCleanupOpen] = useState(false);
+
+  // Fees & Scholarships state
+  const [feesTotalCount, setFeesTotalCount] = useState(0);
+
+  // Newsletter Subscribers state
+  const [newsletterCount, setNewsletterCount] = useState(0);
+
   const debounceRef = useRef(null);
   const hDebounceRef = useRef(null);
+  const enqDebounceRef = useRef(null);
+  const colPickerRef   = useRef(null);
 
   // ── Fetch News ───────────────────────────────────────────────────
   const fetchArticles = useCallback(async (q = '') => {
@@ -1331,11 +1600,49 @@ export default function AdminDashboard() {
     }
   }, [logout, navigate]);
 
+  // ── Fetch Enquiries ─────────────────────────────────────────────
+  const fetchEnquiriesList = useCallback(async (searchVal = '', validOnlyVal = true, sortVal = 'created_at', dirVal = 'desc') => {
+    setEnqLoading(true);
+    setEnqError('');
+    try {
+      const params = {
+        valid_only: validOnlyVal,
+        sort_by: sortVal,
+        order: dirVal,
+      };
+      if (searchVal) params.search = searchVal;
+      const data = await getEnquiries(params, token);
+      setEnquiries(Array.isArray(data) ? data : []);
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        logout();
+        navigate('/admin/login');
+        return;
+      }
+      setEnqError('Failed to load admissions enquiries.');
+    } finally {
+      setEnqLoading(false);
+    }
+  }, [token, logout, navigate]);
+
   useEffect(() => {
     fetchArticles('');
     fetchEventsList();
     fetchHolidayList('');
-  }, [fetchArticles, fetchEventsList, fetchHolidayList]);
+    fetchEnquiriesList('', true, 'created_at', 'desc');
+  }, [fetchArticles, fetchEventsList, fetchHolidayList, fetchEnquiriesList]);
+
+  // Close column picker on outside click
+  useEffect(() => {
+    if (!showColPicker) return;
+    const handleClickOutside = (e) => {
+      if (colPickerRef.current && !colPickerRef.current.contains(e.target)) {
+        setShowColPicker(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showColPicker]);
 
   // ── Search Handlers ──────────────────────────────────────────────
   const handleSearch = (e) => {
@@ -1380,6 +1687,61 @@ export default function AdminDashboard() {
     if (hSortCol === col) setHSortDir(d => d === 'asc' ? 'desc' : 'asc');
     else { setHSortCol(col); setHSortDir('asc'); }
   };
+
+  // ── Enquiry Handlers ─────────────────────────────────────────────
+  const handleEnqSearch = (e) => {
+    const v = e.target.value;
+    setEnqSearch(v);
+    clearTimeout(enqDebounceRef.current);
+    enqDebounceRef.current = setTimeout(() => {
+      fetchEnquiriesList(v.trim(), enqValidOnly, enqSortCol, enqSortDir);
+    }, 350);
+  };
+
+  const handleValidOnlyChange = (val) => {
+    if (val === enqValidOnly) return;
+    setEnqValidOnly(val);
+    fetchEnquiriesList(enqSearch.trim(), val, enqSortCol, enqSortDir);
+  };
+
+  const toggleEnqSort = (col) => {
+    const nextDir = enqSortCol === col && enqSortDir === 'asc' ? 'desc' : 'asc';
+    setEnqSortCol(col);
+    setEnqSortDir(nextDir);
+    fetchEnquiriesList(enqSearch.trim(), enqValidOnly, col, nextDir);
+  };
+
+  const toggleColumn = (colId) => {
+    setEnqColumns(prev => {
+      let next;
+      if (prev.includes(colId)) {
+        if (prev.length <= 1) return prev;
+        next = prev.filter(c => c !== colId);
+      } else {
+        next = [...prev, colId];
+      }
+      try {
+        localStorage.setItem(ENQUIRY_STORAGE_KEY, JSON.stringify(next));
+      } catch (e) {}
+      return next;
+    });
+  };
+
+  const handleEnquiryDeleted = (id) => {
+    setEnquiries(p => p.filter(e => e.id !== id));
+    setEnqDelTarget(null);
+    toast('Enquiry deleted successfully.', 'success');
+  };
+
+  const handleEnquiriesCleaned = (result) => {
+    const count = result?.total_deleted ?? 0;
+    toast(`Cleanup complete: ${count} invalid/duplicate record${count === 1 ? '' : 's'} purged.`, 'success');
+    setEnqCleanupOpen(false);
+    fetchEnquiriesList(enqSearch.trim(), enqValidOnly, enqSortCol, enqSortDir);
+  };
+
+  const invalidEnqCount = enquiries.filter(e => !e.is_valid_phone || !e.is_valid_email).length;
+  const duplicateEnqCount = enquiries.filter(e => e.is_duplicate).length;
 
   const sortedHolidays = [...holidays].sort((a, b) => {
     let va = a[hSortCol], vb = b[hSortCol];
@@ -1512,6 +1874,10 @@ export default function AdminDashboard() {
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             Calendar
           </Link>
+          <Link to="/fees-scholarships" className="adm-topbar__view-site" target="_blank" rel="noopener noreferrer">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            Fees &amp; Scholarships
+          </Link>
           <button className="adm-topbar__logout" onClick={handleLogout} aria-label="Log out of admin panel">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
             Logout
@@ -1550,6 +1916,36 @@ export default function AdminDashboard() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             Holidays &amp; Vacations
             <span className="adm-tab-badge">{holidays.length}</span>
+          </button>
+
+          <button
+            type="button"
+            className={`adm-tab-btn ${activeTab === 'enquiries' ? 'active' : ''}`}
+            onClick={() => setActiveTab('enquiries')}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Admissions Enquiries
+            <span className="adm-tab-badge">{enquiries.length}</span>
+          </button>
+
+          <button
+            type="button"
+            className={`adm-tab-btn ${activeTab === 'fees' ? 'active' : ''}`}
+            onClick={() => setActiveTab('fees')}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            Fees &amp; Scholarships
+            <span className="adm-tab-badge">{feesTotalCount}</span>
+          </button>
+
+          <button
+            type="button"
+            className={`adm-tab-btn ${activeTab === 'newsletter' ? 'active' : ''}`}
+            onClick={() => setActiveTab('newsletter')}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Newsletter Subscribers
+            <span className="adm-tab-badge">{newsletterCount}</span>
           </button>
         </div>
       </div>
@@ -1885,6 +2281,209 @@ export default function AdminDashboard() {
           </>
         )}
 
+        {/* ========================================================= */}
+        {/* TAB 4: ADMISSIONS ENQUIRIES                               */}
+        {/* ========================================================= */}
+        {activeTab === 'enquiries' && (
+          <div className="adm-card">
+            <div className="adm-card__header" style={{flexWrap:'wrap', gap:'1rem'}}>
+              <div>
+                <h2 className="adm-card__title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  Admissions Enquiries
+                </h2>
+                <div style={{fontSize:'0.8rem', color:'#64748b', marginTop:'0.25rem'}}>
+                  Direct submissions from the public website enquiry form
+                </div>
+              </div>
+
+              <div className="adm-enquiry-toolbar">
+                <div className="adm-toggle-group" role="group" aria-label="Filter enquiries validity">
+                  <button
+                    type="button"
+                    className={`adm-toggle-btn ${enqValidOnly ? 'active' : ''}`}
+                    onClick={() => handleValidOnlyChange(true)}
+                  >
+                    Valid Only
+                  </button>
+                  <button
+                    type="button"
+                    className={`adm-toggle-btn ${!enqValidOnly ? 'active' : ''}`}
+                    onClick={() => handleValidOnlyChange(false)}
+                  >
+                    Show All
+                  </button>
+                </div>
+
+                <div className="adm-col-picker-container" ref={colPickerRef}>
+                  <button
+                    type="button"
+                    className="adm-btn adm-btn--ghost"
+                    onClick={() => setShowColPicker(p => !p)}
+                    aria-label="Toggle visible columns menu"
+                    aria-expanded={showColPicker}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    Columns ({enqColumns.length})
+                  </button>
+                  {showColPicker && (
+                    <div className="adm-col-picker-dropdown" role="menu">
+                      <div className="adm-col-picker-title">Display Columns</div>
+                      {ALL_ENQUIRY_COLUMNS.map(col => (
+                        <label key={col.id} className="adm-col-picker-label">
+                          <input
+                            type="checkbox"
+                            checked={enqColumns.includes(col.id)}
+                            onChange={() => toggleColumn(col.id)}
+                          />
+                          {col.label}
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <button
+                  type="button"
+                  className="adm-btn adm-btn--danger-cleanup"
+                  onClick={() => setEnqCleanupOpen(true)}
+                  title="Purge all invalid phone/email records and duplicate entries"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                  Clean Up Invalid &amp; Duplicates
+                </button>
+              </div>
+
+              <div className="adm-table-toolbar" style={{width:'100%', marginTop:'0.5rem'}}>
+                <div className="adm-search-wrap">
+                  <svg className="adm-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  <input
+                    type="search"
+                    className="adm-search-input"
+                    placeholder="Search by student, parent, email, phone, or class…"
+                    value={enqSearch}
+                    onChange={handleEnqSearch}
+                    aria-label="Search admissions enquiries"
+                  />
+                </div>
+                <span className="adm-table-count" aria-live="polite">
+                  {enqLoading ? '…' : `${enquiries.length} enquir${enquiries.length !== 1 ? 'ies' : 'y'}`}
+                </span>
+                <button
+                  className="adm-btn adm-btn--ghost"
+                  onClick={() => fetchEnquiriesList(enqSearch.trim(), enqValidOnly, enqSortCol, enqSortDir)}
+                  aria-label="Refresh enquiries"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                </button>
+              </div>
+            </div>
+
+            {enqError && (
+              <div className="adm-error-banner" style={{margin:'1rem 1.5rem',marginBottom:0}} role="alert">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                {enqError}
+              </div>
+            )}
+
+            <div className="adm-table-wrap">
+              <table className="adm-table" aria-label="Admissions enquiries table">
+                <thead>
+                  <tr>
+                    {enqColumns.includes('child_name') && (
+                      <th className={`sortable${enqSortCol === 'child_name' ? ' sorted' : ''}`} onClick={() => toggleEnqSort('child_name')} style={{minWidth:150}}>
+                        Child's Name <SortIcon dir={enqSortCol === 'child_name' ? enqSortDir : null} />
+                      </th>
+                    )}
+                    {enqColumns.includes('class_applying_for') && (
+                      <th className={`sortable${enqSortCol === 'class_applying_for' ? ' sorted' : ''}`} onClick={() => toggleEnqSort('class_applying_for')} style={{minWidth:110}}>
+                        Class <SortIcon dir={enqSortCol === 'class_applying_for' ? enqSortDir : null} />
+                      </th>
+                    )}
+                    {enqColumns.includes('parent_name') && (
+                      <th className={`sortable${enqSortCol === 'parent_name' ? ' sorted' : ''}`} onClick={() => toggleEnqSort('parent_name')} style={{minWidth:150}}>
+                        Parent's Name <SortIcon dir={enqSortCol === 'parent_name' ? enqSortDir : null} />
+                      </th>
+                    )}
+                    {enqColumns.includes('phone') && (
+                      <th className={`sortable${enqSortCol === 'phone' ? ' sorted' : ''}`} onClick={() => toggleEnqSort('phone')} style={{minWidth:140}}>
+                        Phone <SortIcon dir={enqSortCol === 'phone' ? enqSortDir : null} />
+                      </th>
+                    )}
+                    {enqColumns.includes('email') && (
+                      <th className={`sortable${enqSortCol === 'email' ? ' sorted' : ''}`} onClick={() => toggleEnqSort('email')} style={{minWidth:180}}>
+                        Email <SortIcon dir={enqSortCol === 'email' ? enqSortDir : null} />
+                      </th>
+                    )}
+                    {enqColumns.includes('notes') && (
+                      <th style={{minWidth:200}}>Notes / Message</th>
+                    )}
+                    {enqColumns.includes('created_at') && (
+                      <th className={`sortable${enqSortCol === 'created_at' ? ' sorted' : ''}`} onClick={() => toggleEnqSort('created_at')} style={{minWidth:140}}>
+                        Submitted <SortIcon dir={enqSortCol === 'created_at' ? enqSortDir : null} />
+                      </th>
+                    )}
+                    {enqColumns.includes('status') && (
+                      <th style={{minWidth:140}}>Status</th>
+                    )}
+                    <th style={{width:80, textAlign:'right'}}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {enqLoading && Array.from({length:5}).map((_, i) => (
+                    <tr key={i} className="adm-skeleton-row">
+                      {Array.from({length: enqColumns.length + 1}).map((__, j) => (
+                        <td key={j}><div className="adm-skeleton-block" style={{width: j === 0 ? '70%' : '50%'}} /></td>
+                      ))}
+                    </tr>
+                  ))}
+                  {!enqLoading && enquiries.length === 0 && (
+                    <tr>
+                      <td colSpan={enqColumns.length + 1}>
+                        <div className="adm-table-empty">
+                          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                          <br />
+                          {enqSearch ? `No enquiries matched "${enqSearch}"` : 'No enquiries found.'}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                  {!enqLoading && enquiries.map(item => (
+                    <EnquiryRow
+                      key={item.id}
+                      enquiry={item}
+                      visibleCols={enqColumns}
+                      onDelete={setEnqDelTarget}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================= */}
+        {/* TAB 5: FEES & SCHOLARSHIPS                                */}
+        {/* ========================================================= */}
+        {activeTab === 'fees' && (
+          <FeesAdminTab
+            token={token}
+            toast={toast}
+            onCountsUpdate={(fCount, sCount) => setFeesTotalCount(fCount + sCount)}
+          />
+        )}
+
+        {/* ========================================================= */}
+        {/* TAB 6: NEWSLETTER SUBSCRIBERS                             */}
+        {/* ========================================================= */}
+        {activeTab === 'newsletter' && (
+          <NewsletterAdminTab
+            token={token}
+            toast={toast}
+            onCountUpdate={(count) => setNewsletterCount(count)}
+          />
+        )}
+
       </div>
 
       {/* ── News Modals ────────────────────────────────────────────── */}
@@ -1941,6 +2540,26 @@ export default function AdminDashboard() {
           token={token}
           onDeleted={handleEventDeleted}
           onClose={() => setEDelTarget(null)}
+        />
+      )}
+
+      {/* ── Enquiry Modals ─────────────────────────────────────────── */}
+      {enqDelTarget && (
+        <DeleteEnquiryModal
+          enquiry={enqDelTarget}
+          token={token}
+          onDeleted={handleEnquiryDeleted}
+          onClose={() => setEnqDelTarget(null)}
+        />
+      )}
+
+      {enqCleanupOpen && (
+        <CleanupEnquiriesModal
+          token={token}
+          invalidCount={invalidEnqCount}
+          duplicateCount={duplicateEnqCount}
+          onCleaned={handleEnquiriesCleaned}
+          onClose={() => setEnqCleanupOpen(false)}
         />
       )}
 

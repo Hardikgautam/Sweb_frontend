@@ -64,21 +64,28 @@
   text-align: left;
 }
 
-/* ── Photo Grid: 3 cols × 2 rows on desktop ─────────────────────────────── */
+/* ── Photo Grid: magazine asymmetry — first card spans 2 rows ─────────────── */
 .school-life-section__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
   gap: var(--space-md);
+}
+
+/* First photo is taller — spans 2 rows for an offset magazine feel */
+.school-life-section__photo-card:first-child {
+  grid-row: span 2;
+  aspect-ratio: unset; /* let it fill both row heights naturally */
 }
 
 .school-life-section__photo-card {
   position: relative;
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  border-radius: 4px;
-  border: 1px solid rgba(199, 164, 107, 0.4);
+  border-radius: var(--card-radius);
+  border: 1px solid rgba(199, 164, 107, 0.3);
   background-color: var(--color-navy);
-  box-shadow: 0 4px 16px rgba(28, 43, 69, 0.08);
+  box-shadow: var(--card-shadow);
   transition: box-shadow var(--transition-mid), transform var(--transition-mid);
 }
 
@@ -107,9 +114,15 @@
     margin-bottom: var(--space-lg);
   }
 
+  /* On tablet/mobile, drop back to uniform 2-col grid — asymmetry only for desktop */
   .school-life-section__grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
+  }
+
+  .school-life-section__photo-card:first-child {
+    grid-row: span 1;
+    aspect-ratio: 1 / 1;
   }
 }
 

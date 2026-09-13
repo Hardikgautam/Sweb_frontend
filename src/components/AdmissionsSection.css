@@ -77,7 +77,7 @@
 .admission-step-card {
   background-color: var(--color-card-bg);
   border-top: var(--card-border-top);
-  border-radius: 4px;
+  border-radius: var(--card-radius);
   padding: var(--space-lg) var(--space-md) var(--space-md);
   box-shadow: var(--card-shadow);
   display: flex;
@@ -120,7 +120,7 @@
 .admissions-section__callout {
   background-color: #E2DDD1;   /* light tan */
   border-left: 5px solid var(--color-maroon);
-  border-radius: 4px;
+  border-radius: var(--card-radius);
   padding: 1.25rem 1.75rem;
   display: flex;
   align-items: center;
@@ -162,6 +162,31 @@
 
 .admissions-section__callout-action {
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.admissions-section__fees-link {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--color-navy);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--border-radius-sm, 4px);
+  border: 1px solid rgba(28, 43, 69, 0.2);
+  background: rgba(255, 255, 255, 0.6);
+  transition: all var(--transition-fast);
+}
+
+.admissions-section__fees-link:hover {
+  color: #ffffff;
+  background: var(--color-navy);
+  border-color: var(--color-navy);
 }
 
 /* ── Responsive ─────────────────────────────────────────────────────────── */

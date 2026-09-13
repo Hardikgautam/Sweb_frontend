@@ -17,7 +17,7 @@ export const heroContent = {
   ],
 
   // Body paragraph below the headline
-  body: "Located in Panipat, Haryana, XYZ Public School is a CBSE-affiliated institution nurturing children from Nursery through Class 10. We combine academic rigour with a warm, inclusive environment — giving every child the confidence to flourish.",
+  body: "We've been part of Panipat since 1998. Our 1,200 students come from across the district — some travel 30 km each way. What keeps families choosing us is straightforward: small classes, teachers who stay long enough to actually know your child, and results that speak for themselves.",
 
   // Primary CTA button (solid maroon)
   ctaPrimary: {
@@ -40,10 +40,10 @@ export const heroContent = {
 
   // Circular badge overlapping the hero image
   badge: {
-    icon: "🌱",
+    icon: "🏫",
     lines: [
-      "NURTURING",
-      "TOMORROW'S LEADERS",
+      "CBSE",
+      "EST. 1998",
     ],
   },
 };

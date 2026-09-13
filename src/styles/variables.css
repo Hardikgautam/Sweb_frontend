@@ -2,7 +2,7 @@
    DESIGN TOKENS — define once here, import everywhere else
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
 
 :root {
   /* --- Colors --- */
@@ -10,6 +10,8 @@
   --color-navy:       #1C2B45;   /* dark navy — footer, stat banner, headings */
   --color-maroon:     #7A2333;   /* primary buttons, accents, CTA */
   --color-gold:       #C7A46B;   /* section numbering, small accents, stat numbers */
+  --color-sage:       #4A6741;   /* muted olive — school life section, eco accents */
+  --color-slate:      #3D5166;   /* mid-tone navy — stat banner variation, pull-quotes */
   --color-white:      #FFFFFF;
   --color-text-dark:  #1C2B45;
   --color-text-muted: #5B6472;
@@ -21,8 +23,18 @@
   --card-shadow-hover:0 8px 32px rgba(28, 43, 69, 0.15);
 
   /* --- Typography --- */
-  --font-display: 'Playfair Display', Georgia, serif;   /* headings */
-  --font-body:    'Inter', system-ui, sans-serif;       /* body, nav, buttons */
+  --font-display: 'Lora', Georgia, serif;          /* headings — calligraphic serif with character */
+  --font-body:    'DM Sans', system-ui, sans-serif; /* body, nav, buttons — clean with subtle quirks */
+
+  /* Display heading refinements */
+  --heading-tracking-display: -0.025em;  /* tight — for large hero/section titles */
+  --heading-tracking-mid:     -0.01em;   /* moderate — for card titles */
+  --heading-lh-display:       1.12;      /* tighter line-height for big display text */
+  --heading-lh-mid:           1.22;      /* mid-level headings */
+
+  /* Body refinements */
+  --body-lh-long:   1.72;  /* longer editorial paragraphs */
+  --body-lh-short:  1.55;  /* UI labels, captions */
 
   --fs-xs:   0.75rem;   /* 12px */
   --fs-sm:   0.875rem;  /* 14px */
@@ -45,8 +57,13 @@
   --max-width: 1200px;
   --section-padding: var(--space-2xl) var(--space-sm);
 
+  /* --- Radii — intentionally varied, not uniform --- */
+  --btn-radius:  5px;   /* buttons: sharp/authoritative */
+  --card-radius: 10px;  /* cards: slightly softer */
+  --tag-radius:  3px;   /* kicker badges/tags: nearly square, editorial */
+  --img-radius:  0px;   /* image frames: square — avoids glossy app-template look */
+
   /* --- Buttons --- */
-  --btn-radius: 5px;
   --btn-padding: 0.65rem 1.6rem;
   --btn-font-size: var(--fs-sm);
 

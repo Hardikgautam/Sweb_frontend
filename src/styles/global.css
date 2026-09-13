@@ -18,7 +18,7 @@ body {
   font-family: var(--font-body);
   background-color: var(--color-bg);
   color: var(--color-text-dark);
-  line-height: 1.65;
+  line-height: var(--body-lh-long);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -26,7 +26,8 @@ body {
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   color: var(--color-text-dark);
-  line-height: 1.2;
+  line-height: var(--heading-lh-display);
+  letter-spacing: var(--heading-tracking-display);
 }
 
 a {

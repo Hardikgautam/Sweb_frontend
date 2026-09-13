@@ -11,29 +11,29 @@ export const admissionsContent = {
     "admitted student.",
   ],
   description:
-    "We keep our admissions transparent, supportive, and stress-free. Every application is reviewed by experienced educators, and our early-years process focuses on readiness and comfort rather than high-pressure interviews.",
+    "There's no entrance exam for Nursery through Class 5. We'll ask to meet your child — a short, relaxed session so we can understand where they are, not test them. The paperwork is minimal. Our admissions desk is reachable by phone every weekday.",
 
   // 4 steps in the admission journey
   steps: [
     {
       stepNumber: "01",
       title: "Enquire & Visit",
-      desc: "Browse our curriculum, schedule a guided campus tour, and meet our admissions desk to see our classrooms in action.",
+      desc: "Call us or walk in. Our admissions desk is open Monday–Saturday, 9 AM–3 PM. Campus tours run every Tuesday and Friday morning — no appointment needed.",
     },
     {
       stepNumber: "02",
       title: "Submit Application",
-      desc: "Fill out a straightforward enquiry form along with the child's birth certificate and previous school grade cards (if applicable).",
+      desc: "The form takes about 10 minutes. You'll need a copy of the birth certificate and, if transferring from another school, the last two years' report cards.",
     },
     {
       stepNumber: "03",
       title: "Interaction / Assessment",
-      desc: "A warm, friendly interaction for younger learners to assess school readiness, accompanied by quick document verification.",
+      desc: "For Class 6 and above, there's a short written interaction. For younger children, it's a chat — 20 minutes, no pressure. We're checking if the school is a good fit for them, not grading them.",
     },
     {
       stepNumber: "04",
       title: "Admission Confirmation",
-      desc: "Formal admission offers are issued directly to parents along with a clear fee schedule, welcome pack, and orientation dates.",
+      desc: "You'll hear back within a week. The offer letter includes the fee schedule, your child's section, and orientation dates. We don't issue conditional offers.",
     },
   ],
 

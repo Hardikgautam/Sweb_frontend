@@ -12,7 +12,7 @@ export const schoolLifeContent = {
     "morning bell to the last bus.",
   ],
   description:
-    "Beyond textbooks and assessments, life at Greenwood is brimming with spirited sports, art studios, science investigations, music rehearsals, and joyful friendships forged across every courtyard.",
+    "Monday mornings there's football practice before the bell. Wednesday afternoons, the art studio smells like acrylic paint for the rest of the day. The science fair runs three weeks and takes over an entire corridor. This is what school actually looks like here.",
 
   // 6 photo grid items (3 columns × 2 rows on desktop)
   images: [

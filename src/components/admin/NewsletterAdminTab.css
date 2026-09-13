@@ -1,0 +1,87 @@
+/* ============================================================
+   components/admin/NewsletterAdminTab.css — Newsletter Admin Styles
+   ============================================================ */
+
+.adm-newsletter-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.adm-newsletter-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.adm-subscribers-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #15803d;
+  background-color: #dcfce7;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+}
+
+.adm-sub-email-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.adm-sub-email-icon {
+  width: 16px;
+  height: 16px;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.adm-sub-email-text {
+  font-weight: 600;
+  color: #0f1d38;
+}
+
+.adm-copy-email-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid #cbd5e1;
+  background-color: #f8fafc;
+  color: #475569;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all 0.15s ease;
+}
+
+.adm-copy-email-btn:hover {
+  opacity: 1;
+  background-color: #e2e8f0;
+  color: #0f1d38;
+}
+
+.adm-sort-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+}
+
+.adm-export-csv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+@media (max-width: 768px) {
+  .adm-newsletter-title-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+}

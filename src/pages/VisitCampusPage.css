@@ -1,0 +1,255 @@
+/* ============================================================
+   pages/VisitCampusPage.css — Visit Campus Page Styles
+   ============================================================ */
+
+.visit-page {
+  background-color: var(--color-light-bg, #f8f9fa);
+  min-height: 100vh;
+}
+
+/* ── Hero Banner ────────────────────────────────────────────── */
+.visit-page-hero {
+  background: linear-gradient(135deg, #0a1426 0%, #152542 60%, #1b3052 100%);
+  color: #ffffff;
+  padding: 3.5rem 0 3rem;
+  position: relative;
+  border-bottom: 3px solid rgba(199, 164, 107, 0.4);
+}
+
+.visit-page-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(199, 164, 107, 0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.visit-page-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1.5rem;
+}
+
+.visit-page-breadcrumb a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.visit-page-breadcrumb a:hover {
+  color: var(--color-gold, #c7a46b);
+}
+
+.visit-page-breadcrumb__sep {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.visit-page-breadcrumb__current {
+  color: var(--color-gold, #c7a46b);
+  font-weight: 500;
+}
+
+.visit-page-hero__content {
+  max-width: 820px;
+}
+
+.visit-page-hero__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gold, #c7a46b);
+  margin-bottom: 0.85rem;
+}
+
+.visit-page-hero__kicker-line {
+  width: 28px;
+  height: 2px;
+  background-color: var(--color-gold, #c7a46b);
+  display: inline-block;
+}
+
+.visit-page-hero__title {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0 0 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.visit-page-hero__subtitle {
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+  max-width: 720px;
+}
+
+/* ── Transit & Commute Section ──────────────────────────────── */
+.visit-transit-section {
+  padding: 4rem 0;
+  background-color: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.visit-transit__header {
+  margin-bottom: 2.5rem;
+  max-width: 680px;
+}
+
+.visit-transit__tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #936e38;
+  display: inline-block;
+  margin-bottom: 0.35rem;
+}
+
+.visit-transit__title {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(1.75rem, 3vw, 2.3rem);
+  font-weight: 800;
+  color: #0f1d38;
+  margin: 0 0 0.5rem;
+}
+
+.visit-transit__desc {
+  font-size: 0.95rem;
+  color: #556275;
+  margin: 0;
+}
+
+.visit-transit__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.75rem;
+}
+
+.visit-transit-card {
+  background: #fdfbf7;
+  border: 1px solid #f0e6d6;
+  border-radius: 10px;
+  padding: 1.65rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.visit-transit-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: rgba(199, 164, 107, 0.16);
+  color: #936e38;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.visit-transit-card h3 {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #0f1d38;
+  margin: 0 0 0.5rem;
+}
+
+.visit-transit-card p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #556275;
+  margin: 0;
+}
+
+/* ── Bottom Tour Booking CTA ─────────────────────────────────── */
+.visit-bottom-cta {
+  background: #0a1426;
+  padding: 4rem 0;
+  color: #ffffff;
+}
+
+.visit-bottom-cta__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2.25rem;
+  flex-wrap: wrap;
+}
+
+.visit-bottom-cta__content {
+  max-width: 650px;
+}
+
+.visit-bottom-cta__content h2 {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 0.75rem;
+}
+
+.visit-bottom-cta__content p {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+}
+
+.visit-bottom-cta__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.visit-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.65rem;
+  border-radius: 6px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+}
+
+.visit-cta-btn--gold {
+  background: var(--color-gold, #c7a46b);
+  color: #0f1d38;
+}
+
+.visit-cta-btn--gold:hover {
+  background: #d6b47c;
+  color: #000000;
+}
+
+.visit-cta-btn--outline {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+
+.visit-cta-btn--outline:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .visit-bottom-cta__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
