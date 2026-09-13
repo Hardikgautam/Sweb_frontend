@@ -1,10 +1,11 @@
 // src/api/client.js
 // Centralized Axios client instance for all API calls.
+// Set VITE_API_BASE_URL in .env (dev) or .env.production (prod) to point at the backend.
 
 import axios from 'axios';
 
 const client = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api',
   timeout: 15000,
   headers: {
     'Content-Type': 'application/json',
