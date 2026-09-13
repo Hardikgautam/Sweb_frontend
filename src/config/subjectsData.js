@@ -1,6 +1,7 @@
 // src/config/subjectsData.js
 // Complete content for all 6 Subject Detail Pages.
 // Contains hero video, curriculum breakdown, gallery photos, and closing CTA content.
+import { publicUrl } from '../utils/publicUrl';
 
 export const subjectsData = {
   languages: {
@@ -8,9 +9,9 @@ export const subjectsData = {
     title: "Languages & Literature",
     kicker: "CURRICULUM · LANGUAGES",
     levels: "NURSERY – CLASS 10",
-    video: "/videos/languages.mp4",
-    poster: "/images/subjects/languages-hero.jpg",
-    fallbackImage: "/images/subjects/languages-hero.jpg",
+    video: publicUrl('videos/languages.mp4'),
+    poster: publicUrl('images/subjects/languages-hero.jpg'),
+    fallbackImage: publicUrl('images/subjects/languages-hero.jpg'),
     intro:
       "Fostering articulate expression, rich literary appreciation, and multi-lingual mastery across English, Hindi, and Sanskrit through interactive phonics, classical literature, creative prose, and competitive debate.",
     stats: [
@@ -66,12 +67,12 @@ export const subjectsData = {
     ],
     highlights: [
       {
-        src: "/images/subjects/languages-1.jpg",
+        src: publicUrl('images/subjects/languages-1.jpg'),
         title: "Scholarly Library Reading Circles",
         desc: "Students engaged in collaborative literary analysis and reading circles in our school library.",
       },
       {
-        src: "/images/subjects/languages-2.jpg",
+        src: publicUrl('images/subjects/languages-2.jpg'),
         title: "Podium Debates & Public Rhetoric",
         desc: "Young orators developing poise and persuasive debate delivery at inter-house championships.",
       },
@@ -93,9 +94,9 @@ export const subjectsData = {
     title: "Mathematics & Analytical Logic",
     kicker: "CURRICULUM · MATHEMATICS",
     levels: "KG – CLASS 10",
-    video: "/videos/mathematics.mp4",
-    poster: "/images/subjects/math-hero.jpg",
-    fallbackImage: "/images/subjects/math-hero.jpg",
+    video: publicUrl('videos/mathematics.mp4'),
+    poster: publicUrl('images/subjects/math-hero.jpg'),
+    fallbackImage: publicUrl('images/subjects/math-hero.jpg'),
     intro:
       "Developing fearless, creative mathematical problem solvers through concrete-to-abstract learning, interactive math lab discovery, mental calculation drills, and rigorous CBSE conceptual mastery.",
     stats: [
@@ -151,12 +152,12 @@ export const subjectsData = {
     ],
     highlights: [
       {
-        src: "/images/subjects/math-1.jpg",
+        src: publicUrl('images/subjects/math-1.jpg'),
         title: "Mathematics Laboratory Modeling",
         desc: "Hands-on polyhedral models and 3D geometric tools turning abstract theory into tangible insight.",
       },
       {
-        src: "/images/subjects/math-2.jpg",
+        src: publicUrl('images/subjects/math-2.jpg'),
         title: "Interactive Proofs & Blackboard Calculations",
         desc: "Students collaborating on step-by-step trigonometric proofs and theorem derivations.",
       },
@@ -178,9 +179,9 @@ export const subjectsData = {
     title: "Science & Experimental Inquiry",
     kicker: "CURRICULUM · SCIENCE",
     levels: "CLASSES 1 – 10",
-    video: "/videos/science.mp4",
-    poster: "/images/subjects/science-hero.jpg",
-    fallbackImage: "/images/subjects/science-hero.jpg",
+    video: publicUrl('videos/science.mp4'),
+    poster: publicUrl('images/subjects/science-hero.jpg'),
+    fallbackImage: publicUrl('images/subjects/science-hero.jpg'),
     intro:
       "Igniting lifelong scientific curiosity through observational discovery in nature, guided scientific method, and hands-on laboratory experimentation across Physics, Chemistry, and Biology.",
     stats: [
@@ -226,12 +227,12 @@ export const subjectsData = {
     ],
     highlights: [
       {
-        src: "/images/subjects/science-1.jpg",
+        src: publicUrl('images/subjects/science-1.jpg'),
         title: "Chemistry Titration & Reaction Trials",
         desc: "Middle and senior students performing safe chemical reactions and quantitative solution analysis.",
       },
       {
-        src: "/images/subjects/science-2.jpg",
+        src: publicUrl('images/subjects/science-2.jpg'),
         title: "Compound Optical Microscopy",
         desc: "Microscopic observation and botanical specimen analysis under high-magnification optical lenses.",
       },
@@ -253,9 +254,9 @@ export const subjectsData = {
     title: "Social Studies & Global Perspectives",
     kicker: "CURRICULUM · SOCIAL STUDIES",
     levels: "CLASSES 3 – 10",
-    video: "/videos/social_studies.mp4",
-    poster: "/images/subjects/social-hero.jpg",
-    fallbackImage: "/images/subjects/social-hero.jpg",
+    video: publicUrl('videos/social_studies.mp4'),
+    poster: publicUrl('images/subjects/social-hero.jpg'),
+    fallbackImage: publicUrl('images/subjects/social-hero.jpg'),
     intro:
       "Developing empathetic, responsible global citizens through immersive Indian and world history, geographical analysis, democratic political institutions, and socio-economic understanding.",
     stats: [
@@ -301,12 +302,12 @@ export const subjectsData = {
     ],
     highlights: [
       {
-        src: "/images/subjects/social-1.jpg",
+        src: publicUrl('images/subjects/social-1.jpg'),
         title: "Geographical Mapping & Terrestrial Globes",
         desc: "Interactive topographical relief analysis and cartographic projects in our humanities lab.",
       },
       {
-        src: "/images/subjects/social-2.jpg",
+        src: publicUrl('images/subjects/social-2.jpg'),
         title: "Parliamentary Simulations & History Displays",
         desc: "Student-led historical exhibitions, heritage research presentations, and mock parliamentary debates.",
       },
@@ -328,9 +329,9 @@ export const subjectsData = {
     title: "Computer Science & Digital Innovation",
     kicker: "CURRICULUM · COMPUTER SCIENCE",
     levels: "CLASSES 1 – 10",
-    video: "/videos/computer_science.mp4",
-    poster: "/images/subjects/cs-hero.jpg",
-    fallbackImage: "/images/subjects/cs-hero.jpg",
+    video: publicUrl('videos/computer_science.mp4'),
+    poster: publicUrl('images/subjects/cs-hero.jpg'),
+    fallbackImage: publicUrl('images/subjects/cs-hero.jpg'),
     intro:
       "Empowering students with 21st-century digital literacy, computational thinking, algorithmic logic, and programming fundamentals from visual block coding to Python and Artificial Intelligence.",
     stats: [
@@ -386,12 +387,12 @@ export const subjectsData = {
     ],
     highlights: [
       {
-        src: "/images/subjects/cs-1.jpg",
+        src: publicUrl('images/subjects/cs-1.jpg'),
         title: "Interactive Coding Terminals",
         desc: "Students programming Python scripts and web applications in our contemporary computer lab.",
       },
       {
-        src: "/images/subjects/cs-2.jpg",
+        src: publicUrl('images/subjects/cs-2.jpg'),
         title: "Robotics & Hardware Interfacing",
         desc: "Students building and coding robotic kits, micro-controller boards, and autonomous sensors.",
       },
@@ -413,9 +414,9 @@ export const subjectsData = {
     title: "Arts, Music & Physical Education",
     kicker: "CURRICULUM · ARTS, MUSIC & SPORTS",
     levels: "NURSERY – CLASS 10",
-    video: "/videos/arts_sports.mp4",
-    poster: "/images/subjects/arts-hero.jpg",
-    fallbackImage: "/images/subjects/arts-hero.jpg",
+    video: publicUrl('videos/arts_sports.mp4'),
+    poster: publicUrl('images/subjects/arts-hero.jpg'),
+    fallbackImage: publicUrl('images/subjects/arts-hero.jpg'),
     intro:
       "Nurturing creative self-expression, acoustic musicality, physical vitality, and teamwork through structured visual arts, performing arts, and comprehensive athletics.",
     stats: [
@@ -472,12 +473,12 @@ export const subjectsData = {
     ],
     highlights: [
       {
-        src: "/images/subjects/arts-1.jpg",
+        src: publicUrl('images/subjects/arts-1.jpg'),
         title: "Visual Arts Studio & Painting",
         desc: "Students practicing fine art techniques, color harmony, and canvas painting in our sunlit studio.",
       },
       {
-        src: "/images/subjects/arts-2.jpg",
+        src: publicUrl('images/subjects/arts-2.jpg'),
         title: "Track Athletics & Field Sports",
         desc: "Students training and competing on our athletic sprint tracks and lush outdoor sports complex.",
       },

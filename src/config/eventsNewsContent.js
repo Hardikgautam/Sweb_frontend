@@ -1,4 +1,5 @@
 // src/config/eventsNewsContent.js
+import { publicUrl } from '../utils/publicUrl';
 // ─────────────────────────────────────────────────────────────────────────────
 // EDIT THIS FILE to update Section 07 (Upcoming Events) and Section 08 (Latest News).
 // ─────────────────────────────────────────────────────────────────────────────
@@ -58,7 +59,7 @@ export const eventsNewsContent = {
     // One featured news card on top
     featured: {
       id: "stem-olympiad",
-      image: "/images/image13.jpg",
+      image: publicUrl('images/image13.jpg'),
       alt: "Middle school students presenting science model",
       tag: "ACADEMICS",
       date: "October 3, 2026",
@@ -72,7 +73,7 @@ export const eventsNewsContent = {
     smaller: [
       {
         id: "football-cup",
-        image: "/images/image14.jpg",
+        image: publicUrl('images/image14.jpg'),
         alt: "Under-14 football team celebrating championship victory",
         tag: "SPORTS",
         date: "September 28, 2026",
@@ -83,7 +84,7 @@ export const eventsNewsContent = {
       },
       {
         id: "art-exhibit",
-        image: "/images/image15.jpg",
+        image: publicUrl('images/image15.jpg'),
         alt: "Student art and painting exhibition",
         tag: "CAMPUS LIFE",
         date: "September 20, 2026",

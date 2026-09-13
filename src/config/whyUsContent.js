@@ -1,11 +1,12 @@
 // src/config/whyUsContent.js
+import { publicUrl } from '../utils/publicUrl';
 // ─────────────────────────────────────────────────────────────────────────────
 // EDIT THIS FILE to update Section 02 ("Why Us" / "Why Our School") content.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const whyUsContent = {
   // Left column image & floating stat badge
-  image: "/images/image2.jpg",
+  image: publicUrl('images/image2.jpg'),
   imageAlt: "Students reading together in the school library",
   statCard: {
     number: "20,000+",

@@ -7,6 +7,7 @@
 
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { openEnquiryModal } from '../api/enquiries';
+import { publicUrl } from '../utils/publicUrl';
 import './ClassesPage.css';
 
 const STAGES_DATA = {
@@ -16,7 +17,7 @@ const STAGES_DATA = {
     badge: 'FOUNDATIONAL & PRIMARY',
     title: 'Classes 1–5 (Primary Wing)',
     subtitle: 'Nurturing curiosity, foundational literacy, and joyful experiential discovery.',
-    heroImage: '/images/image2.jpg',
+    heroImage: publicUrl('images/image2.jpg'),
     defaultEbookClass: 'Class 1',
     stats: [
       { number: '15:1', label: 'Student-Teacher Ratio' },
@@ -58,7 +59,7 @@ const STAGES_DATA = {
     badge: 'MIDDLE SCHOOL WING',
     title: 'Classes 6–8 (Middle Wing)',
     subtitle: 'Cultivating analytical reasoning, laboratory exploration, and multidisciplinary skills.',
-    heroImage: '/images/image5.jpg',
+    heroImage: publicUrl('images/image5.jpg'),
     defaultEbookClass: 'Class 6',
     stats: [
       { number: '3', label: 'Dedicated Science Labs' },
@@ -101,7 +102,7 @@ const STAGES_DATA = {
     badge: 'SECONDARY SCHOOL WING',
     title: 'Classes 9–10 (Secondary Wing)',
     subtitle: 'CBSE board exam rigor, advanced experimentation, and visionary leadership.',
-    heroImage: '/images/subjects/math-hero.jpg',
+    heroImage: publicUrl('images/subjects/math-hero.jpg'),
     defaultEbookClass: 'Class 10',
     stats: [
       { number: '100%', label: 'CBSE Board Pass Rate' },

@@ -1,4 +1,5 @@
 // src/config/heroContent.js
+import { publicUrl } from '../utils/publicUrl';
 // ─────────────────────────────────────────────────────────────────────────────
 // EDIT THIS FILE to update all Hero section text and image paths.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -34,7 +35,7 @@ export const heroContent = {
   statsLine: "Ranked #1 school in the city · 15:1 student–teacher ratio · 3,200+ students",
 
   // Hero image — place your photo at this path
-  image:    "/images/image1.jpg",
+  image:    publicUrl('images/image1.jpg'),
   imageAlt: "Students walking across the XYZ Public School campus",
 
   // Circular badge overlapping the hero image

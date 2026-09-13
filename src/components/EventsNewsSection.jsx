@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { eventsNewsContent } from '../config/eventsNewsContent';
 import { getEvents } from '../api/events';
 import { getNews } from '../api/news';
+import { publicUrl } from '../utils/publicUrl';
 import './EventsNewsSection.css';
 
 function formatEventDate(dateStr) {
@@ -62,7 +63,7 @@ export default function EventsNewsSection() {
         if (newsRes.status === 'fulfilled' && newsRes.value && newsRes.value.length > 0) {
           const formatted = newsRes.value.map((item) => ({
             id: item.id,
-            image: item.image_url || '/images/image13.jpg',
+            image: item.image_url || publicUrl('images/image13.jpg'),
             alt: item.headline || item.title || 'News',
             tag: item.category || (item.is_pinned ? 'PINNED' : 'NEWS'),
             date: formatNewsDate(item.published_date || item.created_at?.split('T')[0]),

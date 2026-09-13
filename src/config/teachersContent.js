@@ -1,4 +1,5 @@
 // src/config/teachersContent.js
+import { publicUrl } from '../utils/publicUrl';
 // ─────────────────────────────────────────────────────────────────────────────
 // EDIT THIS FILE to update Section 06 ("Our Teachers") copy and teacher roster.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -19,28 +20,28 @@ export const teachersContent = {
       id: "sunita-sharma",
       name: "Mrs. Sunita Sharma",
       role: "MATHEMATICS, CLASSES 6–10",
-      photo: "/images/image9.jpg",
+      photo: publicUrl('images/image9.jpg'),
       bio: "14 years guiding middle and senior school mathematics. Specialises in demystifying algebra and building confident problem-solvers.",
     },
     {
       id: "rajesh-nair",
       name: "Mr. Rajesh Nair",
       role: "PRIMARY HOMEROOM, CLASS 3",
-      photo: "/images/image10.jpg",
+      photo: publicUrl('images/image10.jpg'),
       bio: "Early years literacy specialist who believes every child thrives when given curiosity-driven tasks, storytelling, and patient mentorship.",
     },
     {
       id: "ananya-sen",
       name: "Mrs. Ananya Sen",
       role: "SCIENCE & COMPUTER LAB",
-      photo: "/images/image11.jpg",
+      photo: publicUrl('images/image11.jpg'),
       bio: "Inquiry-based science educator leading hands-on lab experiments, junior robotics, and annual eco-science club investigations.",
     },
     {
       id: "vikram-rathore",
       name: "Coach Vikram Rathore",
       role: "PHYSICAL EDUCATION & SPORTS",
-      photo: "/images/image12.jpg",
+      photo: publicUrl('images/image12.jpg'),
       bio: "Certified athletics and football coach dedicated to building lifelong physical fitness, sportsmanship, and team spirit.",
     },
   ],

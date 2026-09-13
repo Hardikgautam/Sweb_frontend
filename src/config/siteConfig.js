@@ -1,4 +1,5 @@
 // src/config/siteConfig.js
+import { publicUrl } from '../utils/publicUrl';
 // ─────────────────────────────────────────────────────────────────────────────
 // EDIT THIS FILE to update the school's identity, contact, social handles,
 // and footer columns across the entire website.
@@ -15,8 +16,8 @@ export const siteConfig = {
   city:            "Panipat",
 
   // Logo paths (relative to /public)
-  logo:            "/images/logo.png",
-  logoWhite:       "/images/logo-white.png",
+  logo:            publicUrl('images/logo.png'),
+  logoWhite:       publicUrl('images/logo-white.png'),
 
   // Contact
   phone:    "+91 XXXXXXXXXX",           // TODO: replace with real phone number

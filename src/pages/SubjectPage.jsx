@@ -6,6 +6,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { openEnquiryModal } from '../api/enquiries';
+import { publicUrl } from '../utils/publicUrl';
 import './SubjectPage.css';
 
 export default function SubjectPage({ data }) {
@@ -14,7 +15,7 @@ export default function SubjectPage({ data }) {
   const [videoPlaying, setVideoPlaying] = useState(false);
 
   const { title, kicker, levels, video, poster, fallbackImage, intro, stats, gradeBands, highlights, cta } = data;
-  const heroImgSrc = poster || fallbackImage || '/images/image1.jpg';
+  const heroImgSrc = poster || fallbackImage || publicUrl('images/image1.jpg');
 
   // Ensure autoplay works cross-browser and resumes after tab switch
   useEffect(() => {
