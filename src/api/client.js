@@ -11,9 +11,15 @@ console.log('API_BASE_URL resolved to:', API_BASE_URL);
 const client = axios.create({
   baseURL: API_BASE_URL,
   timeout: 15000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+});
+
+// Request interceptor: Ensure FormData requests never have Content-Type: application/json
+// so Axios does not serialize FormData to JSON and the browser sets multipart/form-data boundary
+client.interceptors.request.use((config) => {
+  if (typeof FormData !== 'undefined' && config.data instanceof FormData) {
+    delete config.headers['Content-Type'];
+  }
+  return config;
 });
 
 // Response interceptor to unwrap data and handle network errors
