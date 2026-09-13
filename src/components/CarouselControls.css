@@ -1,0 +1,78 @@
+/* src/components/CarouselControls.css
+   Interactive dot indicators and navigation arrows for mobile/tablet horizontal swipeable carousels.
+   Completely hidden on desktop (> 768px). */
+
+.carousel-controls {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding: 0.25rem 0;
+  }
+
+  .carousel-controls__btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 1.5px solid rgba(199, 164, 107, 0.45);
+    color: var(--color-navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(28, 43, 69, 0.08);
+    transition: all var(--transition-fast);
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .carousel-controls__btn:hover:not(:disabled),
+  .carousel-controls__btn:active:not(:disabled) {
+    background-color: var(--color-navy);
+    color: var(--color-gold);
+    border-color: var(--color-navy);
+    transform: scale(1.06);
+  }
+
+  .carousel-controls__btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    box-shadow: none;
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .carousel-controls__dots {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .carousel-controls__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(28, 43, 69, 0.22);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .carousel-controls__dot:hover {
+    background-color: rgba(122, 35, 51, 0.55);
+  }
+
+  .carousel-controls__dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background-color: var(--color-maroon);
+    box-shadow: 0 1px 5px rgba(122, 35, 51, 0.35);
+  }
+}

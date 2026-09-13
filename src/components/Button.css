@@ -1,0 +1,64 @@
+/* components/Button.css */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: var(--btn-font-size);
+  font-weight: 600;
+  padding: var(--btn-padding);
+  min-height: 44px;            /* WCAG tap-target minimum */
+  border-radius: var(--btn-radius);
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast),
+              border-color var(--transition-fast),
+              transform var(--transition-fast);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Primary: solid maroon */
+.btn--primary {
+  background-color: var(--color-maroon);
+  color: var(--color-white);
+  border-color: var(--color-maroon);
+}
+
+.btn--primary:hover {
+  background-color: #621c29;
+  border-color: #621c29;
+}
+
+/* Secondary: outlined navy */
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-navy);
+  border-color: var(--color-navy);
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+}
+
+/* Secondary maroon variant */
+.btn--secondary-maroon {
+  background-color: transparent;
+  color: var(--color-maroon);
+  border-color: var(--color-maroon);
+}
+
+.btn--secondary-maroon:hover {
+  background-color: var(--color-maroon);
+  color: var(--color-white);
+}

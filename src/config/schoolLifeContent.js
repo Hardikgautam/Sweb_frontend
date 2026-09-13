@@ -1,0 +1,43 @@
+// src/config/schoolLifeContent.js
+// ─────────────────────────────────────────────────────────────────────────────
+// EDIT THIS FILE to update Section 04 ("School Life") text and photo grid paths.
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const schoolLifeContent = {
+  kickerNumber: "04",
+  kickerLabel: "SCHOOL LIFE",
+  headlineLines: [
+    "Life on campus, from the",
+    "morning bell to the last bus.",
+  ],
+  description:
+    "Beyond textbooks and assessments, life at Greenwood is brimming with spirited sports, art studios, science investigations, music rehearsals, and joyful friendships forged across every courtyard.",
+
+  // 6 photo grid items (3 columns × 2 rows on desktop)
+  images: [
+    {
+      src: "/images/image3.jpg",
+      alt: "Students playing sports on the campus ground",
+    },
+    {
+      src: "/images/image4.jpg",
+      alt: "Students painting in the art studio",
+    },
+    {
+      src: "/images/image5.jpg",
+      alt: "Science laboratory practical session",
+    },
+    {
+      src: "/images/image6.jpg",
+      alt: "Music class with instruments and instructor",
+    },
+    {
+      src: "/images/image7.jpg",
+      alt: "Students walking across campus gardens",
+    },
+    {
+      src: "/images/image8.jpg",
+      alt: "Students reading together in the library",
+    },
+  ],
+};

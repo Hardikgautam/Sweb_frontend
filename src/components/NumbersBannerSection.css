@@ -1,0 +1,220 @@
+/* components/NumbersBannerSection.css */
+
+.numbers-banner {
+  background-color: var(--color-navy);
+  width: 100%;
+  padding: 5.5rem 0;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(199, 164, 107, 0.25);
+  border-bottom: 1px solid rgba(199, 164, 107, 0.25);
+}
+
+/* ── Header: Kicker + Large serif off-white heading ─────────────────────── */
+.numbers-banner__header {
+  margin-bottom: 3.5rem;
+}
+
+.numbers-banner__kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.numbers-banner__kicker-line {
+  display: block;
+  width: 32px;
+  height: 1.5px;
+  background-color: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.numbers-banner__kicker-text {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.numbers-banner__headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3.25rem);
+  font-weight: 700;
+  color: var(--color-bg);   /* warm off-white */
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+}
+
+.numbers-banner__headline span {
+  display: block;
+}
+
+/* ── 4 Stat Columns ─────────────────────────────────────────────────────── */
+.numbers-banner__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: stretch;
+}
+
+.numbers-banner__stat-col {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--space-md);
+  position: relative;
+}
+
+/* Remove left padding on first col and right on last col for flush container alignment */
+.numbers-banner__stat-col:first-child {
+  padding-left: 0;
+}
+
+.numbers-banner__stat-col:last-child {
+  padding-right: 0;
+}
+
+/* Thin gold vertical divider line between columns on desktop */
+.numbers-banner__stat-col:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 10%;
+  height: 80%;
+  width: 1px;
+  background-color: rgba(199, 164, 107, 0.35);
+}
+
+.numbers-banner__stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 4.2vw, 3.8rem);
+  font-weight: 700;
+  color: var(--color-gold);
+  line-height: 1.05;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.5px;
+}
+
+.numbers-banner__stat-label {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: rgba(241, 238, 230, 0.82);
+  line-height: 1.55;
+  max-width: 230px;
+}
+
+/* ── Responsive: 2x2 layout on Tablet and Mobile ────────────────────────── */
+@media (max-width: 860px) {
+  .numbers-banner {
+    padding: 4rem 0;
+  }
+
+  .numbers-banner__header {
+    margin-bottom: 2.5rem;
+  }
+
+  .numbers-banner__grid {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2.25rem;
+  }
+
+  /* Reset desktop divider lines */
+  .numbers-banner__stat-col:not(:last-child)::after {
+    display: none;
+  }
+
+  /* Uniform padding in 2x2 mode */
+  .numbers-banner__stat-col {
+    padding: 0 1.25rem;
+  }
+
+  .numbers-banner__stat-col:first-child {
+    padding-left: 0;
+  }
+
+  .numbers-banner__stat-col:nth-child(2) {
+    padding-right: 0;
+  }
+
+  .numbers-banner__stat-col:nth-child(3) {
+    padding-left: 0;
+  }
+
+  .numbers-banner__stat-col:nth-child(4) {
+    padding-right: 0;
+  }
+
+  /* Add vertical divider between col 1 and col 2 (odd items: 1 and 3) */
+  .numbers-banner__stat-col:nth-child(odd)::after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 5%;
+    height: 90%;
+    width: 1px;
+    background-color: rgba(199, 164, 107, 0.35);
+  }
+
+  /* Add thin horizontal divider between top row and bottom row */
+  .numbers-banner__stat-col:nth-child(1),
+  .numbers-banner__stat-col:nth-child(2) {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(199, 164, 107, 0.2);
+  }
+
+  .numbers-banner__stat-number {
+    font-size: 2.6rem;
+  }
+
+  .numbers-banner__stat-label {
+    font-size: 0.825rem;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .numbers-banner {
+    padding: 3.25rem 0;
+  }
+
+  .numbers-banner__stat-col {
+    padding: 0 0.75rem;
+  }
+
+  .numbers-banner__stat-number {
+    font-size: 2.25rem;
+  }
+
+  .numbers-banner__stat-label {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .numbers-banner__grid {
+    grid-template-columns: 1fr;
+    row-gap: 1.5rem;
+  }
+
+  /* Remove the 2-col dividers on single-col layout */
+  .numbers-banner__stat-col:nth-child(odd)::after {
+    display: none;
+  }
+
+  .numbers-banner__stat-col:nth-child(1),
+  .numbers-banner__stat-col:nth-child(2) {
+    border-bottom: 1px solid rgba(199, 164, 107, 0.2);
+    padding-bottom: 1.5rem;
+  }
+
+  .numbers-banner__stat-col:nth-child(3) {
+    border-bottom: 1px solid rgba(199, 164, 107, 0.2);
+    padding-bottom: 1.5rem;
+  }
+
+  .numbers-banner__stat-col {
+    padding: 0;
+  }
+}

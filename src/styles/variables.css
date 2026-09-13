@@ -1,0 +1,59 @@
+/* ============================================================
+   DESIGN TOKENS — define once here, import everywhere else
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  /* --- Colors --- */
+  --color-bg:         #F1EEE6;   /* warm cream — page background */
+  --color-navy:       #1C2B45;   /* dark navy — footer, stat banner, headings */
+  --color-maroon:     #7A2333;   /* primary buttons, accents, CTA */
+  --color-gold:       #C7A46B;   /* section numbering, small accents, stat numbers */
+  --color-white:      #FFFFFF;
+  --color-text-dark:  #1C2B45;
+  --color-text-muted: #5B6472;
+
+  /* --- Card / Surface --- */
+  --color-card-bg:    #FFFFFF;
+  --card-border-top:  3px solid var(--color-gold);
+  --card-shadow:      0 4px 20px rgba(28, 43, 69, 0.08);
+  --card-shadow-hover:0 8px 32px rgba(28, 43, 69, 0.15);
+
+  /* --- Typography --- */
+  --font-display: 'Playfair Display', Georgia, serif;   /* headings */
+  --font-body:    'Inter', system-ui, sans-serif;       /* body, nav, buttons */
+
+  --fs-xs:   0.75rem;   /* 12px */
+  --fs-sm:   0.875rem;  /* 14px */
+  --fs-base: 1rem;      /* 16px */
+  --fs-md:   1.125rem;  /* 18px */
+  --fs-lg:   1.375rem;  /* 22px */
+  --fs-xl:   1.75rem;   /* 28px */
+  --fs-2xl:  2.25rem;   /* 36px */
+  --fs-3xl:  3rem;      /* 48px */
+
+  /* --- Spacing --- */
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  1.5rem;
+  --space-lg:  2.5rem;
+  --space-xl:  4rem;
+  --space-2xl: 6rem;
+
+  /* --- Layout --- */
+  --max-width: 1200px;
+  --section-padding: var(--space-2xl) var(--space-sm);
+
+  /* --- Buttons --- */
+  --btn-radius: 5px;
+  --btn-padding: 0.65rem 1.6rem;
+  --btn-font-size: var(--fs-sm);
+
+  /* --- Transitions --- */
+  --transition-fast: 0.2s ease;
+  --transition-mid:  0.35s ease;
+
+  /* --- Navbar height (for offset) --- */
+  --nav-height: 70px;
+}

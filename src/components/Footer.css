@@ -1,0 +1,460 @@
+/* components/Footer.css
+   Responsive footer with desktop multi-column view and mobile/tablet collapsible accordion.
+*/
+
+.footer {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  padding: 4.5rem 0 2rem;
+  border-top: 1.5px solid var(--color-gold);
+  position: relative;
+}
+
+/* ── Main Layout: Brand + Accordion/Columns ────────────────────────────── */
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.35fr 3.65fr;
+  gap: var(--space-xl);
+  align-items: flex-start;
+}
+
+/* ── Brand Column (Always Visible) ─────────────────────────────────────── */
+.footer__brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.footer__brand-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer__logo-img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+
+.footer__logo-fallback {
+  width: 46px;
+  height: 46px;
+  border-radius: 6px;
+  background-color: var(--color-maroon);
+  color: var(--color-gold);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--color-gold);
+}
+
+.footer__school-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-white);
+  line-height: 1.2;
+}
+
+.footer__motto {
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  color: var(--color-gold);
+  font-style: italic;
+  letter-spacing: 0.04em;
+  margin-top: -0.25rem;
+}
+
+.footer__address-block {
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  color: rgba(241, 238, 230, 0.75);
+  line-height: 1.6;
+  margin-top: 0.25rem;
+}
+
+.footer__contact-line {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.footer__contact-link {
+  color: rgba(241, 238, 230, 0.85);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.84rem;
+  transition: color var(--transition-fast);
+}
+
+.footer__contact-link:hover {
+  color: var(--color-gold);
+}
+
+/* Social Outline Icons */
+.footer__social-row {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.footer__social-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(199, 164, 107, 0.4);
+  background: transparent;
+  color: var(--color-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.footer__social-icon-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.footer__social-icon-btn:hover {
+  background-color: var(--color-maroon);
+  border-color: var(--color-maroon);
+  color: var(--color-white);
+  transform: translateY(-2px);
+}
+
+/* ── Columns / Accordion Group ─────────────────────────────────────────── */
+.footer__accordion-group {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  align-items: flex-start;
+}
+
+.footer__col-title {
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.footer__links-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.footer__link-item a,
+.footer__nav-link {
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  color: rgba(241, 238, 230, 0.75);
+  text-decoration: none;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  display: inline-block;
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.footer__link-item a:hover,
+.footer__nav-link:hover {
+  color: var(--color-white);
+  transform: translateX(3px);
+}
+
+/* ── Newsletter Column ─────────────────────────────────────────────────── */
+.footer__newsletter-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__newsletter-text {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: rgba(241, 238, 230, 0.75);
+  line-height: 1.55;
+  margin-bottom: 0.85rem;
+}
+
+.footer__newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer__newsletter-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(199, 164, 107, 0.35);
+  color: var(--color-white);
+  border-radius: 4px;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.82rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.footer__newsletter-input::placeholder {
+  color: rgba(241, 238, 230, 0.45);
+}
+
+.footer__newsletter-input:focus {
+  border-color: var(--color-gold);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.footer__newsletter-btn {
+  background-color: var(--color-maroon);
+  color: var(--color-white);
+  border: 1px solid var(--color-maroon);
+  border-radius: 4px;
+  padding: 0.6rem 1.15rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  text-align: center;
+}
+
+.footer__newsletter-btn:hover {
+  background-color: #611b27;
+  transform: translateY(-1px);
+}
+
+.footer__newsletter-success {
+  color: var(--color-gold);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.footer__newsletter-error {
+  color: #FCA5A5;
+  font-size: 0.78rem;
+  margin-top: 0.4rem;
+}
+
+/* ── Desktop Styles (>= 769px) ─────────────────────────────────────────── */
+@media (min-width: 769px) {
+  .footer__accordion-trigger {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-bottom: 1.15rem;
+    cursor: default;
+    display: block;
+    width: 100%;
+    text-align: left;
+    outline: none;
+    pointer-events: none; /* No collapse needed on spacious desktop */
+  }
+
+  .footer__accordion-chevron {
+    display: none;
+  }
+
+  .footer__accordion-wrapper {
+    display: block !important;
+  }
+
+  .footer__accordion-content {
+    display: block !important;
+  }
+}
+
+/* ── Tablet & Mobile Accordion (< 769px) ───────────────────────────────── */
+@media (max-width: 768px) {
+  .footer {
+    padding: 3rem 0 1.5rem;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .footer__brand-col {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(199, 164, 107, 0.18);
+  }
+
+  .footer__accordion-group {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .footer__accordion-item {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(199, 164, 107, 0.22);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+  }
+
+  .footer__accordion-item:hover {
+    border-color: rgba(199, 164, 107, 0.38);
+  }
+
+  .footer__accordion-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    padding: 0.95rem 1.15rem;
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--transition-fast);
+  }
+
+  .footer__accordion-trigger:hover,
+  .footer__accordion-trigger:focus-visible {
+    background: rgba(255, 255, 255, 0.05);
+    outline: none;
+  }
+
+  .footer__accordion-trigger .footer__col-title {
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    color: var(--color-gold);
+    margin-bottom: 0;
+  }
+
+  .footer__accordion-chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(199, 164, 107, 0.12);
+    color: var(--color-gold);
+    flex-shrink: 0;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), background var(--transition-fast);
+  }
+
+  .footer__accordion-trigger[aria-expanded="true"] .footer__accordion-chevron {
+    transform: rotate(180deg);
+    background: rgba(199, 164, 107, 0.24);
+  }
+
+  /* Smooth Grid-based Collapse Animation */
+  .footer__accordion-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .footer__accordion-wrapper.is-open {
+    grid-template-rows: 1fr;
+  }
+
+  .footer__accordion-content {
+    min-height: 0;
+    overflow: hidden;
+    padding: 0 1.15rem;
+    transition: padding 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .footer__accordion-wrapper.is-open .footer__accordion-content {
+    padding: 0.35rem 1.15rem 1.15rem;
+  }
+
+  .footer__links-list {
+    gap: 0.5rem;
+  }
+
+  .footer__link-item a,
+  .footer__nav-link {
+    font-size: 0.88rem;
+    padding: 0.3rem 0;
+    display: block;
+  }
+}
+
+/* ── Bottom Bar ─────────────────────────────────────────────────────────── */
+.footer__bottom-bar {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: rgba(241, 238, 230, 0.5);
+}
+
+.footer__bottom-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer__creator-credit {
+  color: rgba(241, 238, 230, 0.45);
+}
+
+.footer__creator-link {
+  color: rgba(241, 238, 230, 0.7);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.footer__creator-link:hover {
+  color: var(--color-gold);
+}
+
+.footer__legal-links {
+  display: flex;
+  gap: 1.25rem;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.footer__legal-links a {
+  color: rgba(241, 238, 230, 0.55);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer__legal-links a:hover {
+  color: var(--color-gold);
+}
+
+@media (max-width: 768px) {
+  .footer__bottom-bar {
+    margin-top: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .footer__bottom-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .footer__legal-links {
+    gap: 0.85rem;
+  }
+}

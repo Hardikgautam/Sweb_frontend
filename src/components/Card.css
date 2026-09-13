@@ -1,0 +1,34 @@
+/* components/Card.css */
+
+.card {
+  background-color: var(--color-card-bg);
+  border-top: var(--card-border-top);
+  border-radius: 4px;
+  padding: var(--space-md) var(--space-md) var(--space-lg);
+  box-shadow: var(--card-shadow);
+  transition: box-shadow var(--transition-mid), transform var(--transition-mid);
+}
+
+.card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-4px);
+}
+
+.card__icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
+  display: block;
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  color: var(--color-navy);
+  margin-bottom: 0.5rem;
+}
+
+.card__body {
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}

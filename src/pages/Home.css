@@ -1,0 +1,89 @@
+/* pages/Home.css — styles scoped to the homepage */
+
+/* ── Hero Placeholder ──────────────────────────────────────────────────── */
+.hero-placeholder {
+  min-height: 80vh;
+  background: linear-gradient(
+    135deg,
+    var(--color-navy) 0%,
+    #2a3f63 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-placeholder__inner {
+  text-align: center;
+  padding: var(--space-2xl) var(--space-md);
+}
+
+.hero-placeholder__kicker {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--space-sm);
+}
+
+.hero-placeholder__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  color: var(--color-white);
+  margin-bottom: var(--space-sm);
+}
+
+.hero-placeholder__sub {
+  font-size: var(--fs-md);
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: var(--space-lg);
+  line-height: 1.7;
+}
+
+.hero-placeholder__actions {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── API Status Banner ─────────────────────────────────────────────────── */
+.api-status-banner {
+  background-color: var(--color-navy);
+  padding: var(--space-sm) 0;
+}
+
+.api-status-banner__text {
+  font-size: var(--fs-sm);
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+/* ── Generic Sections ──────────────────────────────────────────────────── */
+.section {
+  padding: var(--space-2xl) 0;
+}
+
+.section--alt {
+  background-color: #e9e5dc;  /* slightly darker cream for rhythm */
+}
+
+.placeholder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-md);
+}
+
+.placeholder-text {
+  color: var(--color-text-muted);
+  font-size: var(--fs-base);
+  font-style: italic;
+}
+
+@media (max-width: 600px) {
+  .hero-placeholder__title {
+    font-size: var(--fs-2xl);
+  }
+}

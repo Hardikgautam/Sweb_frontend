@@ -1,0 +1,256 @@
+/* components/Hero.css */
+
+/* ── Hero wrapper ───────────────────────────────────────────────────────── */
+.hero {
+  background-color: var(--color-bg);
+  padding: var(--space-2xl) 0;
+  overflow: hidden;   /* prevent frame offset from causing horizontal scroll */
+}
+
+/* Two-column grid: left text (55%), right image (45%) */
+.hero__grid {
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+/* ── Left column — text ─────────────────────────────────────────────────── */
+.hero__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Kicker: "— NURSERY TO CLASS 10" */
+.hero__kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero__kicker-line {
+  display: block;
+  width: 28px;
+  height: 1.5px;
+  background-color: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.hero__kicker-text {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+/* Headline */
+.hero__headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--color-navy);
+  line-height: 1.12;
+  letter-spacing: -0.5px;
+}
+
+/* Body paragraph */
+.hero__body {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  max-width: 520px;
+}
+
+/* CTA buttons row */
+.hero__buttons {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Stats line */
+.hero__stats {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: var(--space-xs);
+  border-top: 1px solid rgba(199, 164, 107, 0.3);
+}
+
+.hero__stats-line {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.03em;
+}
+
+/* ── Right column — image with frame + badge ────────────────────────────── */
+.hero__image-col {
+  /* Extra padding so the offset gold frame doesn't clip */
+  padding-top: 24px;
+  padding-left: 24px;
+  padding-bottom: 24px;   /* room for badge overflow */
+  position: relative;
+}
+
+/* The gold border rectangle — sits BEHIND the photo, offset to top-left */
+.hero__image-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Frame dimensions: full col width minus the right/bottom offset amount */
+  right: 24px;
+  bottom: 24px;
+  border: 2.5px solid var(--color-gold);
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* The actual photo — sits in front of the frame */
+.hero__image-wrapper {
+  position: relative;
+  z-index: 1;
+  border-radius: 8px;
+  overflow: visible;   /* let badge overflow */
+}
+
+.hero__image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  min-height: 280px;
+  background-color: var(--color-navy);
+  display: block;
+  border-radius: 8px;
+  object-fit: cover;
+  max-height: 540px;
+  /* Subtle warm shadow */
+  box-shadow: 0 20px 60px rgba(28, 43, 69, 0.18);
+}
+
+/* Circular badge — bottom-left, overlapping the image */
+.hero__badge {
+  position: absolute;
+  bottom: -24px;
+  left: -20px;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background-color: var(--color-maroon);
+  border: 3px solid var(--color-bg);    /* cream ring to separate from image */
+  outline: 2px solid var(--color-gold); /* gold outer ring */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  text-align: center;
+  padding: 8px;
+  cursor: default;
+  /* subtle rotation for a hand-stamped feel */
+  transform: rotate(-6deg);
+}
+
+.hero__badge-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+.hero__badge-line {
+  font-family: var(--font-body);
+  font-size: 0.52rem;
+  font-weight: 700;
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  /* Image goes BELOW text on mobile */
+  .hero__image-col {
+    order: 2;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 32px;   /* extra room for badge */
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .hero__text {
+    order: 1;
+  }
+
+  .hero__image-frame {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .hero__headline {
+    font-size: clamp(2rem, 7vw, 2.8rem);
+  }
+
+  .hero__body {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 3rem 0 2.5rem;
+  }
+
+  .hero__image-col {
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 0;
+    padding-top: 16px;
+    padding-bottom: 28px;
+  }
+
+  .hero__image-frame {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .hero__badge {
+    width: 90px;
+    height: 90px;
+    bottom: -18px;
+    left: -12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 2.5rem 0 2rem;
+  }
+
+  .hero__buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero__buttons .btn {
+    text-align: center;
+    width: 100%;
+    white-space: normal;
+  }
+
+  .hero__stats-line {
+    font-size: 0.65rem;
+  }
+}
