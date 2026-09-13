@@ -105,16 +105,22 @@ export default function AcademicsSection() {
           // Normalize backend fields to card format.
           // FIX: always resolve the route from ROUTE_BY_ID (static config) — the API
           // has no knowledge of frontend routes, so we must never use a field from it.
-          const formatted = data.map((item) => ({
-            id:     item.id,
-            icon:   item.icon_key || 'languages',
-            title:  item.title,
-            desc:   item.description,
-            levels: item.levels_text,
-            link:   ROUTE_BY_ID[item.id]
-                      ?? fallbackSubjects.find((s) => s.id === item.id)?.link
-                      ?? `/subjects/${item.id}`,
-          }));
+          const formatted = data.map((item) => {
+            const iconKey = item.icon_key || 'languages';
+            const resolvedLink =
+              ROUTE_BY_ID[iconKey] ||
+              ROUTE_BY_ID[item.id] ||
+              fallbackSubjects.find((s) => s.id === iconKey || s.id === item.id)?.link ||
+              `/subjects/${iconKey}`;
+            return {
+              id:     item.id,
+              icon:   iconKey,
+              title:  item.title,
+              desc:   item.description,
+              levels: item.levels_text,
+              link:   resolvedLink,
+            };
+          });
           setSubjects(formatted);
         }
       })

@@ -4,17 +4,112 @@
 // Matches the site's navy/maroon/gold/cream design system.
 
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { subjectsData } from '../config/subjectsData';
 import { openEnquiryModal } from '../api/enquiries';
 import { publicUrl } from '../utils/publicUrl';
 import './SubjectPage.css';
 
-export default function SubjectPage({ data }) {
+// Authoritative mapping for all subject keys, slugs, and 1-indexed / 0-indexed IDs
+const SUBJECT_LOOKUP = {
+  // Slugs & keys
+  languages: subjectsData.languages,
+  mathematics: subjectsData.mathematics,
+  math: subjectsData.mathematics,
+  science: subjectsData.science,
+  social: subjectsData.social,
+  'social-studies': subjectsData.social,
+  computer: subjectsData.computer,
+  'computer-science': subjectsData.computer,
+  arts: subjectsData.arts,
+  'arts-music-sports': subjectsData.arts,
+
+  // 1-indexed database IDs (seed.py: 1=Languages, 2=Math, 3=Science, 4=Social, 5=Computer, 6=Arts)
+  '1': subjectsData.languages,
+  '2': subjectsData.mathematics,
+  '3': subjectsData.science,
+  '4': subjectsData.social,
+  '5': subjectsData.computer,
+  '6': subjectsData.arts,
+
+  // 0-indexed fallback
+  '0': subjectsData.languages,
+};
+
+export default function SubjectPage({ data: propData }) {
+  const { id } = useParams();
+  const subjectData = propData || (id ? SUBJECT_LOOKUP[String(id).toLowerCase().trim()] : null);
+
   const videoRef = useRef(null);
   const [videoFailed, setVideoFailed] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
 
-  const { title, kicker, levels, video, poster, fallbackImage, intro, stats, gradeBands, highlights, cta } = data;
+  // Subject Not Found Fallback UI
+  if (!subjectData) {
+    return (
+      <main className="subject-page subject-page--not-found">
+        <div
+          className="container"
+          style={{
+            padding: '8rem 1.5rem',
+            textAlign: 'center',
+            minHeight: '60vh',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <p
+            style={{
+              color: 'var(--color-gold, #c5a059)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.15em',
+              fontWeight: 600,
+              fontSize: '0.9rem',
+              marginBottom: '0.5rem',
+            }}
+          >
+            Curriculum
+          </p>
+          <h1
+            style={{
+              fontSize: '2.5rem',
+              color: 'var(--color-navy, #0f2b48)',
+              marginBottom: '1rem',
+              fontFamily: 'var(--font-heading, serif)',
+            }}
+          >
+            Subject Not Found
+          </h1>
+          <p style={{ color: '#666', maxWidth: '540px', margin: '0 auto 2rem', lineHeight: 1.6 }}>
+            The requested subject {id ? `("${id}")` : ''} could not be found. Please select from our available curriculum subjects below:
+          </p>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '0.75rem',
+              justifyContent: 'center',
+              marginBottom: '2.5rem',
+            }}
+          >
+            <Link to="/subjects/languages" className="btn btn--outline" style={{ padding: '0.6rem 1.2rem', border: '1px solid #ccc', borderRadius: '4px', textDecoration: 'none', color: 'inherit' }}>Languages</Link>
+            <Link to="/subjects/mathematics" className="btn btn--outline" style={{ padding: '0.6rem 1.2rem', border: '1px solid #ccc', borderRadius: '4px', textDecoration: 'none', color: 'inherit' }}>Mathematics</Link>
+            <Link to="/subjects/science" className="btn btn--outline" style={{ padding: '0.6rem 1.2rem', border: '1px solid #ccc', borderRadius: '4px', textDecoration: 'none', color: 'inherit' }}>Science</Link>
+            <Link to="/subjects/social-studies" className="btn btn--outline" style={{ padding: '0.6rem 1.2rem', border: '1px solid #ccc', borderRadius: '4px', textDecoration: 'none', color: 'inherit' }}>Social Studies</Link>
+            <Link to="/subjects/computer" className="btn btn--outline" style={{ padding: '0.6rem 1.2rem', border: '1px solid #ccc', borderRadius: '4px', textDecoration: 'none', color: 'inherit' }}>Computer Science</Link>
+            <Link to="/subjects/arts" className="btn btn--outline" style={{ padding: '0.6rem 1.2rem', border: '1px solid #ccc', borderRadius: '4px', textDecoration: 'none', color: 'inherit' }}>Arts & Sports</Link>
+          </div>
+          <Link to="/" className="btn btn--cta-gold" style={{ textDecoration: 'none' }}>
+            ← Return to Home
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
+  const { title, kicker, levels, video, poster, fallbackImage, intro, stats, gradeBands, highlights, cta } = subjectData;
   const heroImgSrc = poster || fallbackImage || publicUrl('images/image1.jpg');
 
   // Ensure autoplay works cross-browser and resumes after tab switch

@@ -47,6 +47,7 @@ export default function App() {
           <Route path="/classes/:stage" element={<ClassesPage />} />
 
           {/* ── Subject detail pages ──────────────────────────── */}
+          <Route path="/subjects/:id"            element={<SubjectPage />} />
           <Route path="/subjects/languages"      element={<SubjectPage data={subjectsData.languages}   />} />
           <Route path="/subjects/mathematics"    element={<SubjectPage data={subjectsData.mathematics} />} />
           <Route path="/subjects/science"        element={<SubjectPage data={subjectsData.science}     />} />
