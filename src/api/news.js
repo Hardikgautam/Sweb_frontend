@@ -50,7 +50,6 @@ export async function createNewsArticle({ title, description, is_pinned = false,
 
   const res = await client.post('/news', form, {
     headers: {
-      'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${token}`,
     },
   });
@@ -74,7 +73,6 @@ export async function updateNewsArticle(id, { title, description, is_pinned, ima
 
   const res = await client.put(`/news/${id}`, form, {
     headers: {
-      'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${token}`,
     },
   });
@@ -107,7 +105,6 @@ export async function uploadNewsImage(file, token) {
 
   const res = await client.post('/news/upload-image', form, {
     headers: {
-      'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${token}`,
     },
   });
