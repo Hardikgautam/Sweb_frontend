@@ -24,7 +24,11 @@
   border-radius: 10px;
   width: 100%;
   max-width: 540px;
+  /* vh on mobile browsers measures the viewport with the URL bar collapsed,
+     so a vh-capped modal gets clipped while the bar is showing. dvh tracks
+     the live viewport; the vh line stays as the fallback. */
   max-height: 88vh;
+  max-height: 88dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -269,6 +273,7 @@
   .enquiry-modal {
     width: 100%;
     max-height: 90vh;
+    max-height: 90dvh;
     border-radius: 10px;
   }
 
@@ -299,14 +304,25 @@
     gap: 1.15rem;
   }
 
+  /* 16px is the threshold below which iOS Safari zooms the viewport on focus.
+     Anything smaller made the form jump and overflow sideways on iPhones. */
   .enquiry-form__input,
-  .enquiry-form__select {
-    min-height: 46px;
-    font-size: 0.95rem;
+  .enquiry-form__select,
+  .enquiry-form__textarea {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .enquiry-form__textarea {
+    min-height: 96px;
+  }
+
+  .enquiry-form__label {
+    font-size: 0.82rem;
   }
 
   .enquiry-form__submit-btn {
-    min-height: 48px;
+    min-height: 50px;
     font-size: 0.95rem;
   }
 }
@@ -317,7 +333,8 @@
   }
 
   .enquiry-modal {
-    width: calc(100vw - 1rem);
+    /* 100vw counts the scrollbar gutter and overflowed on some Androids. */
+    width: 100%;
   }
 
   .enquiry-modal__header {

@@ -1135,3 +1135,184 @@
   }
 }
 
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ADMIN UI POLISH & MOBILE CORRECTIONS
+   Appended last so these rules win on source order without needing !important.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Tab bar: scrollable rail ─────────────────────────────────────────────
+   The bar is a non-wrapping flex row. With ten tabs it overflowed the page
+   on tablets and phones and the last tabs were simply unreachable. It is now
+   a horizontally scrollable, snapping rail with edge fades.
+   ─────────────────────────────────────────────────────────────────────── */
+.adm-tabs-bar {
+  position: sticky;
+  top: 62px;                 /* directly under .adm-topbar */
+  z-index: 190;
+  overflow: hidden;
+  /* Fade both edges at every width, so an overflowing rail visibly reads as
+     "there are more tabs this way" instead of looking like it just ends.
+     With ten tabs it overflows on laptops too, not only phones. */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 18px,
+    #000 calc(100% - 26px),
+    transparent 100%
+  );
+}
+
+.adm-tabs-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+}
+
+.adm-tabs-container::-webkit-scrollbar { display: none; }
+
+.adm-tab-btn {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  white-space: nowrap;
+  border-radius: 6px 6px 0 0;
+}
+
+.adm-tab-btn:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: -2px;
+}
+
+/* ── Forms ───────────────────────────────────────────────────────────────── */
+.adm-input,
+.adm-textarea,
+.adm-select {
+  min-height: 42px;
+  line-height: 1.4;
+}
+
+.adm-select:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(199, 164, 107, 0.15);
+}
+
+.adm-input::placeholder,
+.adm-textarea::placeholder {
+  color: #9ca3af;
+}
+
+.adm-input:disabled,
+.adm-textarea:disabled,
+.adm-select:disabled {
+  background: #f9fafb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Validation text sits with the field it belongs to. */
+.adm-field .adm-error-text {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--color-maroon);
+}
+
+/* ── Modal: long forms must scroll inside, not clip ──────────────────────── */
+.adm-modal {
+  max-height: 90dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;          /* the body scrolls, not the shell */
+}
+
+.adm-modal__header,
+.adm-modal__footer {
+  flex-shrink: 0;
+}
+
+.adm-modal__body {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .adm-tabs-bar {
+    padding: 0 0.75rem;
+  }
+
+  .adm-tabs-container { gap: 0.35rem; }
+
+  .adm-tab-btn {
+    padding: 0.8rem 0.7rem;
+    font-size: 0.82rem;
+    gap: 0.35rem;
+  }
+
+  /* 16px is the floor below which iOS Safari zooms the page on focus — the
+     main reason the admin forms felt off on phones. */
+  .adm-input,
+  .adm-textarea,
+  .adm-select {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .adm-textarea { min-height: 110px; }
+
+  .adm-form-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .adm-form-actions > * { width: 100%; }
+
+  .adm-modal-backdrop {
+    padding: 0.6rem;
+    align-items: flex-end;   /* sheet-style on phones — thumb-reachable */
+  }
+
+  .adm-modal {
+    max-height: 92dvh;
+    border-radius: 14px;
+  }
+
+  .adm-modal__header { padding: 1rem 1.1rem 0.85rem; }
+  .adm-modal__body   { padding: 1rem 1.1rem; }
+
+  .adm-modal__footer {
+    padding: 0.9rem 1.1rem;
+    flex-direction: column-reverse;
+    gap: 0.55rem;
+  }
+
+  .adm-modal__footer > * { width: 100%; }
+
+  /* Tables: let them scroll rather than squeeze columns to nothing. */
+  .adm-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .adm-table { min-width: 620px; }
+
+  .adm-table-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .adm-tab-btn svg { display: none; }   /* labels matter more than icons here */
+  .adm-tab-btn { font-size: 0.8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .adm-modal,
+  .adm-modal-backdrop { animation: none; }
+}

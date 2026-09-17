@@ -376,7 +376,9 @@
 
 .sp-gallery__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  /* min() keeps the track from demanding 340px inside a narrower phone
+     viewport, which previously forced horizontal page scroll. */
+  grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
   gap: 2rem;
 }
 
@@ -609,8 +611,32 @@
     margin-bottom: 2rem;
   }
 
+  /* The desktop grid is `260px 1px 1fr`. Left unchanged at phone width the
+     260px left column plus the divider consume the whole row, collapsing
+     .sp-band__points to ~0px — which is why Science/Maths curriculum bullets
+     rendered blank on mobile. Stack the band instead. */
   .sp-band {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
     padding: 1.4rem 1.1rem;
+  }
+
+  /* The divider is a vertical hairline on desktop; stacked, it has to run
+     horizontally or it renders as a 1px sliver. */
+  .sp-band__divider {
+    width: 100%;
+    min-height: 0;
+    height: 1px;
+    align-self: stretch;
+    background: linear-gradient(to right, transparent, var(--color-gold) 15%, var(--color-gold) 85%, transparent);
+  }
+
+  .sp-band__points {
+    gap: 0.7rem;
+  }
+
+  .sp-band__points li {
+    font-size: var(--fs-sm);
   }
 
   .sp-gallery__img-wrap {

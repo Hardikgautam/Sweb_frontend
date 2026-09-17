@@ -195,6 +195,7 @@
 .appt-select,
 .appt-textarea {
   width: 100%;
+  min-height: 46px;
   padding: 0.75rem 1rem;
   border-radius: 8px;
   border: 1.5px solid #cbd5e1;
@@ -234,7 +235,7 @@
 /* ── Purpose Selector Cards ──────────────────────────────────────────────── */
 .appt-purpose-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
   gap: 0.75rem;
 }
 
@@ -527,4 +528,45 @@
   justify-content: center;
   color: #0b1a30;
   flex-shrink: 0;
+}
+
+
+/* ── Mobile form corrections ──────────────────────────────────────────────
+   Fields sat at 0.95rem (15.2px). Below the 16px threshold iOS Safari zooms
+   the viewport on focus, which pushed this page sideways and made the form
+   feel broken on phones. Touch heights also come up to 48px here.
+   ─────────────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .appt-layout {
+    padding: 0 1rem;
+  }
+
+  .appt-card {
+    border-radius: 12px;
+  }
+
+  .appt-input,
+  .appt-select,
+  .appt-textarea {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .appt-textarea {
+    min-height: 104px;
+  }
+
+  .appt-form {
+    gap: 1.15rem;
+  }
+
+  /* Single column: two 180px cards plus a gap overflow a 360px screen. */
+  .appt-purpose-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .appt-purpose-card {
+    padding: 0.9rem;
+    align-items: center;
+  }
 }

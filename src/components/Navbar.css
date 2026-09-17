@@ -144,8 +144,9 @@
   color: inherit;
 }
 
-.navbar__dropdown-chevron.open,
-.navbar__dropdown-wrapper:hover .navbar__dropdown-chevron {
+/* The chevron follows the panel's real open state only. It used to also spin
+   on wrapper hover, which made a closed menu look open. */
+.navbar__dropdown-chevron.open {
   transform: rotate(180deg);
 }
 
@@ -170,7 +171,10 @@
   z-index: 300;
 }
 
-.navbar__dropdown-wrapper:hover .navbar__dropdown-menu,
+/* Open state is driven solely by .is-open (React state). The former
+   `:hover` opener fought the click-to-toggle handler: clicking to dismiss
+   flipped the state, but hover immediately re-showed the panel, so the menu
+   appeared to ignore clicks until the pointer left the nav item. */
 .navbar__dropdown-menu.is-open {
   opacity: 1;
   visibility: visible;

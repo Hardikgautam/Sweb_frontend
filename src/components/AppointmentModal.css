@@ -25,7 +25,10 @@
   border-radius: 12px;
   width: 100%;
   max-width: 580px;
+  /* dvh tracks the live mobile viewport; vh (measured with the URL bar
+     collapsed) clipped the dialog's footer buttons on phones. */
   max-height: 90vh;
+  max-height: 90dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -130,6 +133,19 @@
   .appt-modal-row {
     grid-template-columns: 1fr;
   }
+
+  /* Under 16px, iOS Safari zooms the viewport when a field takes focus,
+     which shifted this dialog off-centre and clipped its right edge. */
+  .appt-modal-input,
+  .appt-modal-select,
+  .appt-modal-textarea {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .appt-modal-textarea {
+    min-height: 88px;
+  }
 }
 
 .appt-modal-group {
@@ -152,6 +168,7 @@
 .appt-modal-select,
 .appt-modal-textarea {
   width: 100%;
+  min-height: 44px;
   padding: 0.65rem 0.85rem;
   border-radius: 6px;
   border: 1.5px solid #cbd5e1;

@@ -1,0 +1,581 @@
+/* src/components/SaraswatiChat.css
+   Saraswati AI launcher + chat panel.
+   Navy/gold/maroon to match the site; stays clear of the footer CTA on mobile.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.sar-sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Launcher ────────────────────────────────────────────────────────────── */
+.sar-launcher {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 900;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.15rem;
+  min-height: 52px;
+
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-navy) 0%, #2b3f61 100%);
+  border: 1.5px solid rgba(199, 164, 107, 0.55);
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(28, 43, 69, 0.34);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.sar-launcher:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(28, 43, 69, 0.42);
+  border-color: var(--color-gold);
+}
+
+.sar-launcher:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Open state collapses to a circular close button. */
+.sar-launcher.is-open {
+  padding: 0;
+  width: 48px;
+  min-height: 48px;
+  justify-content: center;
+  background: var(--color-maroon);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.sar-launcher__label { white-space: nowrap; }
+
+.sar-launcher__badge {
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #fff;
+  background: var(--color-maroon);
+  border: 2px solid #fff;
+  border-radius: 9999px;
+}
+
+/* ── Panel ───────────────────────────────────────────────────────────────── */
+.sar-panel {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 5.25rem;
+  z-index: 901;
+
+  width: min(384px, calc(100vw - 2.5rem));
+  /* dvh keeps the composer on screen while mobile browser chrome moves. */
+  max-height: min(620px, calc(100dvh - 7.5rem));
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  font-family: var(--font-body);
+  background: var(--color-white);
+  border: 1px solid rgba(28, 43, 69, 0.14);
+  border-top: 3px solid var(--color-gold);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(28, 43, 69, 0.3);
+  animation: sarPanelIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes sarPanelIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* ── Panel header ────────────────────────────────────────────────────────── */
+.sar-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.8rem 0.9rem;
+  background: var(--color-navy);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.sar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.sar-brand__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  flex-shrink: 0;
+  color: var(--color-gold);
+  background: rgba(199, 164, 107, 0.16);
+  border: 1px solid rgba(199, 164, 107, 0.4);
+  border-radius: 8px;
+}
+
+.sar-brand__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sar-brand__name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.sar-brand__sub {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.62);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sar-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.sar-gbtn {
+  /* Google renders its own button here; keep it from stretching the header. */
+  display: flex;
+  align-items: center;
+  max-width: 160px;
+  overflow: hidden;
+}
+
+.sar-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.5rem 0.22rem 0.25rem;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9999px;
+  cursor: pointer;
+  max-width: 130px;
+}
+
+.sar-user:hover { background: rgba(255, 255, 255, 0.18); }
+
+.sar-user__pic,
+.sar-user__initial {
+  width: 21px; height: 21px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.sar-user__initial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--color-navy);
+  background: var(--color-gold);
+}
+
+.sar-user__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sar-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  color: rgba(255, 255, 255, 0.75);
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s;
+}
+
+.sar-icon-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ── Notes / errors ──────────────────────────────────────────────────────── */
+.sar-note {
+  margin: 0;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: #6b5a2f;
+  background: rgba(199, 164, 107, 0.14);
+  border-bottom: 1px solid rgba(199, 164, 107, 0.26);
+  flex-shrink: 0;
+}
+
+.sar-note--busy {
+  color: var(--color-navy);
+  background: rgba(28, 43, 69, 0.07);
+  border-color: rgba(28, 43, 69, 0.12);
+}
+
+.sar-error {
+  margin: 0;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #9f1239;
+  background: #fff1f2;
+  border-top: 1px solid #fecdd3;
+  flex-shrink: 0;
+}
+
+/* ── Message scroller ────────────────────────────────────────────────────── */
+.sar-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  background: #fbfaf7;
+}
+
+.sar-msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 86%;
+}
+
+.sar-msg--bot,
+.sar-msg--staff { align-self: flex-start; }
+.sar-msg--me    { align-self: flex-end; align-items: flex-end; }
+
+.sar-msg__who {
+  margin-bottom: 0.2rem;
+  padding-left: 0.15rem;
+  font-size: 0.66rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-maroon);
+}
+
+.sar-msg__bubble {
+  padding: 0.6rem 0.8rem;
+  font-size: 0.845rem;
+  line-height: 1.55;
+  border-radius: 12px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.sar-msg__bubble p { margin: 0; }
+.sar-msg__bubble p + p,
+.sar-msg__bubble p + .sar-msg__list { margin-top: 0.4rem; }
+
+.sar-msg__list {
+  margin: 0;
+  padding-left: 1.05rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.sar-msg--bot .sar-msg__bubble {
+  color: var(--color-text-dark);
+  background: #fff;
+  border: 1px solid rgba(28, 43, 69, 0.1);
+  border-bottom-left-radius: 4px;
+}
+
+.sar-msg--staff .sar-msg__bubble {
+  color: var(--color-text-dark);
+  background: #fff8ef;
+  border: 1px solid rgba(199, 164, 107, 0.45);
+  border-bottom-left-radius: 4px;
+}
+
+.sar-msg--me .sar-msg__bubble {
+  color: #fff;
+  background: var(--color-navy);
+  border-bottom-right-radius: 4px;
+}
+
+.sar-msg__time {
+  margin-top: 0.2rem;
+  padding: 0 0.2rem;
+  font-size: 0.64rem;
+  color: #94a0b3;
+}
+
+/* Typing indicator */
+.sar-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.75rem 0.9rem;
+}
+
+.sar-typing span {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #9aa7bd;
+  animation: sarBounce 1.3s infinite ease-in-out;
+}
+
+.sar-typing span:nth-child(2) { animation-delay: 0.16s; }
+.sar-typing span:nth-child(3) { animation-delay: 0.32s; }
+
+@keyframes sarBounce {
+  0%, 80%, 100% { transform: translateY(0);     opacity: 0.45; }
+  40%           { transform: translateY(-4px);  opacity: 1; }
+}
+
+/* Loading skeleton */
+.sar-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.sar-skel {
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f1efea 25%, #e7e4dd 50%, #f1efea 75%);
+  background-size: 200% 100%;
+  animation: sarShimmer 1.4s linear infinite;
+}
+
+.sar-skel:nth-child(2) { width: 72%; }
+.sar-skel:nth-child(3) { width: 58%; align-self: flex-end; }
+
+@keyframes sarShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Suggestion chips ────────────────────────────────────────────────────── */
+.sar-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+}
+
+.sar-chip {
+  padding: 0.42rem 0.7rem;
+  font: inherit;
+  font-size: 0.775rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  background: #fff;
+  border: 1px solid rgba(28, 43, 69, 0.16);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background 0.16s, border-color 0.16s;
+}
+
+.sar-chip:hover:not(:disabled) {
+  background: rgba(199, 164, 107, 0.14);
+  border-color: var(--color-gold);
+}
+
+.sar-chip:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Handoff banner ──────────────────────────────────────────────────────── */
+.sar-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--color-navy);
+  background: rgba(199, 164, 107, 0.15);
+  border: 1px solid rgba(199, 164, 107, 0.4);
+  border-radius: 10px;
+}
+
+.sar-banner--pending {
+  color: #14532d;
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.sar-banner__btn {
+  padding: 0.38rem 0.75rem;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-maroon);
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.sar-banner__btn:hover:not(:disabled) { background: #611b27; }
+.sar-banner__btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ── Composer ────────────────────────────────────────────────────────────── */
+.sar-composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding: 0.65rem 0.7rem;
+  background: #fff;
+  border-top: 1px solid rgba(28, 43, 69, 0.1);
+  flex-shrink: 0;
+}
+
+.sar-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 42px;
+  max-height: 110px;
+  padding: 0.6rem 0.75rem;
+  font-family: inherit;
+  /* 16px: below this iOS Safari zooms the page when the field takes focus. */
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-text-dark);
+  background: #fbfaf7;
+  border: 1.5px solid rgba(28, 43, 69, 0.15);
+  border-radius: 10px;
+  resize: none;
+  outline: none;
+  transition: border-color 0.16s, box-shadow 0.16s;
+}
+
+.sar-input:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(199, 164, 107, 0.18);
+}
+
+.sar-input:disabled { background: #f3f2ef; }
+
+.sar-send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px; height: 42px;
+  flex-shrink: 0;
+  color: #fff;
+  background: var(--color-maroon);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.16s, opacity 0.16s;
+}
+
+.sar-send:hover:not(:disabled) { background: #611b27; }
+.sar-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.sar-send:focus-visible,
+.sar-chip:focus-visible,
+.sar-banner__btn:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 1px;
+}
+
+/* ── Disclaimer ──────────────────────────────────────────────────────────── */
+.sar-disclaimer {
+  margin: 0;
+  padding: 0.5rem 0.8rem 0.65rem;
+  font-size: 0.68rem;
+  line-height: 1.45;
+  color: #77839a;
+  background: #fff;
+  border-top: 1px solid rgba(28, 43, 69, 0.06);
+  flex-shrink: 0;
+}
+
+.sar-link {
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  color: var(--color-maroon);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.sar-link:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Mobile ──────────────────────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .sar-launcher {
+    right: 1rem;
+    bottom: 1rem;
+    padding: 0;
+    width: 52px;
+    justify-content: center;
+  }
+
+  /* The pill label costs too much width on a phone; the icon carries it. */
+  .sar-launcher__label { display: none; }
+
+  /* Near-fullscreen sheet so the keyboard doesn't bury the composer. */
+  .sar-panel {
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    max-height: 88dvh;
+    border-radius: 16px 16px 0 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .sar-msg { max-width: 92%; }
+
+  .sar-gbtn { max-width: 124px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sar-panel,
+  .sar-skel,
+  .sar-typing span { animation: none; }
+  .sar-launcher { transition: none; }
+}

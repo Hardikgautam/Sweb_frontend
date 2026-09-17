@@ -554,7 +554,7 @@ export default function AppointmentsPage() {
               </div>
               <div>
                 <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Direct Phone</div>
-                <strong style={{ color: '#0b1a30' }}>{siteConfig.contact.phone}</strong>
+                <strong style={{ color: '#0b1a30' }}>{siteConfig.location?.admissionsHelpdesk || siteConfig.phone}</strong>
               </div>
             </div>
             <div className="appt-contact-item">
@@ -563,7 +563,7 @@ export default function AppointmentsPage() {
               </div>
               <div>
                 <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Admissions Desk</div>
-                <strong style={{ color: '#0b1a30' }}>{siteConfig.contact.email}</strong>
+                <strong style={{ color: '#0b1a30' }}>{siteConfig.location?.receptionEmail || siteConfig.email}</strong>
               </div>
             </div>
             <div className="appt-contact-item">

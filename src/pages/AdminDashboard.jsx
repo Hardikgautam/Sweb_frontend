@@ -32,6 +32,8 @@ import {
 import FeesAdminTab from '../components/admin/FeesAdminTab';
 import NewsletterAdminTab from '../components/admin/NewsletterAdminTab';
 import AnalyticsTab from '../components/admin/AnalyticsTab';
+import SaraswatiAdminTab from '../components/admin/SaraswatiAdminTab';
+import HumanRequestsTab from '../components/admin/HumanRequestsTab';
 import AppointmentsAdminTab from '../components/admin/AppointmentsAdminTab';
 import './AdminDashboard.css';
 
@@ -1491,7 +1493,7 @@ export default function AdminDashboard() {
   const { toasts, push: toast } = useToasts();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const validTabs = ['news', 'events', 'holidays', 'enquiries', 'fees', 'newsletter', 'analytics', 'appointments'];
+  const validTabs = ['news', 'events', 'holidays', 'enquiries', 'fees', 'newsletter', 'analytics', 'appointments', 'saraswati', 'chat-requests'];
   const tabParam = searchParams.get('tab');
   const [activeTab, setActiveTab] = useState(() => {
     return validTabs.includes(tabParam) ? tabParam : 'news';
@@ -1502,6 +1504,13 @@ export default function AdminDashboard() {
       setActiveTab(tabParam);
     }
   }, [tabParam, activeTab]);
+
+  // The tab rail scrolls horizontally, so the active tab must be brought into
+  // view — both on click and when arriving via ?tab=... deep link.
+  useEffect(() => {
+    const el = document.querySelector('.adm-tab-btn.active');
+    el?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+  }, [activeTab]);
 
   const handleTabChange = (newTab) => {
     setActiveTab(newTab);
@@ -1563,6 +1572,8 @@ export default function AdminDashboard() {
   // Newsletter Subscribers state
   const [newsletterCount, setNewsletterCount] = useState(0);
   const [appointmentsCount, setAppointmentsCount] = useState(0);
+  // Visitors waiting on a human reply in Saraswati AI chat.
+  const [chatRequestsCount, setChatRequestsCount] = useState(0);
 
   const debounceRef = useRef(null);
   const hDebounceRef = useRef(null);
@@ -2002,6 +2013,27 @@ export default function AdminDashboard() {
             Appointments
             <span className="adm-tab-badge" style={appointmentsCount > 0 ? { background: '#d4af37', color: '#0b1a30', fontWeight: 800 } : {}}>
               {appointmentsCount}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className={`adm-tab-btn ${activeTab === 'saraswati' ? 'active' : ''}`}
+            onClick={() => handleTabChange('saraswati')}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2 4 6v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V6l-8-4z"/><path d="M9.2 11.2 12 14l3.4-4"/></svg>
+            Saraswati AI
+          </button>
+
+          <button
+            type="button"
+            className={`adm-tab-btn ${activeTab === 'chat-requests' ? 'active' : ''}`}
+            onClick={() => handleTabChange('chat-requests')}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            Chat Requests
+            <span className="adm-tab-badge" style={chatRequestsCount > 0 ? { background: '#7A2333', color: '#fff', fontWeight: 800 } : {}}>
+              {chatRequestsCount}
             </span>
           </button>
         </div>
@@ -2559,6 +2591,24 @@ export default function AdminDashboard() {
             token={token}
             toast={toast}
             onCountUpdate={(count) => setAppointmentsCount(count)}
+          />
+        )}
+
+        {/* ========================================================= */}
+        {/* TAB 9: SARASWATI AI KNOWLEDGE BASE                        */}
+        {/* ========================================================= */}
+        {activeTab === 'saraswati' && (
+          <SaraswatiAdminTab token={token} toast={toast} />
+        )}
+
+        {/* ========================================================= */}
+        {/* TAB 10: CHAT REQUESTS / HUMAN ASSISTANCE                  */}
+        {/* ========================================================= */}
+        {activeTab === 'chat-requests' && (
+          <HumanRequestsTab
+            token={token}
+            toast={toast}
+            onCountUpdate={(count) => setChatRequestsCount(count)}
           />
         )}
 

@@ -2,7 +2,7 @@
 // Sticky top navbar with brand, nav links, "More" dropdown, actions, and mobile hamburger.
 // Shows Login button when no JWT exists; Admin Dashboard + Logout when logged in.
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { siteConfig } from '../config/siteConfig';
 import { openEnquiryModal } from '../api/enquiries';
@@ -17,12 +17,50 @@ export default function Navbar() {
   const { pathname } = useLocation();
   const navigate     = useNavigate();
   const { isAuthenticated, logout } = useAuth();
+  const moreRef      = useRef(null);
 
   const closeMenu = () => {
     setMenuOpen(false);
     setDesktopMoreOpen(false);
     setMobileMoreOpen(false);
   };
+
+  // The dropdown used to open on mouseenter AND toggle on click. Those two
+  // fought each other: clicking to dismiss set the state false while the
+  // pointer was still inside, so the next mouse movement (or a second click)
+  // re-opened it — the "have to click several times" behaviour. It is now
+  // click-driven only, and closes on an outside click, on Escape, or when the
+  // route changes.
+  useEffect(() => {
+    if (!desktopMoreOpen) return undefined;
+
+    const onPointerDown = (e) => {
+      if (moreRef.current && !moreRef.current.contains(e.target)) {
+        setDesktopMoreOpen(false);
+      }
+    };
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setDesktopMoreOpen(false);
+        // Return focus to the trigger so keyboard users aren't stranded.
+        moreRef.current?.querySelector('.navbar__dropdown-btn')?.focus();
+      }
+    };
+
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [desktopMoreOpen]);
+
+  // Navigating away must never leave a panel hanging open.
+  useEffect(() => {
+    setDesktopMoreOpen(false);
+    setMobileMoreOpen(false);
+    setMenuOpen(false);
+  }, [pathname]);
 
   const handleLogout = () => {
     closeMenu();
@@ -75,11 +113,7 @@ export default function Navbar() {
           })}
 
           {/* ── "More" Dropdown ───────────────────────────────────────── */}
-          <li
-            className="navbar__dropdown-wrapper"
-            onMouseEnter={() => setDesktopMoreOpen(true)}
-            onMouseLeave={() => setDesktopMoreOpen(false)}
-          >
+          <li className="navbar__dropdown-wrapper" ref={moreRef}>
             <button
               type="button"
               className={`navbar__link navbar__dropdown-btn ${isMoreActive ? 'active' : ''}`}

@@ -44,6 +44,48 @@ export default function SubjectPage({ data: propData }) {
   const [videoFailed, setVideoFailed] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
 
+  // Hero video autoplay. This must run before the "subject not found" early
+  // return below: a hook placed after it changes hook order between a valid
+  // and an invalid /subjects/:id route, which React treats as an error and
+  // which crashed the page when navigating from one to the other.
+  useEffect(() => {
+    const vid = videoRef.current;
+    if (!vid || !subjectData) return undefined;
+
+    // Explicit DOM properties — required by several browsers' autoplay policy.
+    vid.muted = true;
+    vid.defaultMuted = true;
+    vid.playsInline = true;
+
+    const playPromise = vid.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => setVideoPlaying(true))
+        .catch((err) => {
+          console.warn(
+            `[SubjectPage] Autoplay blocked for ${subjectData.title}; using the static hero image instead:`,
+            err,
+          );
+          setVideoFailed(true);
+        });
+    }
+
+    const handleVisibility = () => {
+      if (!document.hidden && vid.paused && !videoFailed) {
+        vid.play().catch(() => {});
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, [subjectData, videoFailed]);
+
+  // A different subject means a different video — clear the previous failure
+  // so the new one gets its own chance to play.
+  useEffect(() => {
+    setVideoFailed(false);
+    setVideoPlaying(false);
+  }, [subjectData?.video]);
+
   // Subject Not Found Fallback UI
   if (!subjectData) {
     return (
@@ -111,41 +153,6 @@ export default function SubjectPage({ data: propData }) {
 
   const { title, kicker, levels, video, poster, fallbackImage, intro, stats, gradeBands, highlights, cta } = subjectData;
   const heroImgSrc = poster || fallbackImage || publicUrl('images/image1.jpg');
-
-  // Ensure autoplay works cross-browser and resumes after tab switch
-  useEffect(() => {
-    const vid = videoRef.current;
-    if (!vid) return;
-
-    // Critical cross-browser fix: explicitly set DOM properties for autoplay policy
-    vid.muted = true;
-    vid.defaultMuted = true;
-    vid.playsInline = true;
-
-    // Reset failure state on data/video prop change
-    setVideoFailed(false);
-    setVideoPlaying(false);
-
-    const playPromise = vid.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          setVideoPlaying(true);
-        })
-        .catch((err) => {
-          console.warn(`[SubjectPage] Autoplay policy prevented video playback for ${title}, falling back to static hero image:`, err);
-          setVideoFailed(true);
-        });
-    }
-
-    const handleVisibility = () => {
-      if (!document.hidden && vid.paused && !videoFailed) {
-        vid.play().catch(() => {});
-      }
-    };
-    document.addEventListener('visibilitychange', handleVisibility);
-    return () => document.removeEventListener('visibilitychange', handleVisibility);
-  }, [video, title, videoFailed]);
 
   return (
     <main className="subject-page">
