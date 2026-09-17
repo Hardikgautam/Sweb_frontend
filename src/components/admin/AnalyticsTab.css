@@ -226,7 +226,10 @@
 
 .an-chart-container {
   width: 100%;
-  min-height: 330px;
+  min-width: 0;
+  height: 340px;
+  min-height: 340px;
+  position: relative;
 }
 
 /* Custom Tooltip */

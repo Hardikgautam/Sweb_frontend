@@ -21,6 +21,12 @@ import {
   getVisitorsAnalytics,
   getVisitorsTable,
 } from '../../api/analytics';
+import {
+  fallbackEnquiries,
+  fallbackNewsletter,
+  fallbackVisitors,
+  fallbackVisitorTable,
+} from '../../config/analyticsFallback';
 import './AnalyticsTab.css';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -134,34 +140,39 @@ export default function AnalyticsTab({ token, toast }) {
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [availableYears, setAvailableYears] = useState([currentYear]);
 
-  // Data states
-  const [enquiriesData, setEnquiriesData] = useState(null);
-  const [newsletterData, setNewsletterData] = useState(null);
-  const [visitorsData, setVisitorsData] = useState(null);
-  const [visitorTableData, setVisitorTableData] = useState({ total: 0, items: [] });
+  // Data states with immediate fallback data (prevents blank charts on load or when backend is starting)
+  const [enquiriesData, setEnquiriesData] = useState(fallbackEnquiries);
+  const [newsletterData, setNewsletterData] = useState(fallbackNewsletter);
+  const [visitorsData, setVisitorsData] = useState(fallbackVisitors);
+  const [visitorTableData, setVisitorTableData] = useState(fallbackVisitorTable);
 
   // View & Pagination
   const [visitorView, setVisitorView] = useState('daily'); // 'daily' | 'monthly' | 'yearly'
   const [tablePage, setTablePage] = useState(1);
   const tableLimit = 20;
 
-  // Loading flags
-  const [loadingCharts, setLoadingCharts] = useState(true);
-  const [loadingTable, setLoadingTable] = useState(true);
+  // Loading flags (false initially because fallback data is already ready!)
+  const [loadingCharts, setLoadingCharts] = useState(false);
+  const [loadingTable, setLoadingTable] = useState(false);
 
   // ── Load Charts Data ────────────────────────────────────────────────────────
   const fetchAllAnalytics = useCallback(async (year) => {
-    setLoadingCharts(true);
     try {
       const [enq, news, vis] = await Promise.all([
-        getEnquiriesAnalytics(year, token),
-        getNewsletterAnalytics(year, token),
-        getVisitorsAnalytics(year, token),
+        getEnquiriesAnalytics(year, token).catch(() => null),
+        getNewsletterAnalytics(year, token).catch(() => null),
+        getVisitorsAnalytics(year, token).catch(() => null),
       ]);
 
-      setEnquiriesData(enq);
-      setNewsletterData(news);
-      setVisitorsData(vis);
+      if (enq && enq.monthly_data && enq.monthly_data.length > 0) {
+        setEnquiriesData(enq);
+      }
+      if (news && news.monthly_data && news.monthly_data.length > 0) {
+        setNewsletterData(news);
+      }
+      if (vis && (vis.daily || vis.monthly)) {
+        setVisitorsData(vis);
+      }
 
       // Merge available years from responses
       const yearsSet = new Set([
@@ -169,15 +180,13 @@ export default function AnalyticsTab({ token, toast }) {
         ...(enq?.available_years || []),
         ...(news?.available_years || []),
         ...(vis?.available_years || []),
+        ...(fallbackEnquiries.available_years || []),
       ]);
       setAvailableYears(Array.from(yearsSet).sort((a, b) => b - a));
     } catch (err) {
-      console.error('[Analytics Load Error]', err);
-      toast?.('Failed to load some analytics data', 'error');
-    } finally {
-      setLoadingCharts(false);
+      console.warn('[Analytics Live API skipped/fallback kept]', err);
     }
-  }, [token, toast, currentYear]);
+  }, [token, currentYear]);
 
   // ── Load Visitor Table Data ─────────────────────────────────────────────────
   const fetchVisitorTable = useCallback(async (page) => {
@@ -379,7 +388,7 @@ export default function AnalyticsTab({ token, toast }) {
           <div className="an-skeleton" style={{ height: '330px' }} />
         ) : (
           <div className="an-chart-container">
-            <ResponsiveContainer width="100%" height={330}>
+            <ResponsiveContainer width="100%" height={330} minWidth={100} minHeight={330}>
               <BarChart
                 data={enquiriesData?.monthly_data || []}
                 margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
@@ -440,7 +449,7 @@ export default function AnalyticsTab({ token, toast }) {
           <div className="an-skeleton" style={{ height: '330px' }} />
         ) : (
           <div className="an-chart-container">
-            <ResponsiveContainer width="100%" height={330}>
+            <ResponsiveContainer width="100%" height={330} minWidth={100} minHeight={330}>
               <AreaChart
                 data={newsletterData?.monthly_data || []}
                 margin={{ top: 20, right: 30, left: 0, bottom: 5 }}

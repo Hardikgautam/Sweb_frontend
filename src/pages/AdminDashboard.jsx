@@ -3,7 +3,7 @@
 // Protected by ProtectedRoute. Uses AuthContext for token.
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
   getNews,
@@ -1485,8 +1485,27 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const { toasts, push: toast } = useToasts();
 
-  // Navigation tab: 'news' | 'holidays'
-  const [activeTab, setActiveTab] = useState('news');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const validTabs = ['news', 'events', 'holidays', 'enquiries', 'fees', 'newsletter', 'analytics'];
+  const tabParam = searchParams.get('tab');
+  const [activeTab, setActiveTab] = useState(() => {
+    return validTabs.includes(tabParam) ? tabParam : 'news';
+  });
+
+  useEffect(() => {
+    if (tabParam && validTabs.includes(tabParam) && tabParam !== activeTab) {
+      setActiveTab(tabParam);
+    }
+  }, [tabParam, activeTab]);
+
+  const handleTabChange = (newTab) => {
+    setActiveTab(newTab);
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      next.set('tab', newTab);
+      return next;
+    }, { replace: true });
+  };
 
   // News table state
   const [articles, setArticles]   = useState([]);
@@ -1879,6 +1898,15 @@ export default function AdminDashboard() {
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
             Fees &amp; Scholarships
           </Link>
+          <button
+            type="button"
+            className="adm-topbar__view-site"
+            style={{ background: 'rgba(212, 175, 55, 0.15)', borderColor: '#d4af37', color: '#d4af37', cursor: 'pointer' }}
+            onClick={() => handleTabChange('analytics')}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Analytics Graphs
+          </button>
           <button className="adm-topbar__logout" onClick={handleLogout} aria-label="Log out of admin panel">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
             Logout
@@ -1892,7 +1920,7 @@ export default function AdminDashboard() {
           <button
             type="button"
             className={`adm-tab-btn ${activeTab === 'news' ? 'active' : ''}`}
-            onClick={() => setActiveTab('news')}
+            onClick={() => handleTabChange('news')}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             News Articles
@@ -1902,7 +1930,7 @@ export default function AdminDashboard() {
           <button
             type="button"
             className={`adm-tab-btn ${activeTab === 'events' ? 'active' : ''}`}
-            onClick={() => setActiveTab('events')}
+            onClick={() => handleTabChange('events')}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             Upcoming Events
@@ -1912,7 +1940,7 @@ export default function AdminDashboard() {
           <button
             type="button"
             className={`adm-tab-btn ${activeTab === 'holidays' ? 'active' : ''}`}
-            onClick={() => setActiveTab('holidays')}
+            onClick={() => handleTabChange('holidays')}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             Holidays &amp; Vacations
@@ -1922,7 +1950,7 @@ export default function AdminDashboard() {
           <button
             type="button"
             className={`adm-tab-btn ${activeTab === 'enquiries' ? 'active' : ''}`}
-            onClick={() => setActiveTab('enquiries')}
+            onClick={() => handleTabChange('enquiries')}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Admissions Enquiries
@@ -1932,7 +1960,7 @@ export default function AdminDashboard() {
           <button
             type="button"
             className={`adm-tab-btn ${activeTab === 'fees' ? 'active' : ''}`}
-            onClick={() => setActiveTab('fees')}
+            onClick={() => handleTabChange('fees')}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
             Fees &amp; Scholarships
@@ -1942,7 +1970,7 @@ export default function AdminDashboard() {
           <button
             type="button"
             className={`adm-tab-btn ${activeTab === 'newsletter' ? 'active' : ''}`}
-            onClick={() => setActiveTab('newsletter')}
+            onClick={() => handleTabChange('newsletter')}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Newsletter Subscribers
@@ -1952,7 +1980,7 @@ export default function AdminDashboard() {
           <button
             type="button"
             className={`adm-tab-btn ${activeTab === 'analytics' ? 'active' : ''}`}
-            onClick={() => setActiveTab('analytics')}
+            onClick={() => handleTabChange('analytics')}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
             Analytics &amp; Visitors
