@@ -4,6 +4,7 @@
 
 import { heroContent } from '../config/heroContent';
 import { openEnquiryModal } from '../api/enquiries';
+import { openAppointmentModal } from '../api/appointments';
 import Button from './Button';
 import './Hero.css';
 
@@ -58,8 +59,11 @@ export default function Hero() {
             </Button>
             <Button
               variant="secondary-maroon"
-              as="a"
-              href={ctaSecondary.href}
+              as="button"
+              onClick={(e) => {
+                e.preventDefault();
+                openAppointmentModal('campus_tour');
+              }}
               id="hero-cta-secondary"
             >
               {ctaSecondary.label}

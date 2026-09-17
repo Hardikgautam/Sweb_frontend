@@ -2,6 +2,20 @@
 import client from './client';
 
 /**
+ * Dispatch global event to open the dedicated Appointment / Campus Tour modal.
+ * @param {string} initialPurpose — e.g. 'campus_tour', 'admission_meeting', etc.
+ */
+export function openAppointmentModal(initialPurpose = 'campus_tour') {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(
+      new CustomEvent('open-appointment-modal', {
+        detail: { purpose: initialPurpose },
+      })
+    );
+  }
+}
+
+/**
  * Public: Submit a campus appointment/visit booking.
  * @param {object} data
  */

@@ -2,7 +2,6 @@
 // Dedicated "Visit Campus" public page
 import { Link } from 'react-router-dom';
 import VisitCampusSection from '../components/VisitCampusSection';
-import { openEnquiryModal } from '../api/enquiries';
 import './VisitCampusPage.css';
 
 export default function VisitCampusPage() {

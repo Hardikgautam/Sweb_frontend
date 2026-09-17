@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import EnquiryModal from './components/EnquiryModal';
+import AppointmentModal from './components/AppointmentModal';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import EBooks from './pages/EBooks';
@@ -75,6 +76,7 @@ export default function App() {
         </Routes>
         <Footer />
         <EnquiryModal />
+        <AppointmentModal />
       </BrowserRouter>
     </AuthProvider>
   );

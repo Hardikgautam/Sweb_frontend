@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { siteConfig } from '../config/siteConfig';
 import { openEnquiryModal } from '../api/enquiries';
+import { openAppointmentModal } from '../api/appointments';
 import Button from './Button';
 import './VisitCampusSection.css';
 
@@ -178,7 +179,7 @@ export default function VisitCampusSection({ isHomeSection = false }) {
                     as="button"
                     onClick={(e) => {
                       e.preventDefault();
-                      openEnquiryModal();
+                      openAppointmentModal('campus_tour');
                     }}
                   >
                     Book a Campus Tour
