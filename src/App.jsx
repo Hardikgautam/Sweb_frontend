@@ -11,6 +11,7 @@ import ClassesPage from './pages/ClassesPage';
 import NewsPage from './pages/NewsPage';
 import FeesPage from './pages/FeesPage';
 import VisitCampusPage from './pages/VisitCampusPage';
+import AppointmentsPage from './pages/AppointmentsPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -43,6 +44,10 @@ export default function App() {
           {/* ── Visit Campus & Directions page ───────────────── */}
           <Route path="/visit-campus" element={<VisitCampusPage />} />
           <Route path="/visit" element={<VisitCampusPage />} />
+
+          {/* ── Book Campus Appointment page ─────────────────── */}
+          <Route path="/appointments" element={<AppointmentsPage />} />
+          <Route path="/book-appointment" element={<AppointmentsPage />} />
 
           {/* ── Admin routes ─────────────────────────────────── */}
           <Route path="/admin/login" element={<AdminLogin />} />

@@ -30,7 +30,7 @@ export default function Navbar() {
     navigate('/');
   };
 
-  const isMoreActive = pathname.startsWith('/ebooks') || pathname.startsWith('/e-books') || pathname.startsWith('/calendar');
+  const isMoreActive = pathname.startsWith('/ebooks') || pathname.startsWith('/e-books') || pathname.startsWith('/calendar') || pathname.startsWith('/appointments') || pathname.startsWith('/book-appointment');
 
   return (
     <nav className="navbar" role="navigation" aria-label="Main navigation" style={{ position: 'relative' }}>
@@ -158,6 +158,26 @@ export default function Navbar() {
                 <div>
                   <div className="navbar__dropdown-title">Visit Campus</div>
                   <div className="navbar__dropdown-desc">Location, Map &amp; Directions</div>
+                </div>
+              </Link>
+
+              <Link
+                to="/appointments"
+                className={`navbar__dropdown-item ${pathname === '/appointments' || pathname === '/book-appointment' ? 'active' : ''}`}
+                onClick={() => setDesktopMoreOpen(false)}
+                role="menuitem"
+              >
+                <div className="navbar__dropdown-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="navbar__dropdown-title">Book Appointment</div>
+                  <div className="navbar__dropdown-desc">Schedule Campus Tour &amp; Counseling</div>
                 </div>
               </Link>
             </div>
@@ -307,6 +327,18 @@ export default function Navbar() {
                 <div>
                   <div className="navbar__mobile-sublink-title">Visit Campus</div>
                   <div className="navbar__mobile-sublink-desc">Location, Map &amp; Directions</div>
+                </div>
+              </Link>
+
+              <Link
+                to="/appointments"
+                className={`navbar__mobile-sublink ${pathname === '/appointments' || pathname === '/book-appointment' ? 'active' : ''}`}
+                onClick={closeMenu}
+              >
+                <span className="navbar__mobile-sublink-icon">📅</span>
+                <div>
+                  <div className="navbar__mobile-sublink-title">Book Appointment</div>
+                  <div className="navbar__mobile-sublink-desc">Schedule Campus Tour &amp; Counseling</div>
                 </div>
               </Link>
             </div>

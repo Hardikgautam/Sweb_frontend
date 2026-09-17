@@ -32,6 +32,7 @@ import {
 import FeesAdminTab from '../components/admin/FeesAdminTab';
 import NewsletterAdminTab from '../components/admin/NewsletterAdminTab';
 import AnalyticsTab from '../components/admin/AnalyticsTab';
+import AppointmentsAdminTab from '../components/admin/AppointmentsAdminTab';
 import './AdminDashboard.css';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1486,7 +1487,7 @@ export default function AdminDashboard() {
   const { toasts, push: toast } = useToasts();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const validTabs = ['news', 'events', 'holidays', 'enquiries', 'fees', 'newsletter', 'analytics'];
+  const validTabs = ['news', 'events', 'holidays', 'enquiries', 'fees', 'newsletter', 'analytics', 'appointments'];
   const tabParam = searchParams.get('tab');
   const [activeTab, setActiveTab] = useState(() => {
     return validTabs.includes(tabParam) ? tabParam : 'news';
@@ -1557,6 +1558,7 @@ export default function AdminDashboard() {
 
   // Newsletter Subscribers state
   const [newsletterCount, setNewsletterCount] = useState(0);
+  const [appointmentsCount, setAppointmentsCount] = useState(0);
 
   const debounceRef = useRef(null);
   const hDebounceRef = useRef(null);
@@ -1985,6 +1987,18 @@ export default function AdminDashboard() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
             Analytics &amp; Visitors
             <span className="adm-tab-badge" style={{ background: '#d4af37', color: '#0b1a30', fontWeight: 800 }}>LIVE</span>
+          </button>
+
+          <button
+            type="button"
+            className={`adm-tab-btn ${activeTab === 'appointments' ? 'active' : ''}`}
+            onClick={() => handleTabChange('appointments')}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Appointments
+            <span className="adm-tab-badge" style={appointmentsCount > 0 ? { background: '#d4af37', color: '#0b1a30', fontWeight: 800 } : {}}>
+              {appointmentsCount}
+            </span>
           </button>
         </div>
       </div>
@@ -2530,6 +2544,17 @@ export default function AdminDashboard() {
           <AnalyticsTab
             token={token}
             toast={toast}
+          />
+        )}
+
+        {/* ========================================================= */}
+        {/* TAB 8: APPOINTMENTS & CAMPUS VISITS                       */}
+        {/* ========================================================= */}
+        {activeTab === 'appointments' && (
+          <AppointmentsAdminTab
+            token={token}
+            toast={toast}
+            onCountUpdate={(count) => setAppointmentsCount(count)}
           />
         )}
 

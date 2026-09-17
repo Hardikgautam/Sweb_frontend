@@ -83,13 +83,9 @@ export default function VisitCampusPage() {
             <p>Tours run every working morning. Share your preferred date and class of interest, and our admissions coordinators will confirm your session.</p>
           </div>
           <div className="visit-bottom-cta__actions">
-            <button
-              type="button"
-              className="visit-cta-btn visit-cta-btn--gold"
-              onClick={() => openEnquiryModal()}
-            >
-              Book In-Person Tour
-            </button>
+            <Link to="/appointments" className="visit-cta-btn visit-cta-btn--gold">
+              Book In-Person Tour / Appointment
+            </Link>
             <Link to="/fees-scholarships" className="visit-cta-btn visit-cta-btn--outline">
               View Fee Structure
             </Link>
