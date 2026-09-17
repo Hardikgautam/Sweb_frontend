@@ -35,4 +35,4 @@ testimonial-1.jpg    — Parent/student headshot (square, ~200×200)
 testimonial-2.jpg
 testimonial-3.jpg
 
-FORMATS: JPG or PNG. Keep file sizes reasonable (hero < 800 KB, others < 300 KB).
+FORMATS: JPG or PNG. Keep file sizes reasonable (hero < 800 KB, others < 300 KB). 
