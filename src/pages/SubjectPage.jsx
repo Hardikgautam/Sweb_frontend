@@ -248,7 +248,9 @@ export default function SubjectPage({ data: propData }) {
                 <ul className="sp-band__points">
                   {band.points.map((pt, j) => (
                     <li key={j}>
-                      <span className="sp-band__bullet" aria-hidden="true">◆</span>
+                      <span className="sp-band__bullet" aria-hidden="true">
+                        <svg width="6" height="6" viewBox="0 0 6 6" fill="currentColor" aria-hidden="true"><circle cx="3" cy="3" r="3"/></svg>
+                      </span>
                       {pt}
                     </li>
                   ))}

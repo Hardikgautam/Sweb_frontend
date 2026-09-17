@@ -255,7 +255,11 @@ export default function NewsPage() {
           {/* Error */}
           {!loading && error && (
             <div className="news-page__error" role="alert">
-              <div className="news-page__error-icon" aria-hidden="true">⚠️</div>
+              <div className="news-page__error-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+              </div>
               <p className="news-page__error-title">Unable to Load News</p>
               <p className="news-page__error-sub">{error}</p>
               <button

@@ -210,7 +210,7 @@ function UploadForm({ token, onCreated }) {
           <div className="adm-checkbox-row">
             <input type="checkbox" id="up-pin" checked={form.is_pinned}
               onChange={e => setForm(p => ({...p, is_pinned: e.target.checked}))} />
-            <label htmlFor="up-pin">⭐ Pin this article (shows first)</label>
+            <label htmlFor="up-pin">Pin this article (shows first)</label>
           </div>
         </div>
 
@@ -343,7 +343,7 @@ function EditNewsModal({ article, token, onSaved, onClose }) {
             <div className="adm-checkbox-row">
               <input type="checkbox" id="edit-pin" checked={form.is_pinned}
                 onChange={e => setForm(p => ({...p, is_pinned: e.target.checked}))} />
-              <label htmlFor="edit-pin">⭐ Pin this article</label>
+              <label htmlFor="edit-pin">Pin this article</label>
             </div>
 
             <div className="adm-field">
@@ -461,7 +461,7 @@ function NewsRow({ article, token, onEdit, onDelete, onPinToggle }) {
       <td className="adm-desc-cell" title={article.description}>{article.description}</td>
       <td>
         <span className={`adm-pin-badge adm-pin-badge--${article.is_pinned ? 'yes' : 'no'}`}>
-          {article.is_pinned ? '⭐ Pinned' : '— No'}
+          {article.is_pinned ? 'Pinned' : '— No'}
         </span>
       </td>
       <td className="adm-date-cell">{fmtDate(article.created_at)}</td>
@@ -474,7 +474,7 @@ function NewsRow({ article, token, onEdit, onDelete, onPinToggle }) {
             title={article.is_pinned ? 'Unpin' : 'Pin'}
             aria-label={article.is_pinned ? `Unpin: ${article.title}` : `Pin: ${article.title}`}
           >
-            {pinLoading ? <span className="adm-btn__spinner" aria-hidden="true" /> : (article.is_pinned ? '📌 Unpin' : '📌 Pin')}
+            {pinLoading ? <span className="adm-btn__spinner" aria-hidden="true" /> : (article.is_pinned ? 'Unpin' : 'Pin')}
           </button>
           <button
             className="adm-btn adm-btn--icon adm-btn--edit"
@@ -1273,14 +1273,14 @@ function EnquiryStatusBadges({ enquiry }) {
   if (!enquiry.is_valid_phone) {
     badges.push(
       <span key="phone" className="adm-badge adm-badge--invalid" title="Invalid Indian phone number">
-        ⚠️ Invalid Phone
+        Invalid Phone
       </span>
     );
   }
   if (!enquiry.is_valid_email) {
     badges.push(
       <span key="email" className="adm-badge adm-badge--invalid" title="Invalid email address format">
-        ⚠️ Invalid Email
+        Invalid Email
       </span>
     );
   }
@@ -1294,7 +1294,7 @@ function EnquiryStatusBadges({ enquiry }) {
   if (enquiry.is_valid_phone && enquiry.is_valid_email && !enquiry.is_duplicate) {
     badges.push(
       <span key="valid" className="adm-badge adm-badge--valid">
-        ✓ Valid
+        Valid
       </span>
     );
   }
@@ -1429,7 +1429,9 @@ function EnquiryRow({ enquiry, visibleCols, onDelete }) {
               {enquiry.phone || '—'}
             </a>
             {!enquiry.is_valid_phone && (
-              <span title="Invalid Indian mobile number" style={{color: '#b91c1c', cursor: 'help', fontSize: '0.85rem'}}>⚠️</span>
+              <span title="Invalid Indian mobile number" style={{color: '#b91c1c', cursor: 'help', fontSize: '0.85rem'}} aria-label="Invalid">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
             )}
           </div>
         </td>
@@ -1441,7 +1443,9 @@ function EnquiryRow({ enquiry, visibleCols, onDelete }) {
               {enquiry.email || '—'}
             </a>
             {!enquiry.is_valid_email && (
-              <span title="Invalid email address format" style={{color: '#b91c1c', cursor: 'help', fontSize: '0.85rem'}}>⚠️</span>
+              <span title="Invalid email address format" style={{color: '#b91c1c', cursor: 'help', fontSize: '0.85rem'}} aria-label="Invalid">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </span>
             )}
           </div>
         </td>

@@ -92,7 +92,12 @@ export default function Hero() {
 
             {/* Circular badge overlapping bottom-left of image */}
             <div className="hero__badge" aria-label={badge.lines.join(' ')}>
-              {badge.icon && <span className="hero__badge-icon" aria-hidden="true">{badge.icon}</span>}
+              <span className="hero__badge-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+              </span>
               {badge.lines.map((line, idx) => (
                 <span key={idx} className="hero__badge-line">{line}</span>
               ))}

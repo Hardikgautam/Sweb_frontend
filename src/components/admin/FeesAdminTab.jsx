@@ -541,7 +541,7 @@ export default function FeesAdminTab({ token, toast, onCountsUpdate }) {
                     <div className="adm-sch-card__header">
                       <div className="adm-sch-card__badges">
                         <span className={`adm-status-chip ${sch.is_active ? 'active' : 'inactive'}`}>
-                          {sch.is_active ? '● Active' : '○ Inactive'}
+                          {sch.is_active ? 'Active' : 'Inactive'}
                         </span>
                         <span className="adm-order-tag">Order: #{sch.display_order}</span>
                       </div>
@@ -553,7 +553,7 @@ export default function FeesAdminTab({ token, toast, onCountsUpdate }) {
                           title="Move Up"
                           onClick={() => handleReorderScholarship(sch, -1)}
                         >
-                          ▲
+                          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,1 9,9 1,9"/></svg>
                         </button>
                         <button
                           type="button"
@@ -561,7 +561,7 @@ export default function FeesAdminTab({ token, toast, onCountsUpdate }) {
                           title="Move Down"
                           onClick={() => handleReorderScholarship(sch, 1)}
                         >
-                          ▼
+                          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><polygon points="5,9 9,1 1,1"/></svg>
                         </button>
                       </div>
                     </div>

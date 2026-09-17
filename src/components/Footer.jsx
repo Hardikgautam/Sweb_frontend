@@ -201,7 +201,7 @@ export default function Footer() {
                           <p className="footer__newsletter-text">{col.text}</p>
                           {subscribed ? (
                             <p className="footer__newsletter-success">
-                              ✓ Thank you for subscribing to updates!
+                              Thank you for subscribing to updates!
                             </p>
                           ) : (
                             <form className="footer__newsletter-form" onSubmit={handleSubscribe}>

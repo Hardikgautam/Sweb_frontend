@@ -40,7 +40,7 @@ export const heroContent = {
 
   // Circular badge overlapping the hero image
   badge: {
-    icon: "🏫",
+    icon: null,
     lines: [
       "CBSE",
       "EST. 1998",

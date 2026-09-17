@@ -103,7 +103,9 @@ export default function EnquiryModal({ isOpen: controlledIsOpen, onClose: contro
         <div className="enquiry-modal__body">
           {success ? (
             <div className="enquiry-success">
-              <div className="enquiry-success__icon" aria-hidden="true">✓</div>
+              <div className="enquiry-success__icon" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
               <h3 className="enquiry-success__title">Enquiry Received</h3>
               <p className="enquiry-success__body">
                 Thank you, <strong>{formData.parent_name}</strong>! We have received your admission enquiry for{' '}

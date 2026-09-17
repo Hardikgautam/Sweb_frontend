@@ -223,28 +223,28 @@ export default function HolidayCalendar() {
                 className={`hcal-pill hcal-pill--vacation ${filter === 'vacation' ? 'active' : ''}`}
                 onClick={() => setFilter('vacation')}
               >
-                🏖️ Vacations &amp; Breaks <span className="hcal-pill__count">{counts.vacations}</span>
+                Vacations &amp; Breaks <span className="hcal-pill__count">{counts.vacations}</span>
               </button>
               <button
                 type="button"
                 className={`hcal-pill hcal-pill--exam ${filter === 'exam' ? 'active' : ''}`}
                 onClick={() => setFilter('exam')}
               >
-                📝 Exams <span className="hcal-pill__count">{counts.exams}</span>
+                Exams <span className="hcal-pill__count">{counts.exams}</span>
               </button>
               <button
                 type="button"
                 className={`hcal-pill hcal-pill--national ${filter === 'national' ? 'active' : ''}`}
                 onClick={() => setFilter('national')}
               >
-                🇮🇳 National Holidays <span className="hcal-pill__count">{counts.national}</span>
+                National Holidays <span className="hcal-pill__count">{counts.national}</span>
               </button>
               <button
                 type="button"
                 className={`hcal-pill hcal-pill--event ${filter === 'event' ? 'active' : ''}`}
                 onClick={() => setFilter('event')}
               >
-                🎉 School Events <span className="hcal-pill__count">{counts.events}</span>
+                School Events <span className="hcal-pill__count">{counts.events}</span>
               </button>
             </div>
 
@@ -295,7 +295,7 @@ export default function HolidayCalendar() {
                 onNext={goNextMonth}
               />
               <p className="hcal-grid-note">
-                💡 Showing holidays and vacation periods. Switch to <strong>Timeline View</strong> for the combined event and exam schedule.
+                Showing holidays and vacation periods. Switch to <strong>Timeline View</strong> for the combined event and exam schedule.
               </p>
             </section>
           )}
@@ -315,7 +315,14 @@ export default function HolidayCalendar() {
 
               {!loading && filteredItems.length === 0 && (
                 <div className="hcal-empty-state">
-                  <span className="hcal-empty-icon" aria-hidden="true">🗓️</span>
+                  <span className="hcal-empty-icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                      <line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/>
+                      <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                  </span>
                   <h3>No calendar entries found</h3>
                   <p>Try adjusting your search query or selecting a different category filter.</p>
                 </div>
@@ -339,7 +346,7 @@ export default function HolidayCalendar() {
                           <div className="hcal-card__subdate">
                             {item.isRange ? (
                               <span className="hcal-card__duration-pill">
-                                ⏳ {item.durationDays} Days Duration
+                                {item.durationDays} Days Duration
                               </span>
                             ) : (
                               <span className="hcal-card__weekday">
@@ -354,23 +361,23 @@ export default function HolidayCalendar() {
                           <div className="hcal-card__tag-row">
                             {item.kind === 'event' ? (
                               <span className="hcal-tag hcal-tag--event">
-                                🏆 {item.eventCategory || 'School Event'}
+                                {item.eventCategory || 'School Event'}
                               </span>
                             ) : item.category === 'vacation' ? (
                               <span className="hcal-tag hcal-tag--vacation">
-                                🏖️ Vacation Break
+                                Vacation Break
                               </span>
                             ) : item.category === 'exam' ? (
                               <span className="hcal-tag hcal-tag--exam">
-                                📝 Exam Session
+                                Exam Session
                               </span>
                             ) : item.category === 'national' ? (
                               <span className="hcal-tag hcal-tag--national">
-                                🇮🇳 National Holiday
+                                National Holiday
                               </span>
                             ) : (
                               <span className="hcal-tag hcal-tag--school">
-                                🏫 School Holiday
+                                School Holiday
                               </span>
                             )}
 

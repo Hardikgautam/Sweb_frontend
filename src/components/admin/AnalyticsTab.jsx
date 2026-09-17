@@ -67,7 +67,6 @@ function EnquiriesCustomTooltip({ active, payload, label }) {
   return (
     <div className="an-tooltip">
       <div className="an-tooltip-title">
-        <span>📅</span>
         <span>{data.month_name} {data.year}</span>
       </div>
       <div className="an-tooltip-row">
@@ -76,7 +75,7 @@ function EnquiriesCustomTooltip({ active, payload, label }) {
       </div>
       {data.is_peak_season ? (
         <div className="an-tooltip-peak-note">
-          ⭐ India CBSE Admission Peak Season (Jan – Apr)
+          India CBSE Admission Peak Season (Jan – Apr)
         </div>
       ) : (
         <div style={{ fontSize: '0.72rem', color: '#94a3b8', marginTop: '0.35rem' }}>
@@ -93,7 +92,6 @@ function NewsletterCustomTooltip({ active, payload, label }) {
   return (
     <div className="an-tooltip">
       <div className="an-tooltip-title">
-        <span>📬</span>
         <span>{data.month_name} {data.year}</span>
       </div>
       <div className="an-tooltip-row">
@@ -114,7 +112,6 @@ function VisitorsCustomTooltip({ active, payload, label }) {
   return (
     <div className="an-tooltip">
       <div className="an-tooltip-title">
-        <span>👁️</span>
         <span>{item.label || item.month_name || item.year}</span>
       </div>
       <div className="an-tooltip-row">
@@ -280,7 +277,7 @@ export default function AnalyticsTab({ token, toast }) {
       <div className="an-header">
         <div className="an-title-group">
           <h2>
-            <span>📊</span> Analytics & Visitor Intelligence
+            Analytics &amp; Visitor Intelligence
           </h2>
           <p className="an-subtitle">
             Comprehensive graphical analysis of admission enquiries, newsletter subscribers, and website visitor traffic.
@@ -330,7 +327,7 @@ export default function AnalyticsTab({ token, toast }) {
           <span className="an-stat-label">Admission Queries ({selectedYear})</span>
           <span className="an-stat-value">{enquiryMetrics.total}</span>
           <div className="an-stat-meta">
-            <span className="an-stat-badge">⭐ {enquiryMetrics.peakPct}% in Peak Season</span>
+            <span className="an-stat-badge">{enquiryMetrics.peakPct}% in Peak Season</span>
             <span>(Jan–Apr)</span>
           </div>
         </div>
@@ -365,7 +362,7 @@ export default function AnalyticsTab({ token, toast }) {
         <div className="an-section-header">
           <div>
             <h3 className="an-section-title">
-              <span>🏫</span> Admission Queries by Month — {selectedYear}
+              Admission Queries by Month — {selectedYear}
             </h3>
             <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: '#64748b' }}>
               Analyst View: Highlights India's primary CBSE admission window (January – April) in gold.
@@ -426,7 +423,7 @@ export default function AnalyticsTab({ token, toast }) {
         <div className="an-section-header">
           <div>
             <h3 className="an-section-title">
-              <span>📬</span> Newsletter Subscriber Growth — {selectedYear}
+              Newsletter Subscriber Growth — {selectedYear}
             </h3>
             <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: '#64748b' }}>
               Monthly acquisitions (bars/area) with cumulative total trajectory line.
@@ -502,7 +499,7 @@ export default function AnalyticsTab({ token, toast }) {
         <div className="an-section-header">
           <div>
             <h3 className="an-section-title">
-              <span>👁️</span> Website Visitor Traffic Trends
+              Website Visitor Traffic Trends
             </h3>
             <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: '#64748b' }}>
               Track visitor volumes everyday (last 30 days), every month, or every year.
@@ -620,7 +617,7 @@ export default function AnalyticsTab({ token, toast }) {
         <div className="an-table-header">
           <div>
             <h3 className="an-section-title">
-              <span>📋</span> Website Visitors Log
+              Website Visitors Log
             </h3>
             <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.8rem', color: '#64748b' }}>
               Live privacy-safe audit table tracking guests who came to the website to explore the school.
