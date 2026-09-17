@@ -31,6 +31,7 @@ import {
 } from '../api/enquiries';
 import FeesAdminTab from '../components/admin/FeesAdminTab';
 import NewsletterAdminTab from '../components/admin/NewsletterAdminTab';
+import AnalyticsTab from '../components/admin/AnalyticsTab';
 import './AdminDashboard.css';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1947,6 +1948,16 @@ export default function AdminDashboard() {
             Newsletter Subscribers
             <span className="adm-tab-badge">{newsletterCount}</span>
           </button>
+
+          <button
+            type="button"
+            className={`adm-tab-btn ${activeTab === 'analytics' ? 'active' : ''}`}
+            onClick={() => setActiveTab('analytics')}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Analytics &amp; Visitors
+            <span className="adm-tab-badge" style={{ background: '#d4af37', color: '#0b1a30', fontWeight: 800 }}>LIVE</span>
+          </button>
         </div>
       </div>
 
@@ -2481,6 +2492,16 @@ export default function AdminDashboard() {
             token={token}
             toast={toast}
             onCountUpdate={(count) => setNewsletterCount(count)}
+          />
+        )}
+
+        {/* ========================================================= */}
+        {/* TAB 7: ANALYTICS & VISITORS INTELLIGENCE                  */}
+        {/* ========================================================= */}
+        {activeTab === 'analytics' && (
+          <AnalyticsTab
+            token={token}
+            toast={toast}
           />
         )}
 

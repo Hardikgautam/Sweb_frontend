@@ -16,8 +16,11 @@ import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import { subjectsData } from './config/subjectsData';
+import { useVisitorTracking } from './hooks/useVisitorTracking';
 
 export default function App() {
+  useVisitorTracking();
+
   return (
     <AuthProvider>
       <BrowserRouter basename="/Sweb_frontend">
