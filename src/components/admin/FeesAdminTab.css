@@ -343,3 +343,18 @@
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+@media (max-width: 640px) {
+  .adm-fees-subtabs {
+    width: 100%;
+    display: flex;
+  }
+
+  .adm-fees-subtab-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    gap: 0.35rem;
+  }
+}

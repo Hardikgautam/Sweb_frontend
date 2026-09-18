@@ -441,3 +441,76 @@
   margin: 0 auto 1rem;
   color: #94a3b8;
 }
+
+/* ── Mobile Responsive Styles ────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .appt-admin__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+    padding: 1rem;
+  }
+
+  .appt-admin__status-tabs {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.3rem;
+    scrollbar-width: none;
+  }
+  .appt-admin__status-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .appt-status-tab {
+    flex-shrink: 0;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .appt-admin__actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.6rem;
+  }
+
+  .appt-search-box {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .appt-search-input {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .appt-tool-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 40px;
+  }
+
+  .appt-table {
+    min-width: 850px;
+  }
+}
+
+@media (max-width: 600px) {
+  .appt-admin__kpis {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+  }
+
+  .appt-kpi-card {
+    padding: 1rem;
+  }
+
+  .appt-kpi-val {
+    font-size: 1.4rem;
+  }
+
+  .appt-kpi-icon {
+    width: 36px;
+    height: 36px;
+  }
+}

@@ -1499,6 +1499,9 @@ export default function AdminDashboard() {
     return validTabs.includes(tabParam) ? tabParam : 'news';
   });
 
+  // Mobile sidebar open/close
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   useEffect(() => {
     if (tabParam && validTabs.includes(tabParam) && tabParam !== activeTab) {
       setActiveTab(tabParam);
@@ -1512,8 +1515,39 @@ export default function AdminDashboard() {
     el?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
   }, [activeTab]);
 
+  // Close sidebar when clicking outside on mobile
+  useEffect(() => {
+    if (!sidebarOpen) return;
+    const handleOutside = (e) => {
+      if (!e.target.closest('.adm-sidebar') && !e.target.closest('.adm-hamburger')) {
+        setSidebarOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutside);
+    document.addEventListener('touchstart', handleOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleOutside);
+      document.removeEventListener('touchstart', handleOutside);
+    };
+  }, [sidebarOpen]);
+
+  const TAB_LABELS = {
+    news: 'News Articles',
+    events: 'Upcoming Events',
+    holidays: 'Holidays & Vacations',
+    enquiries: 'Admissions Enquiries',
+    appointments: 'Appointments',
+    fees: 'Fees & Scholarships',
+    newsletter: 'Newsletter Subscribers',
+    analytics: 'Analytics & Traffic',
+    saraswati: 'Saraswati AI',
+    'chat-requests': 'Chat Requests',
+  };
+
   const handleTabChange = (newTab) => {
     setActiveTab(newTab);
+    setSidebarOpen(false); // close on mobile after selection
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setSearchParams(prev => {
       const next = new URLSearchParams(prev);
       next.set('tab', newTab);
@@ -1880,9 +1914,28 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="adm">
+    <div className={`adm${sidebarOpen ? ' adm--sidebar-open' : ''}`}>
       {/* ── Top bar ──────────────────────────────────────────────── */}
       <header className="adm-topbar">
+        {/* Hamburger — visible on mobile only */}
+        <button
+          type="button"
+          className="adm-hamburger"
+          aria-label={sidebarOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={sidebarOpen}
+          onClick={() => setSidebarOpen(o => !o)}
+        >
+          {sidebarOpen ? (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          ) : (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          )}
+        </button>
+
         <div className="adm-topbar__brand">
           <div className="adm-topbar__icon" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -1896,6 +1949,11 @@ export default function AdminDashboard() {
           </div>
         </div>
 
+        <div className="adm-topbar__active-chip" title="Current Active Section">
+          <span className="adm-topbar__active-dot" aria-hidden="true" />
+          <span className="adm-topbar__active-name">{TAB_LABELS[activeTab] || 'Section'}</span>
+        </div>
+
         <div className="adm-topbar__actions">
           {adminEmail && (
             <span className="adm-topbar__email" aria-label={`Signed in as ${adminEmail}`}>
@@ -1903,27 +1961,6 @@ export default function AdminDashboard() {
               {adminEmail}
             </span>
           )}
-          <Link to="/news" className="adm-topbar__view-site" target="_blank" rel="noopener noreferrer">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            News Page
-          </Link>
-          <Link to="/calendar" className="adm-topbar__view-site" target="_blank" rel="noopener noreferrer">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            Calendar
-          </Link>
-          <Link to="/fees-scholarships" className="adm-topbar__view-site" target="_blank" rel="noopener noreferrer">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-            Fees &amp; Scholarships
-          </Link>
-          <button
-            type="button"
-            className="adm-topbar__view-site"
-            style={{ background: 'rgba(212, 175, 55, 0.15)', borderColor: '#d4af37', color: '#d4af37', cursor: 'pointer' }}
-            onClick={() => handleTabChange('analytics')}
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-            Analytics Graphs
-          </button>
           <button className="adm-topbar__logout" onClick={handleLogout} aria-label="Log out of admin panel">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
             Logout
@@ -1931,134 +1968,184 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      {/* ── Sub Navigation Tabs ──────────────────────────────────── */}
-      <div className="adm-tabs-bar">
-        <div className="adm-tabs-container">
-          <button
-            type="button"
-            className={`adm-tab-btn ${activeTab === 'news' ? 'active' : ''}`}
-            onClick={() => handleTabChange('news')}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            News Articles
-            <span className="adm-tab-badge">{articles.length}</span>
-          </button>
+      {/* ── Body: sidebar + content ────────────────────────────── */}
+      <div className="adm-body">
 
-          <button
-            type="button"
-            className={`adm-tab-btn ${activeTab === 'events' ? 'active' : ''}`}
-            onClick={() => handleTabChange('events')}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Upcoming Events
-            <span className="adm-tab-badge">{events.length}</span>
-          </button>
+        {/* Mobile backdrop overlay */}
+        {sidebarOpen && (
+          <div className="adm-sidebar-overlay" onClick={() => setSidebarOpen(false)} aria-hidden="true" />
+        )}
 
-          <button
-            type="button"
-            className={`adm-tab-btn ${activeTab === 'holidays' ? 'active' : ''}`}
-            onClick={() => handleTabChange('holidays')}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            Holidays &amp; Vacations
-            <span className="adm-tab-badge">{holidays.length}</span>
-          </button>
-
-          <button
-            type="button"
-            className={`adm-tab-btn ${activeTab === 'enquiries' ? 'active' : ''}`}
-            onClick={() => handleTabChange('enquiries')}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Admissions Enquiries
-            <span className="adm-tab-badge">{enquiries.length}</span>
-          </button>
-
-          <button
-            type="button"
-            className={`adm-tab-btn ${activeTab === 'fees' ? 'active' : ''}`}
-            onClick={() => handleTabChange('fees')}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-            Fees &amp; Scholarships
-            <span className="adm-tab-badge">{feesTotalCount}</span>
-          </button>
-
-          <button
-            type="button"
-            className={`adm-tab-btn ${activeTab === 'newsletter' ? 'active' : ''}`}
-            onClick={() => handleTabChange('newsletter')}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Newsletter Subscribers
-            <span className="adm-tab-badge">{newsletterCount}</span>
-          </button>
-
-          <button
-            type="button"
-            className={`adm-tab-btn ${activeTab === 'analytics' ? 'active' : ''}`}
-            onClick={() => handleTabChange('analytics')}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-            Analytics &amp; Visitors
-            <span className="adm-tab-badge" style={{ background: '#d4af37', color: '#0b1a30', fontWeight: 800 }}>LIVE</span>
-          </button>
-
-          <button
-            type="button"
-            className={`adm-tab-btn ${activeTab === 'appointments' ? 'active' : ''}`}
-            onClick={() => handleTabChange('appointments')}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            Appointments
-            <span className="adm-tab-badge" style={appointmentsCount > 0 ? { background: '#d4af37', color: '#0b1a30', fontWeight: 800 } : {}}>
-              {appointmentsCount}
-            </span>
-          </button>
-
-          <button
-            type="button"
-            className={`adm-tab-btn ${activeTab === 'saraswati' ? 'active' : ''}`}
-            onClick={() => handleTabChange('saraswati')}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2 4 6v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V6l-8-4z"/><path d="M9.2 11.2 12 14l3.4-4"/></svg>
-            Saraswati AI
-          </button>
-
-          <button
-            type="button"
-            className={`adm-tab-btn ${activeTab === 'chat-requests' ? 'active' : ''}`}
-            onClick={() => handleTabChange('chat-requests')}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-            Chat Requests
-            <span className="adm-tab-badge" style={chatRequestsCount > 0 ? { background: '#7A2333', color: '#fff', fontWeight: 800 } : {}}>
-              {chatRequestsCount}
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {/* ── Content ──────────────────────────────────────────────── */}
-      <div className="adm-content">
-
-        {/* ========================================================= */}
-        {/* TAB 1: NEWS ARTICLES                                      */}
-        {/* ========================================================= */}
-        {activeTab === 'news' && (
-          <>
-            {/* Upload card */}
-            <div className="adm-card">
-              <div className="adm-card__header">
-                <h2 className="adm-card__title">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                  Publish New Article
-                </h2>
-              </div>
-              <div className="adm-card__body">
-                <UploadForm token={token} onCreated={handleNewsCreated} />
-              </div>
+        {/* ── Left Sidebar ──────────────────────────────────────── */}
+        <aside className={`adm-sidebar${sidebarOpen ? ' adm-sidebar--open' : ''}`}>
+          <div className="adm-sidebar__mobile-header">
+            <div className="adm-sidebar__mobile-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+              </svg>
+              Admin Menu
             </div>
+            <button
+              type="button"
+              className="adm-sidebar__close-btn"
+              onClick={() => setSidebarOpen(false)}
+              aria-label="Close navigation drawer"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+          <nav className="adm-sidebar__nav" aria-label="Admin sections">
+
+            <div className="adm-sidebar__section-label">Content</div>
+
+            <button
+              type="button"
+              className={`adm-tab-btn ${activeTab === 'news' ? 'active' : ''}`}
+              onClick={() => handleTabChange('news')}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              News Articles
+              <span className="adm-tab-badge">{articles.length}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`adm-tab-btn ${activeTab === 'events' ? 'active' : ''}`}
+              onClick={() => handleTabChange('events')}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Upcoming Events
+              <span className="adm-tab-badge">{events.length}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`adm-tab-btn ${activeTab === 'holidays' ? 'active' : ''}`}
+              onClick={() => handleTabChange('holidays')}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Holidays &amp; Vacations
+              <span className="adm-tab-badge">{holidays.length}</span>
+            </button>
+
+            <div className="adm-sidebar__section-label">Management</div>
+
+            <button
+              type="button"
+              className={`adm-tab-btn ${activeTab === 'enquiries' ? 'active' : ''}`}
+              onClick={() => handleTabChange('enquiries')}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Admissions Enquiries
+              <span className="adm-tab-badge">{enquiries.length}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`adm-tab-btn ${activeTab === 'appointments' ? 'active' : ''}`}
+              onClick={() => handleTabChange('appointments')}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Appointments
+              <span className="adm-tab-badge" style={appointmentsCount > 0 ? { background: '#d4af37', color: '#0b1a30', fontWeight: 800 } : {}}>
+                {appointmentsCount}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              className={`adm-tab-btn ${activeTab === 'fees' ? 'active' : ''}`}
+              onClick={() => handleTabChange('fees')}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              Fees &amp; Scholarships
+              <span className="adm-tab-badge">{feesTotalCount}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`adm-tab-btn ${activeTab === 'newsletter' ? 'active' : ''}`}
+              onClick={() => handleTabChange('newsletter')}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Newsletter
+              <span className="adm-tab-badge">{newsletterCount}</span>
+            </button>
+
+            <div className="adm-sidebar__section-label">Insights &amp; AI</div>
+
+            <button
+              type="button"
+              className={`adm-tab-btn ${activeTab === 'analytics' ? 'active' : ''}`}
+              onClick={() => handleTabChange('analytics')}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              Analytics &amp; Visitors
+              <span className="adm-tab-badge" style={{ background: '#d4af37', color: '#0b1a30', fontWeight: 800 }}>LIVE</span>
+            </button>
+
+            <button
+              type="button"
+              className={`adm-tab-btn ${activeTab === 'saraswati' ? 'active' : ''}`}
+              onClick={() => handleTabChange('saraswati')}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2 4 6v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V6l-8-4z"/><path d="M9.2 11.2 12 14l3.4-4"/></svg>
+              Saraswati AI
+            </button>
+
+            <button
+              type="button"
+              className={`adm-tab-btn ${activeTab === 'chat-requests' ? 'active' : ''}`}
+              onClick={() => handleTabChange('chat-requests')}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              Chat Requests
+              <span className="adm-tab-badge" style={chatRequestsCount > 0 ? { background: '#7A2333', color: '#fff', fontWeight: 800 } : {}}>
+                {chatRequestsCount}
+              </span>
+            </button>
+
+            {/* Quick links section */}
+            <div className="adm-sidebar__section-label">Quick Links</div>
+            <Link to="/news" className="adm-sidebar__quick-link" target="_blank" rel="noopener noreferrer">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              News Page ↗
+            </Link>
+            <Link to="/calendar" className="adm-sidebar__quick-link" target="_blank" rel="noopener noreferrer">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Calendar ↗
+            </Link>
+            <Link to="/fees-scholarships" className="adm-sidebar__quick-link" target="_blank" rel="noopener noreferrer">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              Fees Page ↗
+            </Link>
+
+          </nav>
+        </aside>
+
+        {/* ── Main content ──────────────────────────────────────── */}
+        <main className="adm-content">
+
+          {/* ========================================================= */}
+          {/* TAB 1: NEWS ARTICLES                                      */}
+          {/* ========================================================= */}
+          {activeTab === 'news' && (
+            <>
+              {/* Upload card */}
+              <div className="adm-card">
+                <div className="adm-card__header">
+                  <h2 className="adm-card__title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Publish New Article
+                  </h2>
+                </div>
+                <div className="adm-card__body">
+                  <UploadForm token={token} onCreated={handleNewsCreated} />
+                </div>
+              </div>
 
             {/* Table card */}
             <div className="adm-card">
@@ -2612,7 +2699,8 @@ export default function AdminDashboard() {
           />
         )}
 
-      </div>
+        </main>
+      </div>{/* end adm-body */}
 
       {/* ── News Modals ────────────────────────────────────────────── */}
       {editTarget && (

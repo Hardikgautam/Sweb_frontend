@@ -1,6 +1,6 @@
 /* ============================================================
    pages/AdminDashboard.css — Admin panel styles
-   Dark sidebar-less layout with cream/white content area.
+   Left Sidebar Layout (Desktop) & Mobile Hamburger Drawer
    ============================================================ */
 
 /* ── Page shell ────────────────────────────────────────────── */
@@ -8,36 +8,61 @@
   min-height: 100vh;
   background: #f0f2f5;
   font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
 }
 
 /* ── Top bar ────────────────────────────────────────────────── */
 .adm-topbar {
   position: sticky;
   top: 0;
-  z-index: 200;
-  background: var(--color-navy);
-  border-bottom: 2px solid rgba(199, 164, 107, 0.3);
-  height: 62px;
+  z-index: 300;
+  background: #081426;
+  border-bottom: 1.5px solid rgba(199, 164, 107, 0.28);
+  height: 64px;
   display: flex;
   align-items: center;
-  padding: 0 2rem;
-  gap: 1.25rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  padding: 0 1.5rem;
+  gap: 1rem;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.3);
+}
+
+/* Hamburger button — hidden on desktop, visible on mobile */
+.adm-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(199, 164, 107, 0.3);
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.adm-hamburger:hover {
+  background: rgba(199, 164, 107, 0.18);
+  border-color: var(--color-gold);
+  color: var(--color-gold);
 }
 
 .adm-topbar__brand {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  flex: 1;
+  flex-shrink: 0;
 }
 
 .adm-topbar__icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 6px;
-  background: rgba(199, 164, 107, 0.15);
-  border: 1px solid rgba(199, 164, 107, 0.3);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(199, 164, 107, 0.25) 0%, rgba(199, 164, 107, 0.08) 100%);
+  border: 1px solid rgba(199, 164, 107, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,74 +76,274 @@
   font-weight: 700;
   color: #fff;
   letter-spacing: -0.2px;
+  line-height: 1.2;
 }
 
 .adm-topbar__sub {
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.45);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgba(199, 164, 107, 0.7);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
+}
+
+/* Active Section indicator chip in topbar */
+.adm-topbar__active-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.32rem 0.85rem;
+  border-radius: 20px;
+  background: rgba(199, 164, 107, 0.12);
+  border: 1px solid rgba(199, 164, 107, 0.28);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  margin-left: 0.5rem;
+}
+
+.adm-topbar__active-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.adm-topbar__active-name {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .adm-topbar__actions {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  margin-left: auto;
 }
 
 .adm-topbar__email {
   font-size: 0.78rem;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.65);
   display: flex;
   align-items: center;
   gap: 0.4rem;
-}
-
-.adm-topbar__view-site {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.38rem 0.85rem;
-  border-radius: 4px;
-  border: 1px solid rgba(255,255,255,0.15);
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: rgba(255,255,255,0.7);
-  text-decoration: none;
-  transition: all var(--transition-fast);
-}
-
-.adm-topbar__view-site:hover {
-  border-color: rgba(255,255,255,0.35);
-  color: #fff;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .adm-topbar__logout {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.38rem 0.85rem;
-  border-radius: 4px;
-  background: rgba(122, 35, 51, 0.6);
-  border: 1px solid rgba(122, 35, 51, 0.8);
+  padding: 0.42rem 0.88rem;
+  border-radius: 6px;
+  background: rgba(122, 35, 51, 0.75);
+  border: 1px solid rgba(122, 35, 51, 0.95);
   font-size: 0.78rem;
   font-weight: 700;
   color: #fff;
   cursor: pointer;
-  transition: background var(--transition-fast);
+  transition: all var(--transition-fast);
   letter-spacing: 0.03em;
 }
 
 .adm-topbar__logout:hover {
-  background: rgba(122, 35, 51, 0.9);
+  background: #8e1c31;
+  box-shadow: 0 2px 8px rgba(142, 28, 49, 0.4);
+}
+
+/* ── Body: Left Sidebar + Content Area ──────────────────────── */
+.adm-body {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - 64px);
+  width: 100%;
+  position: relative;
+}
+
+/* ── Left Sidebar (Desktop) ─────────────────────────────────── */
+.adm-sidebar {
+  width: 270px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #0b1a30 0%, #081324 100%);
+  border-right: 1px solid rgba(199, 164, 107, 0.2);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1.25rem 0.85rem 2.5rem;
+  z-index: 100;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(199, 164, 107, 0.25) transparent;
+}
+
+.adm-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+.adm-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.adm-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(199, 164, 107, 0.25);
+  border-radius: 4px;
+}
+.adm-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(199, 164, 107, 0.5);
+}
+
+.adm-sidebar__mobile-header {
+  display: none;
+}
+
+.adm-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.adm-sidebar__section-label {
+  padding: 1.25rem 0.85rem 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(199, 164, 107, 0.75);
+  user-select: none;
+}
+.adm-sidebar__section-label:first-of-type {
+  padding-top: 0.25rem;
+}
+
+/* Navigation button (left sidebar item) */
+.adm-tab-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.75rem;
+  padding: 0.7rem 0.95rem;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: #94a3b8;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.adm-tab-btn svg {
+  flex-shrink: 0;
+  color: #64748b;
+  transition: color 0.2s ease;
+}
+
+.adm-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #f8fafc;
+  transform: translateX(2px);
+}
+
+.adm-tab-btn:hover svg {
+  color: var(--color-gold);
+}
+
+.adm-tab-btn.active {
+  background: linear-gradient(90deg, rgba(199, 164, 107, 0.22) 0%, rgba(199, 164, 107, 0.06) 100%);
+  color: #ffffff;
+  font-weight: 700;
+  border-left: 3.5px solid var(--color-gold);
+  padding-left: calc(0.95rem - 3.5px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+}
+
+.adm-tab-btn.active svg {
+  color: var(--color-gold);
+}
+
+.adm-tab-badge {
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  line-height: 1.3;
+}
+
+.adm-tab-btn.active .adm-tab-badge {
+  background: rgba(199, 164, 107, 0.25);
+  color: var(--color-gold);
+}
+
+.adm-sidebar__quick-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #64748b;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.adm-sidebar__quick-link svg {
+  color: #475569;
+  transition: color 0.2s ease;
+}
+
+.adm-sidebar__quick-link:hover {
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.adm-sidebar__quick-link:hover svg {
+  color: var(--color-gold);
+}
+
+/* ── Mobile Sidebar Drawer & Overlay ────────────────────────── */
+.adm-sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  top: 64px;
+  background: rgba(4, 9, 18, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1040;
+  animation: admOverlayFade 0.25s ease forwards;
+}
+
+@keyframes admOverlayFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* ── Page content container ─────────────────────────────────── */
 .adm-content {
-  max-width: 1340px;
-  margin: 0 auto;
-  padding: 2rem 2rem 4rem;
+  flex: 1;
+  min-width: 0;
+  max-width: 1400px;
+  margin: 0;
+  padding: 1.75rem 2.25rem 4rem;
 }
 
 /* ── Section card ───────────────────────────────────────────── */
@@ -127,7 +352,7 @@
   border-radius: 10px;
   border: 1px solid #e4e7eb;
   box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-  overflow: hidden;
+  overflow: visible;
   margin-bottom: 2rem;
 }
 
@@ -837,60 +1062,6 @@
   .adm-topbar__sub   { display: none; }
 }
 
-/* ── Navigation Tabs Bar ──────────────────────────────────────── */
-.adm-tabs-bar {
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 0 2rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-}
-
-.adm-tabs-container {
-  display: flex;
-  gap: 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.adm-tab-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.95rem 1.15rem;
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: #64748b;
-  background: transparent;
-  border: none;
-  border-bottom: 2.5px solid transparent;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.adm-tab-btn:hover {
-  color: var(--color-navy);
-}
-
-.adm-tab-btn.active {
-  color: var(--color-navy);
-  border-bottom-color: var(--color-maroon);
-}
-
-.adm-tab-badge {
-  background: #f1f5f9;
-  color: #475569;
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 0.15rem 0.5rem;
-  border-radius: 12px;
-  transition: all var(--transition-fast);
-}
-
-.adm-tab-btn.active .adm-tab-badge {
-  background: rgba(128, 0, 32, 0.1);
-  color: var(--color-maroon);
-}
 
 /* ── Holiday Category Badges ──────────────────────────────────── */
 .adm-htype-badge {
@@ -1141,51 +1312,9 @@
    Appended last so these rules win on source order without needing !important.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ── Tab bar: scrollable rail ─────────────────────────────────────────────
-   The bar is a non-wrapping flex row. With ten tabs it overflowed the page
-   on tablets and phones and the last tabs were simply unreachable. It is now
-   a horizontally scrollable, snapping rail with edge fades.
-   ─────────────────────────────────────────────────────────────────────── */
-.adm-tabs-bar {
-  position: sticky;
-  top: 62px;                 /* directly under .adm-topbar */
-  z-index: 190;
-  overflow: hidden;
-  /* Fade both edges at every width, so an overflowing rail visibly reads as
-     "there are more tabs this way" instead of looking like it just ends.
-     With ten tabs it overflows on laptops too, not only phones. */
-  mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    #000 18px,
-    #000 calc(100% - 26px),
-    transparent 100%
-  );
-}
-
-.adm-tabs-container {
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x proximity;
-  overscroll-behavior-x: contain;
-}
-
-.adm-tabs-container::-webkit-scrollbar { display: none; }
-
-.adm-tab-btn {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-  white-space: nowrap;
-  border-radius: 6px 6px 0 0;
-}
-
-.adm-tab-btn:focus-visible {
-  outline: 2px solid var(--color-gold);
-  outline-offset: -2px;
-}
+/* ═══════════════════════════════════════════════════════════════════════════
+   ADMIN UI POLISH, MOBILE DRAWER & MOBILE FILTER OPTIMIZATIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ── Forms ───────────────────────────────────────────────────────────────── */
 .adm-input,
@@ -1225,7 +1354,7 @@
   max-height: 90dvh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;          /* the body scrolls, not the shell */
+  overflow: hidden;
 }
 
 .adm-modal__header,
@@ -1238,30 +1367,128 @@
   -webkit-overflow-scrolling: touch;
 }
 
-/* ── Mobile ──────────────────────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .adm-tabs-bar {
-    padding: 0 0.75rem;
+/* ── Tablet & Mobile Sidebar Breakpoint (<1024px) ────────────────────────── */
+@media (max-width: 1023px) {
+  .adm-hamburger {
+    display: flex;
   }
 
-  .adm-tabs-container { gap: 0.35rem; }
+  .adm-topbar {
+    padding: 0 1rem;
+    gap: 0.75rem;
+  }
 
-  .adm-tab-btn {
-    padding: 0.8rem 0.7rem;
+  .adm-topbar__active-chip {
+    padding: 0.25rem 0.65rem;
+    font-size: 0.75rem;
+    margin-left: 0.25rem;
+  }
+
+  .adm-topbar__active-name {
+    max-width: 130px;
+  }
+
+  /* Off-canvas Left Sidebar Drawer on Mobile/Tablet */
+  .adm-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 295px;
+    max-width: 86vw;
+    background: #081324;
+    border-right: 1.5px solid rgba(199, 164, 107, 0.28);
+    z-index: 1050;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.33, 1, 0.68, 1);
+    box-shadow: 10px 0 35px rgba(0, 0, 0, 0.55);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .adm-sidebar.adm-sidebar--open {
+    transform: translateX(0);
+  }
+
+  .adm-sidebar__mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.25rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: #050d1a;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .adm-sidebar__mobile-title {
     font-size: 0.82rem;
-    gap: 0.35rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
-  /* 16px is the floor below which iOS Safari zooms the page on focus — the
-     main reason the admin forms felt off on phones. */
+  .adm-sidebar__mobile-title svg {
+    color: var(--color-gold);
+  }
+
+  .adm-sidebar__close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .adm-sidebar__close-btn:hover {
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+  }
+
+  .adm-sidebar__nav {
+    padding: 0.85rem 0.85rem 3rem;
+  }
+
+  .adm-content {
+    padding: 1.25rem 1rem 3.5rem;
+  }
+}
+
+/* ── Mobile Filters & Tables Polish (<768px) ─────────────────────────────── */
+@media (max-width: 768px) {
+  .adm-topbar__sub {
+    display: none;
+  }
+
+  .adm-topbar__email {
+    display: none;
+  }
+
+  /* 16px input font size prevents iOS Safari automatic page zoom */
   .adm-input,
   .adm-textarea,
   .adm-select {
-    min-height: 48px;
+    min-height: 46px;
     font-size: 16px;
   }
 
-  .adm-textarea { min-height: 110px; }
+  .adm-textarea {
+    min-height: 110px;
+  }
 
   .adm-form-actions {
     flex-direction: column;
@@ -1269,11 +1496,13 @@
     gap: 0.6rem;
   }
 
-  .adm-form-actions > * { width: 100%; }
+  .adm-form-actions > * {
+    width: 100%;
+  }
 
   .adm-modal-backdrop {
     padding: 0.6rem;
-    align-items: flex-end;   /* sheet-style on phones — thumb-reachable */
+    align-items: flex-end;
   }
 
   .adm-modal {
@@ -1290,29 +1519,134 @@
     gap: 0.55rem;
   }
 
-  .adm-modal__footer > * { width: 100%; }
+  .adm-modal__footer > * {
+    width: 100%;
+  }
 
-  /* Tables: let them scroll rather than squeeze columns to nothing. */
+  /* ── Mobile Filter Toolbars ────────────────────────────────────────────── */
+  .adm-table-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+    width: 100%;
+  }
+
+  .adm-search-wrap {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .adm-search-input {
+    width: 100%;
+    min-height: 44px;
+    font-size: 16px;
+    padding-left: 2.3rem;
+  }
+
+  .adm-table-count {
+    align-self: flex-start;
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  /* Admissions Enquiries mobile toolbar */
+  .adm-enquiry-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+    width: 100%;
+  }
+
+  .adm-toggle-group {
+    display: flex;
+    width: 100%;
+    background: #e2e8f0;
+    padding: 3px;
+    border-radius: 7px;
+  }
+
+  .adm-toggle-btn {
+    flex: 1;
+    text-align: center;
+    min-height: 38px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .adm-col-picker-container {
+    width: 100%;
+    position: relative;
+  }
+
+  .adm-col-picker-container > .adm-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 40px;
+  }
+
+  .adm-col-picker-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    z-index: 120;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .adm-btn--danger-cleanup {
+    width: 100%;
+    justify-content: center;
+    min-height: 40px;
+  }
+
+  /* Tables: smooth horizontal touch scrolling */
   .adm-table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    border-radius: 0 0 10px 10px;
   }
 
-  .adm-table { min-width: 620px; }
-
-  .adm-table-toolbar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.6rem;
+  .adm-table {
+    min-width: 650px;
   }
 }
 
+/* ── Small Mobile Screens (<480px) ───────────────────────────────────────── */
 @media (max-width: 480px) {
-  .adm-tab-btn svg { display: none; }   /* labels matter more than icons here */
-  .adm-tab-btn { font-size: 0.8rem; }
+  .adm-topbar__title {
+    font-size: 0.9rem;
+  }
+
+  .adm-topbar__active-name {
+    max-width: 90px;
+  }
+
+  .adm-card__header {
+    padding: 0.95rem 1rem;
+  }
+
+  .adm-card__body {
+    padding: 1rem;
+  }
+
+  .adm-tab-btn {
+    padding: 0.65rem 0.8rem;
+    font-size: 0.84rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .adm-sidebar,
+  .adm-sidebar-overlay,
   .adm-modal,
-  .adm-modal-backdrop { animation: none; }
+  .adm-modal-backdrop {
+    animation: none;
+    transition: none;
+  }
 }

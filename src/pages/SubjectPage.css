@@ -29,6 +29,14 @@
   background-color: var(--color-navy);
 }
 
+/* Ensure hero content is never clipped by the fixed min-height on small
+   screens — the section grows to wrap its content if needed. */
+@supports (min-height: 100svh) {
+  .sp-hero {
+    min-height: min(92vh, 100svh);
+  }
+}
+
 .sp-hero__fallback-img {
   position: absolute;
   inset: 0;
@@ -125,6 +133,9 @@
   line-height: 1.75;
   max-width: 700px;
   margin: 0;
+  /* Prevent intro from being hidden below the fold on small devices */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .sp-hero__actions {
@@ -559,10 +570,15 @@
     padding-right: 1.2rem;
   }
 
+  /* On tablets/phones the hero switches to top-aligned content so all text
+     (kicker → title → levels → intro → button) is visible without scrolling.
+     A generous top padding replaces the `align-items: flex-end` approach that
+     was hiding text below the fold on smaller viewports. */
   .sp-hero {
-    min-height: 100svh;
-    padding-bottom: 3.5rem;
-    align-items: flex-end;
+    min-height: auto;
+    padding-top: calc(var(--nav-height, 70px) + 3rem);
+    padding-bottom: 4rem;
+    align-items: flex-start;
   }
 
   .sp-hero__title {
@@ -572,6 +588,11 @@
   .sp-hero__intro {
     font-size: var(--fs-base);
     line-height: 1.65;
+    max-width: 100%;
+  }
+
+  .sp-hero__content {
+    max-width: 100%;
   }
 
   .sp-hero__actions {
@@ -584,6 +605,11 @@
     text-align: center;
     width: 100%;
     white-space: normal;
+  }
+
+  /* Hide the scroll hint — it makes no sense when text is top-aligned */
+  .sp-hero__scroll-hint {
+    display: none;
   }
 
   .sp-stats {
@@ -664,8 +690,60 @@
   }
 }
 
+@media (max-width: 480px) {
+  .sp-hero {
+    padding-top: calc(var(--nav-height, 70px) + 2rem);
+    padding-bottom: 3rem;
+  }
+
+  .sp-hero__title {
+    font-size: clamp(1.7rem, 7.5vw, 2.2rem);
+  }
+
+  .sp-hero__intro {
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    /* Show a condensed version on very small screens by capping lines shown */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .sp-hero__content {
+    gap: 0.75rem;
+  }
+
+  .subject-page .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .sp-band {
+    padding: 1.2rem 0.9rem;
+    gap: 0.9rem;
+  }
+
+  .sp-band__title {
+    font-size: var(--fs-md);
+  }
+
+  .sp-gallery__img-wrap {
+    height: 180px;
+  }
+
+  .sp-stats__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+
+  .sp-stats__item {
+    padding: 0.5rem 0.5rem;
+  }
+}
+
 @media (max-width: 390px) {
   .sp-hero__title {
-    font-size: 1.85rem;
+    font-size: 1.75rem;
   }
 }
